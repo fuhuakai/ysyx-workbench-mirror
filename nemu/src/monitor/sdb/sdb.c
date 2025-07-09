@@ -55,6 +55,31 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+//单步执行
+static int cmd_si(char *args){
+	char *step_arg = strtok(NULL, " ");
+	int step_count = 1;
+	if (step_arg == NULL){
+		cpu_exec(1);
+		return 0;
+	}
+	//确认输入参数格式正确
+	if (sscanf(step_arg, "%d", &step_count) != 1){
+		fprintf(stderr, "ERROR:Invalid step count format\n");
+		return 0;
+	}
+	//确认步数为正
+	if (step_count <= 0){
+		fprintf(stderr, "ERROR: Step count must be positive (got %d)\n", step_count);
+		return 0;
+	}
+
+	for(int i =0; i< step_count; i++){
+		cpu_exec(1);
+	}
+	return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -63,6 +88,7 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
+  { "si", "Single Step Execution", cmd_si},
 
   /* TODO: Add more commands */
 
