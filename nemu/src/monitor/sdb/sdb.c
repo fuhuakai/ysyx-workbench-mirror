@@ -79,6 +79,26 @@ static int cmd_si(char *args){
 	}
 	return 0;
 }
+//打印寄存器
+static int cmd_info(char *args) {
+    char *subcommand = strtok(NULL, " ");
+    
+    // 检查子命令r是否存在
+    if (subcommand == NULL) {
+        fprintf(stderr, "ERROR: Missing subcommand. Usage: info [r|...]\n");
+        return 1;
+    }
+    
+    // 处理寄存器显示命令
+    if (strcmp(subcommand, "r") == 0) {
+        isa_reg_display();  // 调用寄存器显示函数
+        return 0;
+    }
+    
+    // 处理无效子命令
+    fprintf(stderr, "ERROR: Invalid subcommand '%s'. Supported: r\n", subcommand);
+    return 1;
+}
 
 static struct {
   const char *name;
@@ -89,6 +109,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si", "Single Step Execution", cmd_si},
+  { "info", "Display all informations of regisiters", cmd_info },
 
   /* TODO: Add more commands */
 
