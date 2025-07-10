@@ -18,6 +18,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
+#include <memory/paddr.h>
 
 static int is_batch_mode = false;
 
@@ -100,6 +101,40 @@ static int cmd_info(char *args) {
     return 1;
 }
 
+//扫描内存
+static int cmd_x(char *args) {
+    //解析输入命令参数
+	char *step_str = strtok(NULL, " ");
+    char *addr_str = strtok(NULL, " ");
+
+    //确认输入参数格式正确
+	if (!step_str || !addr_str) {
+        printf("Usage error: x [steps] [hex address]\n");
+        printf("Example: x 10 0x80000000\n");
+        return -1;
+    }
+
+    int step = 0;
+    paddr_t address = 0;
+
+    //确认扫描步长
+	if (sscanf(step_str, "%d", &step) != 1) {
+        printf("Invalid step value: '%s'\n", step_str);
+        return -1;
+    }
+	//确认起始地址
+    if (sscanf(addr_str, "%x", &address) != 1) {
+        printf("Invalid address: '%s'\n", addr_str);
+        return -1;
+    }
+    //扫描内存
+	for (int i = 0; i < step; i++) {
+        printf("0x%08x: 0x%08x\n", address, paddr_read(address, 4));
+        address += 4;
+    }
+    return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -110,6 +145,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   { "si", "Single Step Execution", cmd_si},
   { "info", "Display all informations of regisiters", cmd_info },
+  { "x", "Scan The Memory", cmd_x },
 
   /* TODO: Add more commands */
 
