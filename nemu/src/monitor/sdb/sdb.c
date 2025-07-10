@@ -92,7 +92,7 @@ static int cmd_info(char *args) {
     
     // 处理寄存器显示命令
     if (strcmp(subcommand, "r") == 0) {
-        isa_reg_display();  // 调用寄存器显示函数
+        isa_reg_display();  // 调用寄存器显示函数，位于/isa/reg.c
         return 0;
     }
     
@@ -135,6 +135,17 @@ static int cmd_x(char *args) {
     return 0;
 }
 
+//表达式求值
+static int cmd_p(char *args){
+	bool *success = false;
+	int i;
+	i = expr(args, success);//表达式求值函数，位于expr.c
+	if (!success){
+		printf("%d\n", i);
+	}
+	return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -146,6 +157,7 @@ static struct {
   { "si", "Single Step Execution", cmd_si},
   { "info", "Display all informations of regisiters", cmd_info },
   { "x", "Scan The Memory", cmd_x },
+  { "p", "Evaluate The Expressions", cmd_p },
 
   /* TODO: Add more commands */
 

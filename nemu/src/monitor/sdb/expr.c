@@ -21,7 +21,16 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,
+  TK_NOTYPE = 256, 
+  TK_NUM,           // 十进制数字
+  TK_REG,           // 寄存器
+  TK_HEX,           // 十六进制数
+  TK_EQ,            // 相等比较 ==
+  TK_NEQ,           // 不等比较 !=
+  TK_OR,            // 逻辑或 ||
+  TK_AND,           // 逻辑与 &&
+  TK_DEREF,         // 解引用 * 
+  TK_NEG            // 负号 - (用于一元操作)
 
   /* TODO: Add more token types */
 
@@ -36,9 +45,25 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
 
-  {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
-  {"==", TK_EQ},        // equal
+    {"==", TK_EQ},       // 相等比较
+    {"!=", TK_NEQ},      // 不等比较
+    {"\\|\\|", TK_OR},   // 逻辑或
+    {"&&", TK_AND},      // 逻辑与
+    
+    {"\\+", '+'},        // 加号
+    {"\\-", '-'},        // 减号
+    {"\\*", '*'},        // 乘号
+    {"\\/", '/'},        // 除号
+    {"\\(", '('},        // 左括号
+    {"\\)", ')'},        // 右括号
+    {"!", '!'},          // 逻辑非
+    
+    // 标识符和字面量
+    {"\\$[a-zA-Z0-9]+", TK_REG},   // 寄存器（如 $eax）
+    {"0[xX][0-9a-fA-F]+", TK_HEX}, // 十六进制数
+    {"[0-9]+", TK_NUM},            // 十进制数
+    
+    {" +", TK_NOTYPE}    // 空格
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -95,8 +120,32 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
-          default: TODO();
-        }
+            case TK_NOTYPE: // 空格 - 跳过不处理
+                 break;
+                        
+            case TK_NUM:
+            case TK_HEX:
+            case TK_REG:
+                // 复制字符串值
+                tokens[nr_token].type = rules[i].token_type;
+                strncpy(tokens[nr_token].str, substr_start, substr_len);
+                tokens[nr_token].str[substr_len] = '\0'; // 确保终止符
+                nr_token++;
+                break;
+                        
+            case TK_EQ:
+            case TK_NEQ:
+            case TK_OR:
+            case TK_AND:
+                // 多字符操作符 - 直接设置类型
+                tokens[nr_token].type = rules[i].token_type;
+                nr_token++;
+                break;
+                        
+            default: // 单字符操作符 (+, -, *, /, (, ), !)
+                tokens[nr_token].type = rules[i].token_type;
+                nr_token++;
+		  }
 
         break;
       }
@@ -107,7 +156,7 @@ static bool make_token(char *e) {
       return false;
     }
   }
-
+  Log("Lexical analysis completed. Tokens: %d", nr_token);//添加调试信息
   return true;
 }
 
