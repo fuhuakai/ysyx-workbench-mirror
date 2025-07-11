@@ -137,14 +137,18 @@ static int cmd_x(char *args) {
 
 //表达式求值
 static int cmd_p(char *args){
-	bool *success = false;
-	int i;
-	i = expr(args, success);//表达式求值函数，位于expr.c
-	if (success){
-		printf("%d\n", i);
-	}
-	return 0;
+    bool success = false; 
+    word_t result = expr(args, &success); // 传递变量的地址
+    
+    if (success) {
+        // 同时显示十六进制和十进制值
+        printf("0x%08x (%d)\n", result, result);
+    } else {
+        printf("Expression evaluation failed.\n");
+    }
+    return 0;
 }
+
 
 static struct {
   const char *name;
