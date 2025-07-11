@@ -19,6 +19,7 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
+#include <memory/paddr.h>
 
 enum {
   //添加更多的token类型
@@ -30,8 +31,8 @@ enum {
   TK_NEQ,           // 不等比较 !=
   TK_OR,            // 逻辑或 ||
   TK_AND,           // 逻辑与 &&
-  TK_NEG            // 负号 - (用于一元操作)
-
+  TK_NEG,           // 负号 - (用于一元操作)
+  TK_DEREF          // 指针解引用 
   /* TODO: Add more token types */
 
 };
@@ -142,10 +143,29 @@ static bool make_token(char *e) {
                 nr_token++;
                 break;
                         
-            default: // 单字符操作符 (+, -, *, /, (, ), !)
-                tokens[nr_token].type = rules[i].token_type;
-                nr_token++;
-		  }
+            default: // 单字符操作符 (+, -, *, /, (, ), !)(注！！：需要区分指针解引用和乘法）
+			    if (rules[i].token_type == '*') {
+                    // 检查是否为解引用（一元操作符） 1. 位于表达式开头 2. 前面是运算符 3. 前面是左括号
+                    if (nr_token == 0 || 
+                        tokens[nr_token-1].type == '(' ||
+                        tokens[nr_token-1].type == '+' ||
+                        tokens[nr_token-1].type == '-' ||
+                        tokens[nr_token-1].type == '*' ||
+                        tokens[nr_token-1].type == '/' ||
+                        tokens[nr_token-1].type == TK_EQ ||
+                        tokens[nr_token-1].type == TK_NEQ ||
+                        tokens[nr_token-1].type == TK_OR ||
+                        tokens[nr_token-1].type == TK_AND ||
+                        tokens[nr_token-1].type == '!') {
+                        tokens[nr_token].type = TK_DEREF; // 标记为解引用
+                    } else {
+                        tokens[nr_token].type = '*'; // 标记为乘法
+                    }
+                } else {
+                    tokens[nr_token].type = rules[i].token_type;
+                }
+                nr_token++;	
+			}
 
         break;
       }
@@ -214,7 +234,8 @@ int dominant_operator(int p, int q) {
             case '*':     
             case '/':     curr_priority = 5;  break;// 乘除优先级相同
             case '!':    
-            case TK_NEG:  curr_priority = 6; break;// 一元操作符优先级最高
+            case TK_NEG:
+			case TK_DEREF:curr_priority = 6; break;// 一元操作符优先级最高
         }
         
         // 找到优先级最低的操作符
@@ -267,7 +288,7 @@ uint32_t eval(int p, int q, bool *success) {
 
 				// RISC-V 32 寄存器名称表
 				static const char *regs[] = {
-					"0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
+					"$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
 					"s0", "s1", "a0", "a1", "a2", "a3", "a4", "a5",
 					"a6", "a7", "s2", "s3", "s4", "s5", "s6", "s7",
 					"s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
@@ -308,13 +329,14 @@ uint32_t eval(int p, int q, bool *success) {
         return eval(p + 1, q - 1, success);
     }
     // 第三种情况： 一元操作符表达式
-    else if (tokens[p].type == '!' || tokens[p].type == TK_NEG) {
+    else if (tokens[p].type == '!' || tokens[p].type == TK_NEG || tokens[p].type == TK_DEREF) {
         uint32_t val = eval(p + 1, q, success);
         if (!*success) return 0;
         
         switch (tokens[p].type) {
             case '!':     return !val;          // 逻辑非
             case TK_NEG:   return -val;         // 取负
+			case TK_DEREF: return paddr_read(val, 4);
             default:      assert(0); return 0;
         }
     }
