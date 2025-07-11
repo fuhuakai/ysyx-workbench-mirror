@@ -261,7 +261,7 @@ uint32_t eval(int p, int q, bool *success) {
                 return value;
             }
                 
-            case TK_REG: {  // 寄存器
+         /*   case TK_REG: {  // 寄存器
 				const char *reg_name = tokens[p].str;
 			    *success = true;    
 
@@ -295,7 +295,7 @@ uint32_t eval(int p, int q, bool *success) {
 			}
 			printf("\n");
 		return 0;
-        }        
+        }        */
 
             default:
                 *success = false;

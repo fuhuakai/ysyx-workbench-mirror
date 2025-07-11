@@ -140,7 +140,7 @@ static int cmd_p(char *args){
 	bool *success = false;
 	int i;
 	i = expr(args, success);//表达式求值函数，位于expr.c
-	if (!success){
+	if (success){
 		printf("%d\n", i);
 	}
 	return 0;
