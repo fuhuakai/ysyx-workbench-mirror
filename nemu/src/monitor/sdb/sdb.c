@@ -19,6 +19,7 @@
 #include <readline/history.h>
 #include "sdb.h"
 #include <memory/paddr.h>
+#include "watchpoint.h"
 
 static int is_batch_mode = false;
 
@@ -95,7 +96,13 @@ static int cmd_info(char *args) {
         isa_reg_display();  // 调用寄存器显示函数，位于/isa/reg.c
         return 0;
     }
-    
+   
+    //处理监视点信息打印命令
+	if (strcmp(subcommand, "w") == 0) {
+        print_wp();  // 调用监视点打印函数，位于watchpoint.c
+        return 0;
+    }
+
     // 处理无效子命令
     fprintf(stderr, "ERROR: Invalid subcommand '%s'. Supported: r\n", subcommand);
     return 1;
@@ -149,6 +156,40 @@ static int cmd_p(char *args){
     return 0;
 }
 
+//设置监视点
+static int cmd_w(char *args) {
+    if (args == NULL || *args == '\0') {
+        printf("Usage: w <expression>\n");
+        return 0;
+    }
+    
+    // 调用监视点设置函数，位于watchpoint.c
+    set_watchpoint(args);
+    return 0;
+}
+
+//删除监视点
+static int cmd_d(char *args){
+    int p;
+    bool key = true;
+    
+    // 解析参数
+    sscanf(args, "%d", &p);
+    
+    // 查找监视点，该函数位于watchpoint.c
+    WP* q = delete_wp(p, &key);
+    
+    if (key){  // 找到监视点
+        printf("Delete watchpoint %d: %s\n", q->NO, q->expr);
+        free_wp(q);  // 释放监视点
+        return 0;
+    } else {  // 未找到
+        printf("No found watchpoint %d\n", p);
+        return 0;
+    }
+    
+    return 0;
+}
 
 static struct {
   const char *name;
@@ -162,6 +203,8 @@ static struct {
   { "info", "Display all informations of regisiters", cmd_info },
   { "x", "Scan The Memory", cmd_x },
   { "p", "Evaluate The Expressions", cmd_p },
+  { "w", "Set Watchpoint", cmd_w},
+  { "d", "Delete The Watchpoint", cmd_d},
 
   /* TODO: Add more commands */
 
