@@ -235,7 +235,7 @@ int dominant_operator(int p, int q) {
             case '/':     curr_priority = 5;  break;// 乘除优先级相同
             case '!':    
             case TK_NEG:
-			case TK_DEREF:curr_priority = 6; break;// 一元操作符优先级最高
+			case TK_DEREF:curr_priority = 7; break;// 一元操作符优先级最高
         }
         
         // 找到优先级最低的操作符
