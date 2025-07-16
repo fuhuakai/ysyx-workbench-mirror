@@ -25,7 +25,7 @@ int is_exit_status_bad();
 
 // 表达式测试函数
 void run_expr_tests() {
-    const char *test_file = "input";
+    const char *test_file = "src/input";
     FILE *fp = fopen(test_file, "r");
     if (!fp) {
         printf("Test file not found: %s\n", test_file);
