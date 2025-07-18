@@ -136,7 +136,7 @@ static int cmd_x(char *args) {
     }
     //扫描内存
 	for (int i = 0; i < step; i++) {
-        printf("0x%08x: 0x%08x\n", address, paddr_read(address, 4));
+        printf("0x%08x: 0x%08x\n", address, paddr_read(address, 4));//paddr_read()位于memory/paddr.c
         address += 4;
     }
     return 0;
