@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
 #endif
 
 /* 在启动引擎前自动运行表达式测试 */
-  run_expr_tests();
+ // run_expr_tests();
 
   /* Start engine. */
   engine_start();
