@@ -107,7 +107,7 @@ static int decode_exec(Decode *s) {
   INSTPAT("0000001 ????? ????? 100 ????? 01100 11", div    , R, R(rd) = (sword_t)src1 / (sword_t)src2);
   INSTPAT("0000001 ????? ????? 110 ????? 01100 11", rem    , R, R(rd) = (sword_t)src1 % (sword_t)src2);
   INSTPAT("0000001 ????? ????? 001 ????? 01100 11", mulh   , R, { int64_t product = (int64_t)(sword_t)src1 * (int64_t)(sword_t)src2;
-																 R(rd) = (word_t)(product >> 32);  });
+																R(rd) = (word_t)(product >> 32);  });
 
 
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
