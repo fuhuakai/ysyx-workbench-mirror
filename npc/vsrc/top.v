@@ -1,19 +1,63 @@
-module top(  
-  input clk,
-  input rst,
-  output reg [15:0] led
-);
-  reg [31:0] count;
-  always @(posedge clk) begin
-    if (rst) begin 
-    	led <= 1; 
-    	count <= 0; 
-    end
-    else begin
-      if (count == 0) 
-      led <= {led[14:0], led[15]}; // 后四位：0001->0010->0100->1000 为1的位亮灯
-      count <= (count >= 5000000 ? 32'b0 : count + 1); // 控制亮灯间隔
-    end
-  end
-endmodule
+`include "template.v"
 
+module top(
+    input  clk,
+    input  rst,
+    output [31:0] pc,        // 指令地址输出
+    input  [31:0] inst,      // 指令输入
+    output        trap       // ebreak触发信号
+);
+
+// PC寄存器
+wire [31:0] next_pc;
+Reg #(32, 32'h80000000) pc_reg(
+    .clk(clk),
+    .rst(rst),
+    .din(next_pc),
+    .dout(pc),
+    .wen(1'b1)
+);
+
+// PC更新逻辑
+assign next_pc = pc + 4;  // 顺序执行
+
+// 译码和执行信号
+wire        rf_wen;
+wire [4:0]  rf_raddr1;
+wire [31:0] rf_rdata1;
+wire [4:0]  rf_waddr;
+wire [31:0] rf_wdata;
+wire [31:0] imm;
+wire        is_ebreak;
+
+// 指令译码单元
+idu idu(
+    .inst(inst),
+    .rs1(rf_raddr1),
+    .rd(rf_waddr),
+    .imm(imm),
+    .wen(rf_wen),
+    .is_ebreak(is_ebreak)
+);
+
+// 寄存器文件
+regs regs(
+    .clk(clk),
+    .rst(rst),
+    .raddr1(rf_raddr1),
+    .rdata1(rf_rdata1),
+    .waddr(rf_waddr),
+    .wdata(rf_wdata),
+    .wen(rf_wen)
+);
+
+// 执行单元
+exu exu(
+    .rdata1(rf_rdata1),
+    .imm(imm),
+    .is_ebreak(is_ebreak),
+    .wdata(rf_wdata),
+    .trap(trap)
+);
+
+endmodule
