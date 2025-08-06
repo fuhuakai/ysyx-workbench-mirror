@@ -26,9 +26,9 @@ run: build/$(TARGET)
 	@./build/$(TARGET)
 
 wave:
-	gtkwave wave.fst &
+	gtkwave wave.vcd &
 
 clean:
-	rm -rf build obj_dir wave.fst
+	rm -rf build obj_dir wave.vcd
 
 .PHONY: all run wave clean

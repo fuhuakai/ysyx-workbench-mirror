@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <vector>
+#include <iomanip>
 
 // 指令存储器
 std::vector<uint32_t> imem;
@@ -29,33 +30,35 @@ int main(int argc, char** argv) {
     Vtop top;
     
     // 创建波形文件
-    VerilatedVcdC waveFst;
-    top.trace(&waveFst, 99);
-    waveFst.open("wave.fst");
+    VerilatedVcdC waveVcd;
+    top.trace(&waveVcd, 99);
+    waveVcd.open("wave.vcd");
     
     // 初始化指令存储器
     // 示例程序:
     //   addi x1, x0, 1   -> 0x00100093
     //   addi x2, x1, 2   -> 0x00208113
+    //   addi x3, x1, 3   -> 0x00308193
     //   ebreak           -> 0x00100073
     imem.push_back(0x00100093);
     imem.push_back(0x00208113);
+    imem.push_back(0x00308193);
     imem.push_back(0x00100073);
     
     // 复位处理
     top.rst = 1;
     top.clk = 0;
     top.eval();
-    waveFst.dump(0);
+    waveVcd.dump(0);
     
     top.clk = 1;
     top.eval();
-    waveFst.dump(1);
+    waveVcd.dump(1);
     
     top.clk = 0;
     top.rst = 0;
     top.eval();
-    waveFst.dump(2);
+    waveVcd.dump(2);
     
     std::cout << "Simulation started" << std::endl;
     
@@ -73,12 +76,12 @@ int main(int argc, char** argv) {
         
         // 评估设计
         top.eval();
-        waveFst.dump(cycle * 2 + 2);
+        waveVcd.dump(cycle * 2 + 2);
         
         // 时钟高电平
         top.clk = 1;
         top.eval();
-        waveFst.dump(cycle * 2 + 3);
+        waveVcd.dump(cycle * 2 + 3);
         
         // 检查ebreak
         if (top.trap) {
@@ -95,7 +98,7 @@ int main(int argc, char** argv) {
     }
     
     // 关闭波形文件
-    waveFst.close();
+    waveVcd.close();
     
     if (ebreak_triggered) {
         std::cout << "Simulation stopped by EBREAK after " << cycle << " cycles" << std::endl;
