@@ -1,3 +1,6 @@
+`ifndef __TEMPLATE_V__
+`define __TEMPLATE_V__
+
 // 触发器模板
 module Reg #(WIDTH = 1, RESET_VAL = 0) (
   input clk,
@@ -67,3 +70,5 @@ module MuxKeyWithDefault #(NR_KEY = 2, KEY_LEN = 1, DATA_LEN = 1) (
 );
   MuxKeyInternal #(NR_KEY, KEY_LEN, DATA_LEN, 1) i0 (out, key, default_out, lut);
 endmodule
+
+`endif

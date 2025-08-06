@@ -40,7 +40,7 @@ idu idu(
     .is_ebreak(is_ebreak)
 );
 
-// 寄存器文件
+// 寄存器
 regs regs(
     .clk(clk),
     .rst(rst),
@@ -53,6 +53,8 @@ regs regs(
 
 // 执行单元
 exu exu(
+    .clk(clk),
+    .rst(rst),
     .rdata1(rf_rdata1),
     .imm(imm),
     .is_ebreak(is_ebreak),
