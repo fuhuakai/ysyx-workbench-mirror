@@ -26,11 +26,9 @@ static size_t itoa(int n, char *buf, int base) {
   size_t index = 0;
   unsigned num = (n < 0) ? (unsigned)-n : (unsigned)n;
   
-  // 处理0的特殊情况
   if (num == 0) {
     buf[index++] = '0';
   } else {
-    // 转换数字（逆序）
     while (num > 0) {
       unsigned digit = num % base;
       buf[index++] = (digit < 10) 
@@ -40,7 +38,6 @@ static size_t itoa(int n, char *buf, int base) {
     }
   }
   
-  // 添加符号
   if (n < 0) {
     buf[index++] = '-';
   }
@@ -48,10 +45,10 @@ static size_t itoa(int n, char *buf, int base) {
   // 终止字符串
   buf[index] = '\0';
   
-  // 反转得到正确顺序
+  // 反转得到正确顺序(1234->4321->1234)
   reverse(buf, index);
   
-  return index; // 返回字符数（不包括终止符）
+  return index;
 }
 
 int printf(const char *fmt, ...) {
@@ -65,18 +62,16 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 int sprintf(char *out, const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
-  char *start = out; // 记录起始位置
+  char *start = out;
   
   while (*fmt) {
-    // 普通字符直接复制
     if (*fmt != '%') {
-      *out++ = *fmt++;
+      *out++ = *fmt++;// 普通字符直接复制
       continue;
     }
     
-    // 处理格式说明符
-    fmt++; // 跳过 '%'
-    if (!*fmt) break; // 格式字符串以%结束
+    fmt++; 
+    if (!*fmt) break; // 如果%后面没有字符，直接退出
     
     switch (*fmt++) {
       case '%': // 转义%
@@ -93,9 +88,9 @@ int sprintf(char *out, const char *fmt, ...) {
         break;
       }
         
-      default: // 未知格式说明符
+      default: 
         *out++ = '%';
-        *out++ = *(fmt - 1);
+        *out++ = *(fmt - 1); // 未知格式符，保留原样
     }
   }
   
