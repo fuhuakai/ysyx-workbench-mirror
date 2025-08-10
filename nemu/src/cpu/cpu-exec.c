@@ -155,7 +155,7 @@ static void print_iringbuf() {
       if (item->pc == fault_pc) {
           printf("  -->  %s\n", item->logbuf);
       } else {
-          printf("      " FMT_WORD ": %s\n", item->pc, item->logbuf);
+          printf("       %s\n", item->logbuf);
       }
   }
 }
