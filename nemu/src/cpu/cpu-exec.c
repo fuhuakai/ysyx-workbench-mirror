@@ -29,15 +29,15 @@
 #define IRINGBUF_SIZE 16
 
 typedef struct {
-    vaddr_t pc;          // 指令PC
-    uint32_t inst;       // 指令二进制
-    char logbuf[128];    // 完整日志行
+    vaddr_t pc;          
+    uint32_t inst;       
+    char logbuf[128];    // 完整日志
 } IRingBufItem;
 
-static IRingBufItem iringbuf[IRINGBUF_SIZE];  // 环形缓冲区
-static int iringbuf_head = 0;                 // 当前写入位置
-static int iringbuf_count = 0;                // 当前指令数
-static vaddr_t fault_pc = 0;                  // 出错指令PC
+static IRingBufItem iringbuf[IRINGBUF_SIZE];  
+static int iringbuf_head = 0;                 
+static int iringbuf_count = 0;               
+static vaddr_t fault_pc = 0;                  
 
 CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
@@ -55,7 +55,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 
 // 更新环形缓冲区
   if (iringbuf_count < IRINGBUF_SIZE) {
-      iringbuf_count++;  // 缓冲区未满时增加计数
+      iringbuf_count++;  
   }
   
   // 写入当前指令信息
@@ -65,7 +65,6 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   strncpy(item->logbuf, _this->logbuf, sizeof(item->logbuf));
   item->logbuf[sizeof(item->logbuf)-1] = '\0';
   
-  // 移动头指针(环形)
   iringbuf_head = (iringbuf_head + 1) % IRINGBUF_SIZE;
 
   // 新增监视点检查
@@ -116,7 +115,7 @@ static void execute(uint64_t n) {
   
    // 检测到错误时记录PC
     if (nemu_state.state == NEMU_ABORT) {
-        fault_pc = s.pc;  // 保存出错指令PC
+        fault_pc = s.pc;  
     } 
 
     if (nemu_state.state != NEMU_RUNNING) break;
@@ -138,7 +137,7 @@ void assert_fail_msg() {
   statistic();
 }
 
-// 打印环形缓冲区函数，标记出错指令
+// 打印环形缓冲区 函数
 static void print_iringbuf() {
   if (iringbuf_count == 0) return;
   
