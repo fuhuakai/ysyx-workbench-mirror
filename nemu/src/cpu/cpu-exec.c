@@ -146,7 +146,7 @@ static void print_iringbuf() {
   int start = (iringbuf_head - iringbuf_count + IRINGBUF_SIZE) % IRINGBUF_SIZE;
   int count = iringbuf_count;
   
-  printf("\nInstruction trace before fault (max %d):\n", IRINGBUF_SIZE);
+  printf("\n       Instruction trace before fault (max %d):\n", IRINGBUF_SIZE);
   for (int i = 0; i < count; i++) {
       int idx = (start + i) % IRINGBUF_SIZE;
       IRingBufItem *item = &iringbuf[idx];
