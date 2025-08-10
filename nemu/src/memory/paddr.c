@@ -54,7 +54,7 @@ void init_mem() {
   IFDEF(CONFIG_MEM_RANDOM, memset(pmem, rand(), CONFIG_MSIZE));
   Log("physical memory area [" FMT_PADDR ", " FMT_PADDR "]", PMEM_LEFT, PMEM_RIGHT);
 
-    // 新增：初始化 mtrace 条件
+
   #ifdef CONFIG_MTRACE
   if (strcmp(CONFIG_MTRACE_COND, "true") != 0) {
     mtrace_always = false;
@@ -64,7 +64,7 @@ void init_mem() {
   #endif
 }
 
-// 新增：简单的条件检查（不依赖 expr_compile）
+
 static inline bool mtrace_cond_met() {
   #ifdef CONFIG_MTRACE
   if (mtrace_always) return true;
@@ -84,12 +84,13 @@ static inline bool mtrace_cond_met() {
   #endif
 }
 
-// 新增：mtrace 输出函数
+// mtrace 输出函数
 static inline void mtrace_log(char type, paddr_t addr, int len, word_t data) {
   #ifdef CONFIG_MTRACE
   if (mtrace_cond_met()) {
-    printf("%c " FMT_PADDR " %d 0x%08x " FMT_WORD "\n", 
-           type, addr, len, data, cpu.pc);
+    printf("[%c] PC: " FMT_WORD " -> MEM: " FMT_PADDR 
+       " (%d bytes) Data: 0x%0*x\n",
+       type, cpu.pc, addr, len, len*2, data);
   }
   #endif
 }
