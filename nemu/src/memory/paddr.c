@@ -88,8 +88,8 @@ static inline bool mtrace_cond_met() {
 static inline void mtrace_log(char type, paddr_t addr, int len, word_t data) {
   #ifdef CONFIG_MTRACE
   if (mtrace_cond_met()) {
-    printf("[%c] PC: " FMT_WORD " -> MEM: " FMT_PADDR 
-       " (%d bytes) Data: 0x%0*x\n",
+    printf("[%c] PC: " FMT_WORD "    MEM: " FMT_PADDR 
+       " (%d bytes) data: 0x%0*x\n",
        type, cpu.pc, addr, len, len*2, data);
   }
   #endif
