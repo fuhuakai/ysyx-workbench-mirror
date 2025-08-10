@@ -26,6 +26,19 @@
  */
 #define MAX_INST_TO_PRINT 10
 
+#define IRINGBUF_SIZE 16
+
+typedef struct {
+    vaddr_t pc;          // 指令PC
+    uint32_t inst;       // 指令二进制
+    char logbuf[128];    // 完整日志行
+} IRingBufItem;
+
+static IRingBufItem iringbuf[IRINGBUF_SIZE];  // 环形缓冲区
+static int iringbuf_head = 0;                 // 当前写入位置
+static int iringbuf_count = 0;                // 当前指令数
+static vaddr_t fault_pc = 0;                  // 出错指令PC
+
 CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
@@ -39,6 +52,21 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #endif
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
+
+// 更新环形缓冲区
+  if (iringbuf_count < IRINGBUF_SIZE) {
+      iringbuf_count++;  // 缓冲区未满时增加计数
+  }
+  
+  // 写入当前指令信息
+  IRingBufItem *item = &iringbuf[iringbuf_head];
+  item->pc = _this->pc;
+  item->inst = _this->isa.inst;
+  strncpy(item->logbuf, _this->logbuf, sizeof(item->logbuf));
+  item->logbuf[sizeof(item->logbuf)-1] = '\0';
+  
+  // 移动头指针(环形)
+  iringbuf_head = (iringbuf_head + 1) % IRINGBUF_SIZE;
 
   // 新增监视点检查
     if (checkWP()) {
@@ -72,6 +100,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   memset(p, ' ', space_len);
   p += space_len;
 
+  //rtfsc注：调用反汇编函数，将二进制指令转换为可读的汇编指令
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst, ilen);
@@ -84,6 +113,12 @@ static void execute(uint64_t n) {
     exec_once(&s, cpu.pc);
     g_nr_guest_inst ++;
     trace_and_difftest(&s, cpu.pc);
+  
+   // 检测到错误时记录PC
+    if (nemu_state.state == NEMU_ABORT) {
+        fault_pc = s.pc;  // 保存出错指令PC
+    } 
+
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
   }
@@ -103,6 +138,28 @@ void assert_fail_msg() {
   statistic();
 }
 
+// 打印环形缓冲区函数，标记出错指令
+static void print_iringbuf() {
+  if (iringbuf_count == 0) return;
+  
+  // 计算起始位置(最旧的指令)
+  int start = (iringbuf_head - iringbuf_count + IRINGBUF_SIZE) % IRINGBUF_SIZE;
+  int count = iringbuf_count;
+  
+  printf("\nInstruction trace before fault (max %d):\n", IRINGBUF_SIZE);
+  for (int i = 0; i < count; i++) {
+      int idx = (start + i) % IRINGBUF_SIZE;
+      IRingBufItem *item = &iringbuf[idx];
+      
+      // 标记错误指令
+      if (item->pc == fault_pc) {
+          printf("  --> " FMT_WORD ": %s\n", item->pc, item->logbuf);
+      } else {
+          printf("      " FMT_WORD ": %s\n", item->pc, item->logbuf);
+      }
+  }
+}
+
 /* Simulate how the CPU works. */
 void cpu_exec(uint64_t n) {
   g_print_step = (n < MAX_INST_TO_PRINT);
@@ -116,6 +173,11 @@ void cpu_exec(uint64_t n) {
   uint64_t timer_start = get_time();
 
   execute(n);
+
+  // 出错时打印环形缓冲区
+  if (nemu_state.state == NEMU_ABORT && fault_pc != 0) {
+      print_iringbuf();
+  }
 
   uint64_t timer_end = get_time();
   g_timer += timer_end - timer_start;
@@ -133,3 +195,4 @@ void cpu_exec(uint64_t n) {
     case NEMU_QUIT: statistic();
   }
 }
+
