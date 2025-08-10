@@ -69,7 +69,7 @@ static inline bool mtrace_cond_met() {
   #ifdef CONFIG_MTRACE
   if (mtrace_always) return true;
   
-  // 简单的条件检查逻辑（只支持 "pc == 0x8xxxxxxx" ）
+  // 简单的条件检查（只支持 "pc == 0x8xxxxxxx" ）
   if (strstr(mtrace_cond_str, "pc == ") != NULL){
     unsigned long target_pc;
     if (sscanf(mtrace_cond_str, "pc == %lx", &target_pc) == 1) {
@@ -89,8 +89,8 @@ static inline void mtrace_log(char type, paddr_t addr, int len, word_t data) {
   #ifdef CONFIG_MTRACE
   if (mtrace_cond_met()) {
     printf("[%c] PC: " FMT_WORD "    MEM: " FMT_PADDR 
-       " (%d bytes) data: 0x%0*x\n",
-       type, cpu.pc, addr, len, len*2, data);
+       " (%d bytes) data: 0x%08x\n",
+       type, cpu.pc, addr, len, data);
   }
   #endif
 }
