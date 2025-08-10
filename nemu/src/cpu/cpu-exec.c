@@ -153,7 +153,7 @@ static void print_iringbuf() {
       
       // 标记错误指令
       if (item->pc == fault_pc) {
-          printf("  --> " FMT_WORD ": %s\n", item->pc, item->logbuf);
+          printf("  -->  %s\n", item->logbuf);
       } else {
           printf("      " FMT_WORD ": %s\n", item->pc, item->logbuf);
       }
