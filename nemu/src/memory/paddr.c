@@ -24,7 +24,6 @@ static uint8_t *pmem = NULL;
 static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
 #endif
 
-// 新增：mtrace 条件状态
 #ifdef CONFIG_MTRACE
 static bool mtrace_always = true;
 static char mtrace_cond_str[256] = "true";
@@ -70,8 +69,7 @@ static inline bool mtrace_cond_met() {
   #ifdef CONFIG_MTRACE
   if (mtrace_always) return true;
   
-  // 这里添加简单的条件检查逻辑
-  // 示例：只支持 "pc == 0x80000000" 这种简单条件
+  // 简单的条件检查逻辑（只支持 "pc == 0x8xxxxxxx" ）
   if (strstr(mtrace_cond_str, "pc == ") != NULL){
     unsigned long target_pc;
     if (sscanf(mtrace_cond_str, "pc == %lx", &target_pc) == 1) {
