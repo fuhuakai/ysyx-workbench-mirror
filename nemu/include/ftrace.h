@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-//#ifdef CONFIG_FTRACE
+#ifdef CONFIG_FTRACE
 
 void init_ftrace(const char *elf_file);
 const char *ftrace_func_name(uint32_t addr);
@@ -20,6 +20,6 @@ static inline void ftrace_ret(uint32_t pc) {
     (void)pc;
 }
 
-//#endif // CONFIG_FTRACE
+#endif // CONFIG_FTRACE
 
 #endif // __FTRACE_H__
