@@ -48,44 +48,47 @@ void ftrace_ret(uint32_t pc) {
 
 void init_ftrace(const char *elf_file) {
     FILE *fp = fopen(elf_file, "rb");
-    if (!fp) {
-        printf("Ftrace: cannot open ELF file %s\n", elf_file);
-        return;
-    }
-
+    if (!fp) return;
+    
     // 1. 读取ELF头
     uint8_t e_ident[16];
-    if (fread(e_ident, 1, 16, fp) != 16) {
+    size_t bytes_read = fread(e_ident, 1, 16, fp);
+    if (bytes_read != 16) {
         fclose(fp);
         return;
     }
-
-    // 检查ELF魔数
+    
     if (memcmp(e_ident, "\x7F""ELF", 4) != 0) {
-        printf("Ftrace: invalid ELF magic\n");
         fclose(fp);
         return;
     }
-
-    // 检查ELF类别 (32/64位)
-    int is_32bit = (e_ident[4] == 1); // 1=32-bit, 2=64-bit
-
-    // 2. 读取ELF头剩余部分
+    
+    fseek(fp, 32, SEEK_SET);
+    
+    // 2. 读取节头表偏移和数量
     uint32_t e_shoff;
-    uint16_t e_shentsize, e_shnum, e_shstrndx;
+    uint16_t e_shnum, e_shentsize;
     
-    fseek(fp, 32, SEEK_SET); // 定位到e_shoff
-    if (fread(&e_shoff, 4, 1, fp) != 1) goto cleanup;
+    bytes_read = fread(&e_shoff, 4, 1, fp);
+    if (bytes_read != 1) {
+        fclose(fp);
+        return;
+    }
     
-    fseek(fp, 46, SEEK_SET); // e_shentsize
-    if (fread(&e_shentsize, 2, 1, fp) != 1) goto cleanup;
+    fseek(fp, 46, SEEK_SET);
+    bytes_read = fread(&e_shentsize, 2, 1, fp);
+    if (bytes_read != 1) {
+        fclose(fp);
+        return;
+    }
     
-    fseek(fp, 48, SEEK_SET); // e_shnum
-    if (fread(&e_shnum, 2, 1, fp) != 1) goto cleanup;
+    fseek(fp, 48, SEEK_SET);
+    bytes_read = fread(&e_shnum, 2, 1, fp);
+    if (bytes_read != 1) {
+        fclose(fp);
+        return;
+    }
     
-    fseek(fp, 50, SEEK_SET); // e_shstrndx
-    if (fread(&e_shstrndx, 2, 1, fp) != 1) goto cleanup;
-
     // 3. 查找符号表和字符串表
     uint32_t symtab_off = 0, symtab_size = 0;
     uint32_t strtab_off = 0, strtab_size = 0;
@@ -93,89 +96,84 @@ void init_ftrace(const char *elf_file) {
     for (int i = 0; i < e_shnum; i++) {
         fseek(fp, e_shoff + i * e_shentsize, SEEK_SET);
         
-        // 读取节头基本信息
-        uint32_t sh_type, sh_offset, sh_size, sh_link;
-        fseek(fp, 4, SEEK_CUR); // 跳过sh_name
+        uint32_t sh_type;
+        bytes_read = fread(&sh_type, 4, 1, fp);
+        if (bytes_read != 1) continue;
         
-        if (fread(&sh_type, 4, 1, fp) != 1) continue;
-        if (fread(0, 4, 1, fp) != 1) continue; // 跳过sh_flags
-        if (fread(0, 4, 1, fp) != 1) continue; // 跳过sh_addr
-        if (fread(&sh_offset, 4, 1, fp) != 1) continue;
-        if (fread(&sh_size, 4, 1, fp) != 1) continue;
-        if (fread(&sh_link, 4, 1, fp) != 1) continue;
+        fseek(fp, 12, SEEK_CUR);
+        uint32_t sh_offset, sh_size, sh_link;
+        bytes_read = fread(&sh_offset, 4, 1, fp);
+        if (bytes_read != 1) continue;
         
-        if (sh_type == 2) { // SHT_SYMTAB
+        bytes_read = fread(&sh_size, 4, 1, fp);
+        if (bytes_read != 1) continue;
+        
+        bytes_read = fread(&sh_link, 4, 1, fp);
+        if (bytes_read != 1) continue;
+        
+        if (sh_type == 2) {
             symtab_off = sh_offset;
             symtab_size = sh_size;
+            fseek(fp, e_shoff + sh_link * e_shentsize + 16, SEEK_SET);
             
-            // 获取关联的字符串表
-            if (sh_link < e_shnum) {
-                fseek(fp, e_shoff + sh_link * e_shentsize + 16, SEEK_SET);
-                if (fread(&strtab_off, 4, 1, fp) != 1) continue;
-                if (fread(&strtab_size, 4, 1, fp) != 1) continue;
-            }
-            break; // 找到符号表后退出循环
+            bytes_read = fread(&strtab_off, 4, 1, fp);
+            if (bytes_read != 1) continue;
+            
+            bytes_read = fread(&strtab_size, 4, 1, fp);
+            if (bytes_read != 1) continue;
         }
     }
-
+    
     // 4. 读取字符串表
     if (strtab_off && strtab_size) {
         strtab = malloc(strtab_size);
         fseek(fp, strtab_off, SEEK_SET);
-        if (fread(strtab, 1, strtab_size, fp) != strtab_size) {
+        bytes_read = fread(strtab, 1, strtab_size, fp);
+        if (bytes_read != strtab_size) {
             free(strtab);
             strtab = NULL;
         }
     }
-
-    // 5. 处理符号表
+    
+    // 5. 读取并处理符号表
     if (symtab_off && symtab_size) {
-        // 计算符号数量 (32位ELF每个符号16字节)
-        int num_syms = symtab_size / (is_32bit ? 16 : 24);
-        uint8_t *symtab_data = malloc(symtab_size);
+        int num_syms = symtab_size / 16;
+        uint8_t *symtab = malloc(symtab_size);
         fseek(fp, symtab_off, SEEK_SET);
-        if (fread(symtab_data, 1, symtab_size, fp) != symtab_size) {
-            free(symtab_data);
-            goto cleanup;
+        bytes_read = fread(symtab, 1, symtab_size, fp);
+        if (bytes_read != symtab_size) {
+            free(symtab);
+            fclose(fp);
+            return;
         }
-
-        // 第一遍：计算函数符号数量
+        
         sym_count = 0;
         for (int i = 0; i < num_syms; i++) {
-            uint32_t st_name, st_info;
-            memcpy(&st_name, symtab_data + i*16, 4);
-            memcpy(&st_info, symtab_data + i*16 + 12, 1);
-            
-            if ((st_info & 0x0F) == 2) { // STT_FUNC
-                sym_count++;
-            }
+            uint8_t *sym = symtab + i * 16;
+            uint8_t st_info = sym[12];
+            if ((st_info & 0x0F) == 2) sym_count++;
         }
-
-        // 分配内存并存储函数符号
+        
         func_symtab = malloc(sym_count * sizeof(FuncSymbol));
         int idx = 0;
         for (int i = 0; i < num_syms; i++) {
-            uint32_t st_name, st_value, st_size;
-            uint8_t st_info;
-            
-            memcpy(&st_name, symtab_data + i*16, 4);
-            memcpy(&st_value, symtab_data + i*16 + 4, 4);
-            memcpy(&st_size, symtab_data + i*16 + 8, 4);
-            memcpy(&st_info, symtab_data + i*16 + 12, 1);
-
-            if ((st_info & 0x0F) == 2) { // STT_FUNC
+            uint8_t *sym = symtab + i * 16;
+            uint8_t st_info = sym[12];
+            if ((st_info & 0x0F) == 2) {
+                uint32_t st_name, st_value, st_size;
+                memcpy(&st_name, sym, 4);
+                memcpy(&st_value, sym + 4, 4);
+                memcpy(&st_size, sym + 8, 4);
+                
                 func_symtab[idx].addr = st_value;
                 func_symtab[idx].size = st_size;
-                func_symtab[idx].name = (strtab && st_name < strtab_size) ? 
-                                        (strtab + st_name) : "???";
+                func_symtab[idx].name = strtab + st_name;
                 idx++;
             }
         }
-        
-        free(symtab_data);
+        free(symtab);
     }
-
-cleanup:
+    
     fclose(fp);
     printf("Ftrace: loaded %d functions from %s\n", sym_count, elf_file);
 }
