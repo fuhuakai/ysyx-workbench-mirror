@@ -27,7 +27,7 @@ $(REPO_MAKEFILE):
 
 SPIKE = $(REPO_BUILD_PATH)/spike
 $(SPIKE): $(REPO_MAKEFILE)
-	CFLAGS="-fvisibility=hidden" CXXFLAGS="-fvisibility=hidden" $(MAKE) -C $(^D) -Wno-ignored-attributes
+	CFLAGS="-fvisibility=hidden" CXXFLAGS="-fvisibility=hidden" $(MAKE) -C $(^D)
 
 BUILD_DIR = ./build
 $(shell mkdir -p $(BUILD_DIR))
@@ -44,7 +44,7 @@ SRCS = difftest.cc
 
 $(BINARY): $(SPIKE) $(SRCS)
 	g++ -std=c++17 -O2 -shared -fPIC -fvisibility=hidden $(INC_PATH) $(SRCS) $(INC_LIBS) -o $@
-
+	-Wno-ignored-attributes
 clean:
 	rm -rf $(BUILD_DIR)
 
