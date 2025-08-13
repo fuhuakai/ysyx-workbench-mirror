@@ -33,7 +33,7 @@ const char *ftrace_func_name(uint32_t addr) {
 
 void ftrace_call(uint32_t pc, uint32_t target) {
     if (call_stack_top < CALL_STACK_DEPTH - 1) {
-        call_stack[++call_stack_top] = pc + 4;
+        call_stack[++call_stack_top] = pc + 8;
     }
     printf("[FTRACE] pc=0x%08x Call: 0x%08x -> %s\n", pc, target, ftrace_func_name(target));
 }
