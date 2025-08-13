@@ -42,9 +42,10 @@ NAME = $(GUEST_ISA)-spike-so
 BINARY = $(BUILD_DIR)/$(NAME)
 SRCS = difftest.cc
 
+#添加一行忽略警告
 $(BINARY): $(SPIKE) $(SRCS)
 	g++ -std=c++17 -O2 -shared -fPIC -fvisibility=hidden $(INC_PATH) $(SRCS) $(INC_LIBS) -o $@ \
-	-Wno-ignored-attributes
+	-Wno-ignored-attributes  
 clean:
 	rm -rf $(BUILD_DIR)
 
