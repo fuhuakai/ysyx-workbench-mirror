@@ -35,14 +35,14 @@ void ftrace_call(uint32_t pc, uint32_t target) {
     if (call_stack_top < CALL_STACK_DEPTH - 1) {
         call_stack[++call_stack_top] = pc + 4;
     }
-    printf("[FTRACE] Call: 0x%08x -> %s\n", target, ftrace_func_name(target));
+    printf("[FTRACE] Call: pc=0x%08x 0x%08x -> %s\n", pc, target, ftrace_func_name(target));
 }
 
 void ftrace_ret(uint32_t pc) {
     if (call_stack_top >= 0) {
         uint32_t ret_addr = call_stack[call_stack_top--];
         const char *func_name = ftrace_func_name(pc);
-        printf("[FTRACE] Ret:  %s -> 0x%08x\n", func_name, ret_addr);
+        printf("[FTRACE] Ret:  pc=0x%08x %s -> 0x%08x\n", pc, func_name, ret_addr);
     }
 }
 
