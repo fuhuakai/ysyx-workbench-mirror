@@ -1,5 +1,5 @@
 #include <common.h>
-#include <generated/autoconf.h>
+#include <generated/autoconf.h>//必须包含配置宏，否则会因为识别不到CONFIG-FTRACE而直接跳过函数实现！！
 #include <ftrace.h>
 #include <stdio.h>
 #include <stdlib.h>
