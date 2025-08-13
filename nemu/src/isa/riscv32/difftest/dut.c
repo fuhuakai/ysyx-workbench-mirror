@@ -18,7 +18,7 @@
 #include "../local-include/reg.h"
 
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
-    /*int reg_num = ARRLEN(cpu.gpr);
+    int reg_num = ARRLEN(cpu.gpr);
     bool match = true;
     
     for (int i = 0; i < reg_num; i++) {
@@ -35,8 +35,7 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
         match = false;
     }
     
-    return match;*/
-    return false;
+    return match;
 }
 
 void isa_difftest_attach() {
