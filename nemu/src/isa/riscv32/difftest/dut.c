@@ -18,16 +18,24 @@
 #include "../local-include/reg.h"
 
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
-  int reg_num = ARRLEN(cpu.gpr);
-  for (int i = 0; i < reg_num; i++) {
-    if (ref_r->gpr[i] != cpu.gpr[i]) {
-      return false;
+    int reg_num = ARRLEN(cpu.gpr);
+    bool match = true;
+    
+    for (int i = 0; i < reg_num; i++) {
+        if (ref_r->gpr[i] != cpu.gpr[i]) {
+            printf("difftest fault: gpr[%d] (ref: 0x%08x != dut: 0x%08x) at PC=0x%08x\n", 
+                   i, ref_r->gpr[i], cpu.gpr[i], pc);
+            match = false;
+        }
     }
-  }
-  if (ref_r->pc != cpu.pc) {
-    return false;
-  }
-  return true;
+    
+    if (ref_r->pc != cpu.pc) {
+        printf("difftest fault: PC (ref: 0x%08x != dut: 0x%08x) at PC=0x%08x\n", 
+               ref_r->pc, cpu.pc, pc);
+        match = false;
+    }
+    
+    return match;
 }
 
 void isa_difftest_attach() {
