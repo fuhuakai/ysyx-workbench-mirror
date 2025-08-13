@@ -37,33 +37,24 @@ void ftrace_call(uint32_t pc, uint32_t target) {
     if (call_stack_top < CALL_STACK_DEPTH - 1) {
         call_stack[++call_stack_top] = pc + 4;
     }
-    
-    // 获取目标函数名
     const char *target_name = ftrace_func_name(target);
     
-    // 打印调用信息，使用缩进表示调用深度
     printf("0x%08x: ", pc);
     for (int i = 0; i < call_depth; i++) {
         printf("  "); // 每层缩进两个空格
     }
     printf("call [%s@0x%08x]\n", target_name, target);
-    
-    // 增加调用深度
     call_depth++;
 }
 
 void ftrace_ret(uint32_t pc) {
     if (call_stack_top >= 0) {
-        // 先减少调用深度（因为当前在返回的函数内）
         call_depth--;
-        
-        
         const char *func_name = ftrace_func_name(pc);
         
-        // 打印返回信息，使用缩进表示调用深度
         printf("0x%08x: ", pc);
         for (int i = 0; i < call_depth; i++) {
-            printf("  "); // 每层缩进两个空格
+            printf("  "); 
         }
         printf("ret  [%s]\n", func_name);
     }
