@@ -31,35 +31,20 @@ const char *ftrace_func_name(uint32_t addr) {
     return "???";
 }
 
-static int call_depth = 0;
-
 void ftrace_call(uint32_t pc, uint32_t target) {
     if (call_stack_top < CALL_STACK_DEPTH - 1) {
         call_stack[++call_stack_top] = pc + 4;
     }
-    const char *target_name = ftrace_func_name(target);
-    
-    printf("0x%08x: ", pc);
-    for (int i = 0; i < call_depth; i++) {
-        printf("  "); // 每层缩进两个空格
-    }
-    printf("call [%s@0x%08x]\n", target_name, target);
-    call_depth++;
+    printf("[FTRACE] Call: 0x%08x -> %s\n", target, ftrace_func_name(target));
 }
 
 void ftrace_ret(uint32_t pc) {
     if (call_stack_top >= 0) {
-        call_depth--;
+        uint32_t ret_addr = call_stack[call_stack_top--];
         const char *func_name = ftrace_func_name(pc);
-        
-        printf("0x%08x: ", pc);
-        for (int i = 0; i < call_depth; i++) {
-            printf("  "); 
-        }
-        printf("ret  [%s]\n", func_name);
+        printf("[FTRACE] Ret:  %s -> 0x%08x\n", func_name, ret_addr);
     }
 }
-
 
 void init_ftrace(const char *elf_file) {
     FILE *fp = fopen(elf_file, "rb");
