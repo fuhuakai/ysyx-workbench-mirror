@@ -31,20 +31,44 @@ const char *ftrace_func_name(uint32_t addr) {
     return "???";
 }
 
+static int call_depth = 0;
+
 void ftrace_call(uint32_t pc, uint32_t target) {
     if (call_stack_top < CALL_STACK_DEPTH - 1) {
         call_stack[++call_stack_top] = pc + 4;
     }
-    printf("[FTRACE] pc=0x%08x Call: 0x%08x -> %s\n", pc, target, ftrace_func_name(target));
+    
+    // 获取目标函数名
+    const char *target_name = ftrace_func_name(target);
+    
+    // 打印调用信息，使用缩进表示调用深度
+    printf("0x%08x: ", pc);
+    for (int i = 0; i < call_depth; i++) {
+        printf("  "); // 每层缩进两个空格
+    }
+    printf("call [%s@0x%08x]\n", target_name, target);
+    
+    // 增加调用深度
+    call_depth++;
 }
 
 void ftrace_ret(uint32_t pc) {
     if (call_stack_top >= 0) {
-        uint32_t ret_addr = call_stack[call_stack_top--];
+        // 先减少调用深度（因为当前在返回的函数内）
+        call_depth--;
+        
+        
         const char *func_name = ftrace_func_name(pc);
-        printf("[FTRACE] pc=0x%08x Ret:  %s -> 0x%08x\n", pc, func_name, ret_addr);
+        
+        // 打印返回信息，使用缩进表示调用深度
+        printf("0x%08x: ", pc);
+        for (int i = 0; i < call_depth; i++) {
+            printf("  "); // 每层缩进两个空格
+        }
+        printf("ret  [%s]\n", func_name);
     }
 }
+
 
 void init_ftrace(const char *elf_file) {
     FILE *fp = fopen(elf_file, "rb");
