@@ -21,6 +21,7 @@ static char *strtab = NULL;
 static uint32_t call_stack[CALL_STACK_DEPTH];
 static int call_stack_top = -1;
 
+//地址——>函数名
 const char *ftrace_func_name(uint32_t addr) {
     for (int i = 0; i < sym_count; i++) {
         if (addr >= func_symtab[i].addr && 
@@ -89,7 +90,7 @@ void init_ftrace(const char *elf_file) {
     uint32_t e_shoff;
     uint16_t e_shentsize, e_shnum, e_shstrndx;
     
-    fseek(fp, 32, SEEK_SET); // 定位到e_shoff
+    fseek(fp, 32, SEEK_SET); // 定位到e_shoff,SEEK_SET是从文件开头开始计算偏移
     if (fread(&e_shoff, 4, 1, fp) != 1) goto cleanup;
     
     fseek(fp, 46, SEEK_SET); // e_shentsize
@@ -137,7 +138,7 @@ void init_ftrace(const char *elf_file) {
         }
     }
 
-    // 4. 读取字符串表
+    // 4. 读取字符串表(函数名)
     if (strtab_off && strtab_size) {
         strtab = malloc(strtab_size);
         fseek(fp, strtab_off, SEEK_SET);
