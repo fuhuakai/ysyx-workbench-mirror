@@ -12,7 +12,7 @@ CFLAGS    += -I$(AM_HOME)/am/src/platform/nemu/include
 LDSCRIPTS += $(AM_HOME)/scripts/linker.ld
 LDFLAGS   += --defsym=_pmem_start=0x80000000 --defsym=_entry_offset=0x0
 LDFLAGS   += --gc-sections -e _start
-NEMUFLAGS += -l $(shell dirname $(IMAGE).elf)/nemu-log.txt  #开启批处理模式
+NEMUFLAGS += -l $(shell dirname $(IMAGE).elf)/nemu-log.txt -b  #添加 -b 开启批处理模式
 NEMUFLAGS += -e $(IMAGE).elf #指定elf文件
 
 MAINARGS_MAX_LEN = 64
