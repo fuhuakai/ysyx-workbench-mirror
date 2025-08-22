@@ -69,8 +69,6 @@ int printf(const char *fmt, ...) {
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  // 您可以基于已有的 sprintf 实现来创建 vsprintf
-  // 只需要将 sprintf 中的 va_start/va_end 部分移除
   char *start = out;
   
   while (*fmt) {
