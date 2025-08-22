@@ -98,7 +98,11 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         while (*str) *out++ = *str++;
         break;
       }
-        
+      case 'x': {
+        unsigned int n = va_arg(ap, unsigned int);
+        out += itoa(n, out, 16);
+        break;
+      }
       default:
         *out++ = '%';
         *out++ = *(fmt - 1);
