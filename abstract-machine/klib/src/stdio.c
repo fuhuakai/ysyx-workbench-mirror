@@ -52,59 +52,11 @@ static size_t itoa(int n, char *buf, int base) {
 }
 
 int printf(const char *fmt, ...) {
-  char buf[256]; // 适当大小的缓冲区
-  va_list args;
-  va_start(args, fmt);
-  
-  // 使用 vsprintf 格式化字符串到缓冲区
-  int len = vsprintf(buf, fmt, args);
-  va_end(args);
-  
-  // 逐个字符输出
-  for (int i = 0; i < len; i++) {
-    putch(buf[i]);
-  }
-  
-  return len;
+  panic("Not implemented");
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  char *start = out;
-  
-  while (*fmt) {
-    if (*fmt != '%') {
-      *out++ = *fmt++;
-      continue;
-    }
-    
-    fmt++;
-    if (!*fmt) break;
-    
-    switch (*fmt++) {
-      case '%':
-        *out++ = '%';
-        break;
-        
-      case 'd': {
-        int n = va_arg(ap, int);
-        out += itoa(n, out, 10);
-        break;
-      }
-        
-      case 's': {
-        const char *str = va_arg(ap, const char *);
-        while (*str) *out++ = *str++;
-        break;
-      }
-
-      default:
-        *out++ = '%';
-        *out++ = *(fmt - 1);
-    }
-  }
-  
-  *out = '\0';
-  return out - start;
+  panic("Not implemented");
 }
 
 int sprintf(char *out, const char *fmt, ...) {
