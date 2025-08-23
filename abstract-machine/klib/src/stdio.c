@@ -51,51 +51,21 @@ static size_t itoa(int n, char *buf, int base) {
   return index;
 }
 
-// 辅助函数：将数字格式化为指定宽度和填充字符
-static size_t format_number(int n, char *buf, int base, int width, char pad) {
-  size_t len = itoa(n, buf, base);
+int printf(const char *fmt, ...) {
+  char buf[256]; // 适当大小的缓冲区
+  va_list args;
+  va_start(args, fmt);
   
-  // 如果需要填充且当前长度小于指定宽度
-  if (width > 0 && len < width) {
-    // 计算需要填充的字符数
-    int pad_count = width - len;
-    
-    // 将现有内容向右移动
-    for (int i = len; i >= 0; i--) {
-      buf[i + pad_count] = buf[i];
-    }
-    
-    // 在前面添加填充字符
-    for (int i = 0; i < pad_count; i++) {
-      buf[i] = pad;
-    }
-    
-    len += pad_count;
+  // 使用 vsprintf 格式化字符串到缓冲区
+  int len = vsprintf(buf, fmt, args);
+  va_end(args);
+  
+  // 逐个字符输出
+  for (int i = 0; i < len; i++) {
+    putch(buf[i]);
   }
   
   return len;
-}
-
-// 解析格式说明符中的宽度和填充选项
-static int parse_format(const char **fmt_ptr, int *width, char *pad) {
-  const char *fmt = *fmt_ptr;
-  *width = 0;
-  *pad = ' ';
-  
-  // 检查填充字符（0 或空格）
-  if (*fmt == '0') {
-    *pad = '0';
-    fmt++;
-  }
-  
-  // 解析宽度数字
-  while (*fmt >= '0' && *fmt <= '9') {
-    *width = *width * 10 + (*fmt - '0');
-    fmt++;
-  }
-  
-  *fmt_ptr = fmt;
-  return *fmt; // 返回格式字符
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
@@ -110,68 +80,37 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     fmt++;
     if (!*fmt) break;
     
-    // 解析格式说明符
-    int width = 0;
-    char pad = ' ';
-    char format_char = parse_format(&fmt, &width, &pad);
-    
-    switch (format_char) {
+    switch (*fmt++) {
       case '%':
         *out++ = '%';
         break;
         
       case 'd': {
         int n = va_arg(ap, int);
-        out += format_number(n, out, 10, width, pad);
+        out += itoa(n, out, 10);
         break;
       }
         
       case 's': {
         const char *str = va_arg(ap, const char *);
-        // 处理字符串宽度（右对齐，左侧填充空格）
-        int len = 0;
-        const char *p = str;
-        while (*p++) len++;
-        
-        if (width > 0 && len < width) {
-          for (int i = 0; i < width - len; i++) {
-            *out++ = ' ';
-          }
-        }
-        
         while (*str) *out++ = *str++;
         break;
       }
-        
+      
       case 'c': {
         int ch = va_arg(ap, int);
-        *out++ = (char)ch;
+        *out++ = ch;
         break;
       }
-        
+
       default:
-        // 输出未知格式说明符
         *out++ = '%';
-        *out++ = format_char;
+        *out++ = *(fmt - 1);
     }
   }
   
   *out = '\0';
   return out - start;
-}
-
-int printf(const char *fmt, ...) {
-  char buf[256];
-  va_list args;
-  va_start(args, fmt);
-  int len = vsprintf(buf, fmt, args);
-  va_end(args);
-  
-  for (int i = 0; i < len; i++) {
-    putch(buf[i]);
-  }
-  
-  return len;
 }
 
 int sprintf(char *out, const char *fmt, ...) {
