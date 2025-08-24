@@ -105,7 +105,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 
       default:
         *out++ = '%';
-        *out++ = *(fmt - 1);
+        *out++ = *(fmt );
     }
   }
   
@@ -144,7 +144,7 @@ int sprintf(char *out, const char *fmt, ...) {
         
       default: 
         *out++ = '%';
-        *out++ = *(fmt ); // 未知格式符，保留原样
+        *out++ = *(fmt - 1); // 未知格式符，保留原样
     }
   }
   
