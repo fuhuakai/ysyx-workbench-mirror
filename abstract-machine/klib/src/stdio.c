@@ -105,7 +105,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 
       default:
         *out++ = '%';
-        *out++ = *(fmt );
+        *out++ = *(fmt - 1);
     }
   }
   
