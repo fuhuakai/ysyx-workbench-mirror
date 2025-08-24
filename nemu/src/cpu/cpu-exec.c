@@ -26,6 +26,7 @@
  */
 #define MAX_INST_TO_PRINT 10
 
+#ifdef CONFIG_ITRACE
 #define IRINGBUF_SIZE 16
 
 typedef struct {
@@ -36,7 +37,9 @@ typedef struct {
 
 static IRingBufItem iringbuf[IRINGBUF_SIZE];  
 static int iringbuf_head = 0;                 
-static int iringbuf_count = 0;               
+static int iringbuf_count = 0;         
+#endif
+
 static vaddr_t fault_pc = 0;                  
 
 CPU_state cpu = {};
@@ -54,6 +57,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 
 // 更新环形缓冲区
+#ifdef CONFIG_ITRACE
   if (iringbuf_count < IRINGBUF_SIZE) {
       iringbuf_count++;  
   }
@@ -66,6 +70,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   item->logbuf[sizeof(item->logbuf)-1] = '\0';
   
   iringbuf_head = (iringbuf_head + 1) % IRINGBUF_SIZE;
+#endif
 
   // 新增监视点检查
     if (checkWP()) {
@@ -138,6 +143,7 @@ void assert_fail_msg() {
 }
 
 // 打印环形缓冲区 函数
+#ifdef CONFIG_ITRACE
 static void print_iringbuf() {
   if (iringbuf_count == 0) return;
   
@@ -158,6 +164,7 @@ static void print_iringbuf() {
       }
   }
 }
+#endif
 
 /* Simulate how the CPU works. */
 void cpu_exec(uint64_t n) {
@@ -174,9 +181,11 @@ void cpu_exec(uint64_t n) {
   execute(n);
 
   // 出错时打印环形缓冲区
+  #ifdef CONFIG_ITRACE
   if (nemu_state.state == NEMU_ABORT && fault_pc != 0) {
       print_iringbuf();
   }
+  #endif
 
   uint64_t timer_end = get_time();
   g_timer += timer_end - timer_start;
