@@ -47,9 +47,9 @@ static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_
     case TYPE_I: src1R();          immI(); break;
     case TYPE_U:                   immU(); break;
     case TYPE_S: src1R(); src2R(); immS(); break;
-	case TYPE_J:                   immJ(); break;
-	case TYPE_B: src1R(); src2R(); immB(); break;
-	case TYPE_R: src1R(); src2R();	       break;
+	  case TYPE_J:                   immJ(); break;
+	  case TYPE_B: src1R(); src2R(); immB(); break;
+	  case TYPE_R: src1R(); src2R();	       break;
     case TYPE_N: break;
     default: panic("unsupported type = %d", type);
   }
@@ -125,7 +125,9 @@ static int decode_exec(Decode *s) {
   INSTPAT("0000001 ????? ????? 100 ????? 01100 11", div    , R, R(rd) = (sword_t)src1 / (sword_t)src2);
   INSTPAT("0000001 ????? ????? 110 ????? 01100 11", rem    , R, R(rd) = (sword_t)src1 % (sword_t)src2);
   INSTPAT("0000001 ????? ????? 001 ????? 01100 11", mulh   , R, int64_t product = (int64_t)(sword_t)src1 * (int64_t)(sword_t)src2;
-																R(rd) = (word_t)(product >> 32) );
+																                                R(rd) = (word_t)(product >> 32) );
+  INSTPAT("0000001 ????? ????? 011 ????? 01100 11", mulhu  , R, uint64_t product = (uint64_t)src1 * (uint64_t)src2;
+                                                                R(rd) = (word_t)(product >> 32) );
   INSTPAT("0000001 ????? ????? 101 ????? 01100 11", divu   , R, R(rd) = src1 / src2);
   INSTPAT("0000001 ????? ????? 111 ????? 01100 11", remu   , R, if (src2 == 0) R(rd) = src1; else R(rd) = src1 % src2);
   INSTPAT("0100000 ????? ????? 101 ????? 01100 11", sra    , R, R(rd) = (sword_t)src1 >> (src2 & 0x1F));
