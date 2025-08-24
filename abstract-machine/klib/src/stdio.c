@@ -52,7 +52,7 @@ static size_t itoa(int n, char *buf, int base) {
 }
 
 int printf(const char *fmt, ...) {
-  char buf[256]; // 适当大小的缓冲区
+  char buf[256]; 
   va_list args;
   va_start(args, fmt);
   
@@ -144,7 +144,7 @@ int sprintf(char *out, const char *fmt, ...) {
         
       default: 
         *out++ = '%';
-        *out++ = *(fmt - 1); // 未知格式符，保留原样
+        *out++ = *(fmt ); // 未知格式符，保留原样
     }
   }
   
