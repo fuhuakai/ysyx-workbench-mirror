@@ -5,6 +5,6 @@
 
 void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
   uint32_t key_code = inl(KBD_ADDR);
-  kbd->keydown = (key_code & KEYDOWN_MASK ? true :false);
+  kbd->keydown = (key_code & KEYDOWN_MASK ? true :false);//按位与结果非零证明有按键按下
   kbd->keycode = key_code & ~KEYDOWN_MASK;
 }
