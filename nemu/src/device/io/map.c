@@ -60,7 +60,7 @@ word_t map_read(paddr_t addr, int len, IOMap *map) {
   word_t ret = host_read(map->space + offset, len);
 
   #ifdef CONFIG_DTRACE
-    log_write("DTRACE: device read from %s at addr " FMT_PADDR ", len %d, data " FMT_WORD "\n", map->name, addr, len, ret);
+    printf("DTRACE: device read from %s at addr " FMT_PADDR ", len %d, data " FMT_WORD "\n", map->name, addr, len, ret);
   #endif
 
   return ret;
