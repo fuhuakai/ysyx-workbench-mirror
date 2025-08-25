@@ -2,7 +2,7 @@
 #include <nemu.h>
 
 void __am_timer_init() {
-  outl(RTC_ADDR , 0);
+  outl(RTC_ADDR , 0);//inl和outl是读写端口的函数，位于am/src/$ISA/$ISA.h
   outl(RTC_ADDR + 4 , 0);
 }
 

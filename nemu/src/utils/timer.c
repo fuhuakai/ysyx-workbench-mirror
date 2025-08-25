@@ -28,7 +28,7 @@ static uint64_t get_time_internal() {
   uint64_t us = io_read(AM_TIMER_UPTIME).us;
 #elif defined(CONFIG_TIMER_GETTIMEOFDAY)
   struct timeval now;
-  gettimeofday(&now, NULL);
+  gettimeofday(&now, NULL);//获取当前准确到微秒级时间的系统函数
   uint64_t us = now.tv_sec * 1000000 + now.tv_usec;
 #else
   struct timespec now;
