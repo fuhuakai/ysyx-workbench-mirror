@@ -74,7 +74,7 @@ void map_write(paddr_t addr, int len, word_t data, IOMap *map) {
   invoke_callback(map->callback, offset, len, true);
 
   #ifdef CONFIG_DTRACE
-    log_write("DTRACE: device write to %s at addr " FMT_PADDR ", len %d, data " FMT_WORD "\n", map->name, addr, len, data);
+    printf("DTRACE: device write to %s at addr " FMT_PADDR ", len %d, data " FMT_WORD "\n", map->name, addr, len, data);
   #endif
 
 }
