@@ -18,10 +18,11 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   };
 }
 
+//写入绘图信息
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-  uint32_t size = inl(VGACTL_ADDR);
-  int vga_w = size >> 16;
-  int vga_h = size & 0xffff;
+  uint32_t width_height = inl(VGACTL_ADDR);
+  int vga_w = width_height >> 16;
+  int vga_h = width_height & 0xffff;
 
   int x = ctl->x, y = ctl->y;
   int w = ctl->w, h = ctl->h;
