@@ -39,7 +39,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
       if (col >= vga_w) {
         break;
       }
-      fb[row * vga_w + col] = pixels[i*w + j];
+      fb[row * vga_w + col] = pixels[i*w + j];//***相对坐标和绝对坐标的转换
     }
   }
   
