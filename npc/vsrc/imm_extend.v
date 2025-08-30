@@ -1,4 +1,4 @@
-`include "/home/uae/ysyx/ysyx-workbench/npc/vsrc/defines.v"
+`include "/home/fuhuakai/ysyx-workbench/npc/vsrc/defines.v"
 
 module RISB_type(
     input  wire [4:0]       rs2,

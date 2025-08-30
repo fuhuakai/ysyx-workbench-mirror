@@ -1,7 +1,7 @@
 #include "../include/difftest.h"
 #include <dlfcn.h>
 #include "Vrv32.h"
-
+#include "Vrv32___024root.h"
 
 /********extern functions or variables********/
 extern Vrv32 *top;
@@ -11,7 +11,7 @@ extern uint8_t* guest_to_host(paddr_t paddr);
 
 #ifdef CONFIG_DIFFTEST
 
-#define top_regs top->rv32__DOT__register_file_inst__DOT__regs
+#define top_regs top->rootp->rv32__DOT__register_file_inst__DOT__regs
 
 void (*ref_difftest_memcpy)(paddr_t addr, void *buf, size_t n, bool direction) = NULL;
 void (*ref_difftest_regcpy)(void *dut, bool direction) = NULL;
@@ -27,7 +27,7 @@ const char *ref_regs[] = {
 
 static void init_cpu_state(CPU_state *cpu)
 {
-    cpu->pc = top->rv32__DOT__pc;
+    cpu->pc = top->rootp->rv32__DOT__pc;
     for(int i = 0; i < 32; i++)
         cpu->gpr[i] = top_regs[i];
 }

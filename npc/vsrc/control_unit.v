@@ -1,5 +1,4 @@
-`include "/home/uae/ysyx/ysyx-workbench/npc/vsrc/defines.v"
-
+`include "/home/fuhuakai/ysyx-workbench/npc/vsrc/defines.v"
 module control_unit(
     input  wire [`RegBus]   inst,
     output wire [4:0]       rd_11_7,
