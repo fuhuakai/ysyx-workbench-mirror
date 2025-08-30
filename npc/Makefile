@@ -64,7 +64,8 @@ run-env: $(BINARY) $(DIFF_REF_SO)
 
 .PHONY:run
 run: run-env
-	$(NEMU_EXEC)
+		mkdir -p ./log
+		$(NEMU_EXEC)
 
 
 .PHONY:build
