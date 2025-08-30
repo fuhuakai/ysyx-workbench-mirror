@@ -23,7 +23,7 @@ typedef struct {
 
 #define Is_FUNC(info)  ((ELF32_ST_TYPE(info)) == STT_FUNC)
 #define MAX_func_size 32               //the max amount of FUNC symbols
-static int func_amount = 0;            //FUNC symbol amount
+static int func_amount = 10000;            //FUNC symbol amount
 static Func_Sym sym_fun_group[MAX_func_size] = {0};
 
 static Elf32_Ehdr ELF_header = {0};     //ELF Header
