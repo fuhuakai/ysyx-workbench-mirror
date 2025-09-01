@@ -51,6 +51,7 @@ VM_USER_CLASSES = \
 	reg \
 	sdb \
 	tb_rv32 \
+	time \
 	trace \
 
 # User .cpp directories (from .cpp's on Verilator command line)
@@ -86,6 +87,8 @@ reg.o: /home/fuhuakai/ysyx-workbench/npc/csrc/reg.cpp
 sdb.o: /home/fuhuakai/ysyx-workbench/npc/csrc/sdb.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 tb_rv32.o: /home/fuhuakai/ysyx-workbench/npc/csrc/tb_rv32.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+time.o: /home/fuhuakai/ysyx-workbench/npc/csrc/time.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 trace.o: /home/fuhuakai/ysyx-workbench/npc/csrc/trace.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
