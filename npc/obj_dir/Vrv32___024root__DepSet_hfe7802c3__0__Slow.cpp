@@ -43,8 +43,8 @@ VL_ATTR_COLD void Vrv32___024root___eval_initial__TOP(Vrv32___024root* vlSelf) {
     vlSelf->rv32__DOT__i5__DOT__i0__DOT__key_list[1U] = 2U;
     vlSelf->rv32__DOT__i5__DOT__i0__DOT__key_list[2U] = 1U;
     vlSelf->rv32__DOT__i5__DOT__i0__DOT__key_list[3U] = 0U;
-    vlSelf->rv32__DOT__i5__DOT__i0__DOT__data_list[0U] = 0xdeadbeafU;
-    vlSelf->rv32__DOT__i5__DOT__i0__DOT__pair_list[0U] = 0x3deadbeafULL;
+    vlSelf->rv32__DOT__i5__DOT__i0__DOT__data_list[0U] = 0xdeadbeefU;
+    vlSelf->rv32__DOT__i5__DOT__i0__DOT__pair_list[0U] = 0x3deadbeefULL;
 }
 
 VL_ATTR_COLD void Vrv32___024root___eval_final(Vrv32___024root* vlSelf) {
@@ -176,7 +176,7 @@ VL_ATTR_COLD void Vrv32___024root___stl_sequent__TOP__0(Vrv32___024root* vlSelf)
                             vlSelf->rv32__DOT__mem_ren = 0U;
                             vlSelf->rv32__DOT__wmask = 0xfU;
                             vlSelf->rv32__DOT__rmask = 0U;
-                            vlSelf->rv32__DOT__m1 = 0U;
+                            vlSelf->rv32__DOT__m1 = 1U;
                             vlSelf->rv32__DOT__m2 = 1U;
                             vlSelf->rv32__DOT__m3 = 1U;
                             vlSelf->rv32__DOT__m4 = 0U;

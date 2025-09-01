@@ -345,7 +345,7 @@ VL_ATTR_COLD void Vrv32___024root__trace_full_sub_0(Vrv32___024root* vlSelf, Ver
     VlWide<3>/*95:0*/ __Vtemp_hdeaaeb44__0;
     VlWide<3>/*95:0*/ __Vtemp_h3751e24b__0;
     VlWide<3>/*95:0*/ __Vtemp_h0807cf62__0;
-    VlWide<5>/*159:0*/ __Vtemp_hcf9f527e__0;
+    VlWide<5>/*159:0*/ __Vtemp_ha9a73541__0;
     // Body
     bufp->fullBit(oldp+1,(vlSelf->rv32__DOT__PC_inst__DOT__i1__DOT__i0__DOT__key_list[0]));
     bufp->fullBit(oldp+2,(vlSelf->rv32__DOT__PC_inst__DOT__i1__DOT__i0__DOT__key_list[1]));
@@ -468,20 +468,20 @@ VL_ATTR_COLD void Vrv32___024root__trace_full_sub_0(Vrv32___024root* vlSelf, Ver
     bufp->fullIData(oldp+89,(vlSelf->rv32__DOT__i4__DOT__i0__DOT__data_list[1]),32);
     bufp->fullIData(oldp+90,(vlSelf->rv32__DOT__i4__DOT__i0__DOT__lut_out),32);
     bufp->fullBit(oldp+91,(vlSelf->rv32__DOT__i4__DOT__i0__DOT__hit));
-    __Vtemp_hcf9f527e__0[0U] = 0xdeadbeafU;
-    __Vtemp_hcf9f527e__0[1U] = (3U | (vlSelf->rv32__DOT__result 
+    __Vtemp_ha9a73541__0[0U] = 0xdeadbeefU;
+    __Vtemp_ha9a73541__0[1U] = (3U | (vlSelf->rv32__DOT__result 
                                       << 2U));
-    __Vtemp_hcf9f527e__0[2U] = (8U | ((vlSelf->rv32__DOT__mem_rdata 
+    __Vtemp_ha9a73541__0[2U] = (8U | ((vlSelf->rv32__DOT__mem_rdata 
                                        << 4U) | (vlSelf->rv32__DOT__result 
                                                  >> 0x1eU)));
-    __Vtemp_hcf9f527e__0[3U] = (0x10U | ((((IData)(4U) 
+    __Vtemp_ha9a73541__0[3U] = (0x10U | ((((IData)(4U) 
                                            + vlSelf->rv32__DOT__pc) 
                                           << 6U) | 
                                          (vlSelf->rv32__DOT__mem_rdata 
                                           >> 0x1cU)));
-    __Vtemp_hcf9f527e__0[4U] = (((IData)(4U) + vlSelf->rv32__DOT__pc) 
+    __Vtemp_ha9a73541__0[4U] = (((IData)(4U) + vlSelf->rv32__DOT__pc) 
                                 >> 0x1aU);
-    bufp->fullWData(oldp+92,(__Vtemp_hcf9f527e__0),136);
+    bufp->fullWData(oldp+92,(__Vtemp_ha9a73541__0),136);
     bufp->fullQData(oldp+97,(vlSelf->rv32__DOT__i5__DOT__i0__DOT__pair_list[0]),34);
     bufp->fullQData(oldp+99,(vlSelf->rv32__DOT__i5__DOT__i0__DOT__pair_list[1]),34);
     bufp->fullQData(oldp+101,(vlSelf->rv32__DOT__i5__DOT__i0__DOT__pair_list[2]),34);

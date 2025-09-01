@@ -195,7 +195,7 @@ module control_unit(
                 m4      = `MUX4_src1;
                 m5      = `MUX5_PCadd4;
             end            
-            `INST_TYPE_JAL: begin
+            `INST_TYPE_JAL: begin  //对正确性存疑：pc+=pc+imm，m1选择不应该是MUX1_Bpc吗？
                 IType   = `INST_J;   
                 aluc    = `ADD;
                 reg_wen = `WEnable;   
@@ -203,7 +203,7 @@ module control_unit(
                 mem_ren = `WDisen;   
                 wmask   = `WWord;          // don't care      
                 rmask   = `LoadW;          // don't care      
-                m1      = `MUX1_NBpc;
+                m1      = `MUX1_Bpc;
                 m2      = `MUX2_result;
                 m3      = `MUX3_imm32;
                 m4      = `MUX4_pc;

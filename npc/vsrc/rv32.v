@@ -171,7 +171,7 @@ module rv32(
       `MUX5_PCadd4, PCadd4,
       `MUX5_memdat, mem_rdata,
       `MUX5_result, result,
-      `MUX5_IDLE,   32'hdeadbeaf}       //uae
+      `MUX5_IDLE,   32'hdeadbeef}       //uae
   );
   
   // ALU module
