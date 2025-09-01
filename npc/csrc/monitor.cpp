@@ -114,7 +114,7 @@ void init_monitor(int argc, char *argv[]) {
     parse_args(argc, argv);
 
     /* Open the log file. */
-    init_log(log_file);
+    //init_log(log_file);
 
 #ifdef CONFIG_FTRACE 
     /* Load the ELF file of the image */
