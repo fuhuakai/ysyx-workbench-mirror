@@ -47,9 +47,7 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
         __Vdlyvset__rv32__DOT__register_file_inst__DOT__regs__v32 = 1U;
         __Vdlyvdim0__rv32__DOT__register_file_inst__DOT__regs__v32 
             = (0x1fU & (vlSelf->rv32__DOT__inst >> 7U));
-        vlSelf->rv32__DOT__pc = ((IData)(vlSelf->clk)
-                                  ? vlSelf->rv32__DOT__PC_inst__DOT__npc
-                                  : vlSelf->rv32__DOT__pc);
+        vlSelf->rv32__DOT__pc = vlSelf->rv32__DOT__PC_inst__DOT__npc;
     }
     if (__Vdlyvset__rv32__DOT__register_file_inst__DOT__regs__v0) {
         vlSelf->rv32__DOT__register_file_inst__DOT__regs[0U] = 0U;
@@ -909,7 +907,7 @@ void Vrv32___024root___eval(Vrv32___024root* vlSelf) {
 #ifdef VL_DEBUG
                     Vrv32___024root___dump_triggers__act(vlSelf);
 #endif
-                    VL_FATAL_MT("/home/fuhuakai/ysyx-workbench/npc/vsrc/rv32.v", 49, "", "Active region did not converge.");
+                    VL_FATAL_MT("/home/fuhuakai/ysyx-workbench/npc/vsrc/rv32.v", 47, "", "Active region did not converge.");
                 }
                 vlSelf->__VactIterCount = ((IData)(1U) 
                                            + vlSelf->__VactIterCount);
@@ -924,7 +922,7 @@ void Vrv32___024root___eval(Vrv32___024root* vlSelf) {
 #ifdef VL_DEBUG
                 Vrv32___024root___dump_triggers__nba(vlSelf);
 #endif
-                VL_FATAL_MT("/home/fuhuakai/ysyx-workbench/npc/vsrc/rv32.v", 49, "", "NBA region did not converge.");
+                VL_FATAL_MT("/home/fuhuakai/ysyx-workbench/npc/vsrc/rv32.v", 47, "", "NBA region did not converge.");
             }
             __VnbaIterCount = ((IData)(1U) + __VnbaIterCount);
             Vrv32___024root___eval_nba(vlSelf);
