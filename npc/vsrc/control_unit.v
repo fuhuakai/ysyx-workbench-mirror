@@ -203,7 +203,7 @@ module control_unit(
                 mem_ren = `WDisen;   
                 wmask   = `WWord;          // don't care      
                 rmask   = `LoadW;          // don't care      
-                m1      = `MUX1_Bpc;
+                m1      = `MUX1_NBpc;
                 m2      = `MUX2_result;
                 m3      = `MUX3_imm32;
                 m4      = `MUX4_pc;
