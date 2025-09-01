@@ -12,6 +12,7 @@ CFLAGS    += -fdata-sections -ffunction-sections
 LDSCRIPTS += $(AM_HOME)/scripts/linker.ld
 LDFLAGS   += --defsym=_pmem_start=0x80000000 --defsym=_entry_offset=0x0
 LDFLAGS   += --gc-sections -e _start
+NPCFLAGS += -b
 
 MAINARGS_MAX_LEN = 64
 MAINARGS_PLACEHOLDER = the_insert-arg_rule_in_Makefile_will_insert_mainargs_here
@@ -28,6 +29,6 @@ image: image-dep
 # 添加 run 目标
 run: insert-arg
 	@echo "Running on NPC..."
-	@make -C $(NPC_HOME) run IMG=$(abspath $(IMAGE).bin)
+	@make -C $(NPC_HOME) run ARGS="$(NPCFLAGS)" IMG=$(abspath $(IMAGE).bin)
 
 .PHONY: insert-arg
