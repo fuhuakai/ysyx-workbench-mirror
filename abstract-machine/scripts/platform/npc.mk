@@ -29,6 +29,6 @@ image: image-dep
 # 添加 run 目标
 run: insert-arg
 	@echo "Running on NPC..."
-	@make -C $(NPC_HOME) run ARGS="$(NPCFLAGS)"IMG=$(abspath $(IMAGE).bin)
+	@make -C $(NPC_HOME) run ARGS="$(NPCFLAGS)" IMG=$(abspath $(IMAGE).bin)
 
 .PHONY: insert-arg
