@@ -7,7 +7,7 @@ module control_unit(
     output wire [2:0]       fun3_14_12,
     output wire [6:0]       fun7_31_25,
     output reg  [`TYPE_BUS] IType,      //inst type
-    output reg  [`AlucBus]  aluc,       //alu operation typp
+    output reg  [`AlucBus]  aluc,       //alu operation type
     output reg              reg_wen,    //RegFile write enable
     output reg              mem_wen,    //mem write enable
     output reg              mem_ren,    //mem read  enable
