@@ -11,8 +11,7 @@ module mem(
     input  wire [`RegBus] raddr,
     input  wire [`RegBus] inst_addr,
     output reg  [`RegBus] rdata,
-    // output reg  [`RegBus] inst_data
-    output wire  [`RegBus] inst_data
+    output wire [`RegBus] inst_data
 );
     
     import "DPI-C" function int  pmem_read(input int raddr);
@@ -20,13 +19,6 @@ module mem(
     import "DPI-C" function void ebreak(input int station, input int inst, input byte unit);
 
     reg  [`RegBus] rdata_temp;
-
-    // always @(posedge clk) begin
-    //     // if(rst == `RST_VAL)
-    //     //     inst_data <= pmem_read_inst(inst_addr);
-    //     // else
-    //         inst_data <= pmem_read_inst(inst_addr);
-    // end
 
     assign inst_data = pmem_read(inst_addr);
 
