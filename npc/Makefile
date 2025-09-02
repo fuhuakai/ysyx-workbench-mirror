@@ -111,9 +111,10 @@ verilate: .stamp.verilate
 #This can be used to check over your sources even if you’re not using Verilator for simulating.
 #----------------------------------------------------------------------------------
 .PHONY:lint
-lint: $(MODULE).v
-	#-lint-only- 告诉 Verilator 进行 lint 但不生成任何仿真输出
-	verilator --lint-only $(MODULE).v
+lint: $(VSRCS)
+		verilator --lint-only -Wall $(VSRCS) -I$(INC_PATH)
+#-lint-only- 告诉 Verilator 进行 lint 但不生成任何仿真输出
+	
 
 
 .PHONY: clean
