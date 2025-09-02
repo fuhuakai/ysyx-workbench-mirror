@@ -16,6 +16,7 @@ static const char mainargs[MAINARGS_MAX_LEN] = TOSTRING(MAINARGS_PLACEHOLDER); /
 void putch(char ch) {
 }
 
+//在halt中加入npc-trap，在npc上运行的AM程序结束时执行ebreak结束仿真
 void halt(int code) {
   npc_trap(code);
 

@@ -14,6 +14,7 @@ extern word_t   reg_str2val(const char *s, bool *success);
 extern uint8_t* guest_to_host(paddr_t paddr);
 extern word_t   host_read(void *addr, int len);
 extern word_t   expr(char *e, bool *success);
+extern NPCState npc_state;
 
 /*********************************************/
 
@@ -25,7 +26,10 @@ static int cmd_c(char *args) {
     cpu_exec(-1);
     return 0;
 }
-static int cmd_q(char *args) {return -1;}
+static int cmd_q(char *args) {
+    npc_state.state = NPC_QUIT;//优雅的退出
+    return -1;}
+
 static int cmd_help(char *args);
 static int cmd_si(char *args);
 static int cmd_info(char *args);
