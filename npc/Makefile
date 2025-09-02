@@ -85,7 +85,6 @@ verilate: .stamp.verilate
 #-cc .v to convert our .v module to C++, 
 #and --exe tb_alu.cpp to tell Verilator which file is our C++ testbench.
 # -Wno-STMTDLY 避免弹出所有warning
-# -Wno-MODDUP 避免“Duplicate declaration”报错
 # --top-module $(MODULE) 确定底层模块，否则会将$(VSRCS)中的第一个文件前缀当成顶层模块
 #----------------------------------------------------------------------------------
 .stamp.verilate: $(VSRCS) $(CSRCS)
