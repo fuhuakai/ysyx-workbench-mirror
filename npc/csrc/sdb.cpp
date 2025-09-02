@@ -56,25 +56,30 @@ static struct {
 #define NR_CMD ARRLEN(cmd_table)
 
 
-static int cmd_si(char *args) 
-{
-    /* extract the first argument */
-    char *buff = strtok(NULL, " ");
-    //The number of instruction to excute.
-    int inst_num = 0;
+//单步执行
+static int cmd_si(char *args){
+	char *step_arg = strtok(NULL, " ");
+	int step_count = 1;
+	if (step_arg == NULL){
+		cpu_exec(1);
+		return 0;
+	}
+	//确认输入参数格式正确
+	if (sscanf(step_arg, "%d", &step_count) != 1){
+		fprintf(stderr, "ERROR:Invalid step count format\n");
+		return 0;
+	}
+	//确认步数为正
+	if (step_count <= 0){
+		fprintf(stderr, "ERROR: Step count must be positive (got %d)\n", step_count);
+		return 0;
+	}
 
-    if (buff == NULL) 
-        /* no argument given */
-        inst_num = 1;
-    else 
-        //extract the number by converting  char* into int
-        sscanf(buff, "%d", &inst_num);
-    
-    _Log(ANSI_FG_BLUE "%d instruction(s) excuted.\n" ANSI_NONE, inst_num);
-    cpu_exec(inst_num);
-    return 0;
+	for(int i =0; i< step_count; i++){
+		cpu_exec(1);
+	}
+	return 0;
 }
-
 
 static int cmd_info(char *args) 
 {
