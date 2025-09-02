@@ -21,7 +21,7 @@ static const char *regs[] = {
 void regs_display() 
 {
     _Log(ANSI_FG_RED "RegName  Hex_Value       Dec_Value\n" ANSI_NONE);
-    _Log(ANSI_FG_YELLOW "$%s\t" ANSI_NONE " 0x%08x\t %010u\n", "pc", 
+    _Log(ANSI_FG_YELLOW "$%s\t" ANSI_NONE " 0x%08x\t %010d\n", "pc", 
          top->rootp->rv32__DOT__pc, top->rootp->rv32__DOT__pc);
     for(int i = 0; i < 32; i++)
     {
