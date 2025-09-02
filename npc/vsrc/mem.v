@@ -28,7 +28,6 @@ module mem(
         end
     end
 
-
     always @(*) begin
         if(mem_ren) begin // 有读数据请求时
             rdata_temp = pmem_read(raddr);
@@ -37,13 +36,11 @@ module mem(
         end
     end
 
-
     // rdata_temp -> rdata
     always @(*) begin
         case (rmask)
             `LoadBU:  rdata = {24'd0, rdata_temp[7:0]};
             `LoadHU:  rdata = {16'd0, rdata_temp[15:0]};
-            // `LoadB:   rdata = {{24{rdata_temp[7]}}, rdata_temp[7:0]};
             `LoadH:   rdata = {{16{rdata_temp[15]}}, rdata_temp[15:0]};
             `LoadW:   rdata = rdata_temp;
             default:  begin

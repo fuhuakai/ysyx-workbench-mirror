@@ -49,20 +49,13 @@ static void execute_once()
 {
     //观察波形图可以发现，执行reset后第一条指令已经执行了1/3，即取指、译码部分已经完成，此时的pc为当前pc，执行剩下的2/3后pc为dnpc
     PCSet.pc = top->rootp->rv32__DOT__pc;  PCSet.inst = top->rootp->rv32__DOT__inst;
-    single_cycle();  //single_cycle();  single_cycle();      // take 3 cycles to excute one instruction
+    single_cycle();  
     PCSet.npc = top->rootp->rv32__DOT__pc;  PCSet.ninst = top->rootp->rv32__DOT__inst;
 
 #ifdef CONFIG_ITRACE
     char *p = logbuf;
     p += snprintf(p, sizeof(logbuf), "0x%08x: 0x%08x ", PCSet.pc, PCSet.inst);
     *p = '\0';
-    // // Log("%s",logbuf);
-    // // Log("%ld, 0x%08x %d", logbuf + sizeof(logbuf) - p, PCSet.pc, 4);
-    // char temp[64] = {0};
-    // uint32_t inst = 0x00000513;
-    // void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
-    // // disassemble(p, logbuf + sizeof(logbuf) - p, PCSet.pc, (uint8_t *)&PCSet.inst, 4);
-    // disassemble(temp, sizeof(temp), 0x8000000c, (uint8_t *)&inst, 4);
 #endif
 
 #ifdef CONFIG_FTRACE

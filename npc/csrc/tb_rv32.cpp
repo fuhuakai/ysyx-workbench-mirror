@@ -15,8 +15,6 @@ VerilatedVcdC* tfp = new VerilatedVcdC(); //导出vcd波形需要加此语句
 Vrv32 *top = new Vrv32("top");
 vluint64_t main_time = 0;  //initial 仿真时间
 
-
-
 /********extern functions or variables********/
 extern char *diff_so_file;
 extern int  difftest_port;
@@ -47,10 +45,7 @@ extern void ebreak(int station, int inst, char unit)
 {
   if(Verilated::gotFinish())
     return;
-    // Log("maintime = %ld, state = %d, pc = 0x%08x, inst = 0x%08x", main_time, npc_state.state, top->rootp->rv32__DOT__pc, top->rootp->rv32__DOT__inst);
 
-  //虽然波形图上inst随pc同时变化，但通过打印二者会发现inst会在pc变化之后才改变（这是因为二者都发生变化了之后才输出至波形图的）
-  //然而，这个延时会导致decode错误，然后调用了 “ebreak(`ABORT, inst);”
   if(main_time >= start_time + 1)   // at the begining (main_time < start_time and before the reset), all regs are zeros
   {
     npc_state.halt_ret = top->rootp->rv32__DOT__register_file_inst__DOT__regs[10]; //a0
@@ -91,7 +86,6 @@ extern int pmem_read(int raddr)
   {
     data = pmem_r(raddr, 4);
     return data; 
-    // return pmem_r((raddr & ~0x3u), 4);
   } 
   else
     return 0xdeadbeaf;
