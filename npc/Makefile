@@ -104,7 +104,7 @@ verilate: .stamp.verilate
 	@touch .stamp.verilate
 
 
-#Note that there is an aditional make lint target, 
+#Note that there is an additional make lint target, 
 #which calls Verilator with --lint-only. 
 #This is useful to quickly parse your Verilog/SystemVerilog source files 
 #and check for problems. 
