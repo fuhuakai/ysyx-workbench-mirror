@@ -26,10 +26,10 @@ $(DIFF_REF_SO):
 
 
 .PHONY:gtkw
-gtkw: uae.gtkw
+gtkw: fhk.gtkw
 	@echo
 	@echo "### WAVES ###"
-	gtkwave uae.gtkw
+	gtkwave fhk.gtkw
 
 
 .PHONY:sim
