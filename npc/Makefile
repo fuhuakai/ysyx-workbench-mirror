@@ -1,14 +1,12 @@
 MODULE=rv32
 CSRCS = $(shell find $(abspath ./csrc) -name "*.cpp")
 VSRCS = $(shell find $(abspath ./vsrc) -name "*.v")
-VSRCS += $(shell find $(abspath ./vsrc/*) -name "*.v")
+#VSRCS += $(shell find $(abspath ./vsrc/*) -name "*.v")
 INC_PATH = $(NPC_HOME)/include/
 LIBS = -lreadline   # link the <readline> lib
 LIBS += -ldl        # link the <dlfcn> lib
 # LIBS += $(shell llvm-config-11 --libs)
 # CXXFLAGS += $(shell llvm-config-11 --cxxflags) -fPIE
-
-
 
 
 # ifdef CONFIG_DIFFTEST
@@ -21,8 +19,6 @@ $(DIFF_REF_SO):
 	$(MAKE) -s -C $(DIFF_REF_PATH) 
 
 # endif
-
-
 
 
 .PHONY:gtkw
@@ -115,7 +111,6 @@ lint: $(VSRCS)
 		verilator --lint-only -Wall $(VSRCS) -I$(INC_PATH)
 #-lint-only- 告诉 Verilator 进行 lint 但不生成任何仿真输出
 	
-
 
 .PHONY: clean
 clean:
