@@ -17,17 +17,17 @@ class Vrv32___024root final : public VerilatedModule {
     struct {
         VL_IN8(clk,0,0);
         VL_IN8(rst,0,0);
-        CData/*2:0*/ rv32__DOT__IType;
+        CData/*2:0*/ rv32__DOT__Inst_type;
         CData/*0:0*/ rv32__DOT__reg_wen;
         CData/*0:0*/ rv32__DOT__mem_wen;
         CData/*0:0*/ rv32__DOT__mem_ren;
         CData/*7:0*/ rv32__DOT__wmask;
         CData/*2:0*/ rv32__DOT__rmask;
-        CData/*0:0*/ rv32__DOT__m1;
-        CData/*0:0*/ rv32__DOT__m2;
-        CData/*0:0*/ rv32__DOT__m3;
-        CData/*0:0*/ rv32__DOT__m4;
-        CData/*1:0*/ rv32__DOT__m5;
+        CData/*0:0*/ rv32__DOT__pc_sel_1;
+        CData/*0:0*/ rv32__DOT__pc_sel_2;
+        CData/*0:0*/ rv32__DOT__alu_sel_2;
+        CData/*0:0*/ rv32__DOT__alu_sel_1;
+        CData/*1:0*/ rv32__DOT__wb_sel;
         CData/*4:0*/ rv32__DOT__aluc;
         CData/*0:0*/ rv32__DOT__PC_inst__DOT____Vcellinp__i1____pinNumber2;
         CData/*0:0*/ rv32__DOT__PC_inst__DOT__i1__DOT__i0__DOT__hit;
