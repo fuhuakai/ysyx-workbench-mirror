@@ -1,4 +1,4 @@
-`include "/home/fuhuakai/ysyx-workbench/npc/vsrc/defines.v"
+`include "defines.v"
 
 module rv32(
   input  wire           clk,

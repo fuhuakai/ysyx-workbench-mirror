@@ -1,4 +1,4 @@
-`include "/home/fuhuakai/ysyx-workbench/npc/vsrc/defines.v"
+`include "defines.v"
 
 module control_unit(
     input  wire [`RegBus]   inst,
