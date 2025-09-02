@@ -1,12 +1,9 @@
 MODULE=rv32
 CSRCS = $(shell find $(abspath ./csrc) -name "*.cpp")
 VSRCS = $(shell find $(abspath ./vsrc) -name "*.v")
-#VSRCS += $(shell find $(abspath ./vsrc/*) -name "*.v")
 INC_PATH = $(NPC_HOME)/include/
 LIBS = -lreadline   # link the <readline> lib
 LIBS += -ldl        # link the <dlfcn> lib
-# LIBS += $(shell llvm-config-11 --libs)
-# CXXFLAGS += $(shell llvm-config-11 --cxxflags) -fPIE
 
 
 # ifdef CONFIG_DIFFTEST
@@ -94,7 +91,7 @@ verilate: .stamp.verilate
 .stamp.verilate: $(VSRCS) $(CSRCS)
 	@echo
 	@echo "### VERILATING ###"
-	verilator -Wno-STMTDLY -Wno-MODDUP --trace --top-module $(MODULE) -cc $(VSRCS) --exe $(CSRCS) -I$(INC_PATH)
+	verilator -Wno-STMTDLY --trace --top-module $(MODULE) -cc $(VSRCS) --exe $(CSRCS) -I$(INC_PATH)
 	@echo "LIBS +=$(LIBS)" >> ./obj_dir/V$(MODULE).mk    # to link readline and dlfcn library
 # @echo "CXXFLAGS +=$(CXXFLAGS)" >> ./obj_dir/V$(MODULE).mk 
 	@touch .stamp.verilate
