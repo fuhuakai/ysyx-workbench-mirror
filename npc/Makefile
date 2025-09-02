@@ -1,7 +1,7 @@
 MODULE=rv32
 CSRCS = $(shell find $(abspath ./csrc) -name "*.cpp")
 VSRCS = $(shell find $(abspath ./vsrc) -name "*.v")
-INC_PATH = $(NPC_HOME)/include/
+INC_PATH = $(NPC_HOME)/include/ $(NPC_HOME)/vsrc/
 LIBS = -lreadline   # link the <readline> lib
 LIBS += -ldl        # link the <dlfcn> lib
 
@@ -90,7 +90,7 @@ verilate: .stamp.verilate
 .stamp.verilate: $(VSRCS) $(CSRCS)
 	@echo
 	@echo "### VERILATING ###"
-	verilator -Wno-STMTDLY --trace --top-module $(MODULE) -cc $(VSRCS) --exe $(CSRCS) -I$(INC_PATH) -I$(NPC_HOME)/vsrc
+	verilator -Wno-STMTDLY --trace --top-module $(MODULE) -cc $(VSRCS) --exe $(CSRCS) -I$(INC_PATH)
 	@echo "LIBS +=$(LIBS)" >> ./obj_dir/V$(MODULE).mk    # to link readline and dlfcn library
 	@touch .stamp.verilate
 
