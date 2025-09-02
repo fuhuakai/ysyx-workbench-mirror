@@ -55,7 +55,7 @@ IMG ?=      #loaded by AM Makefile (npc.mk)
 override ARGS ?= --log=./log/npc-log.txt
 override ARGS += $(ARGS_DIFF)
 BINARY := ./obj_dir/V$(MODULE)
-NEMU_EXEC := $(BINARY) $(ARGS) $(IMG)
+NPC_EXEC := $(BINARY) $(ARGS) $(IMG)
 
 
 .PHONY:run-env
@@ -65,7 +65,7 @@ run-env: $(BINARY) $(DIFF_REF_SO)
 .PHONY:run
 run: run-env
 		mkdir -p ./log
-		$(NEMU_EXEC)
+		$(NPC_EXEC)
 
 
 .PHONY:build
