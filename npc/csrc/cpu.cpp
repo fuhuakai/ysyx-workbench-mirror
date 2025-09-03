@@ -47,7 +47,6 @@ static void statistic() {
 
 static void execute_once() 
 {
-    //观察波形图可以发现，执行reset后第一条指令已经执行了1/3，即取指、译码部分已经完成，此时的pc为当前pc，执行剩下的2/3后pc为dnpc
     PCSet.pc = top->rootp->rv32__DOT__pc;  PCSet.inst = top->rootp->rv32__DOT__inst;
     single_cycle();  
     PCSet.npc = top->rootp->rv32__DOT__pc;  PCSet.ninst = top->rootp->rv32__DOT__inst;
@@ -60,9 +59,9 @@ static void execute_once()
 
 #ifdef CONFIG_FTRACE
   if(PCSet.inst == 0x00008067)  //ret
-    RET_Log(PCSet.pc, PCSet.npc);
+    ftrace_ret(PCSet.pc);
   else if((OPCODE(PCSet.inst)==0b1100111) || (OPCODE(PCSet.inst)== 0b1101111))  //jalr or jal
-    J_Log(PCSet.pc, PCSet.npc);
+    ftrace_call(PCSet.pc, PCSet.npc);
 #endif
 
 #ifdef CONFIG_IRINGBUF 

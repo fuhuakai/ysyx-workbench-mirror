@@ -118,7 +118,11 @@ void init_monitor(int argc, char *argv[]) {
 
 #ifdef CONFIG_FTRACE 
     /* Load the ELF file of the image */
-    load_elf();
+    if (elf_file) {
+    init_ftrace(elf_file);
+  } else {
+    printf("Warning: ftrace requires ELF file (use -e option)\n");
+  }
 #endif
 
     /* Initialize memory. */
