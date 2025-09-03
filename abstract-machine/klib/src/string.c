@@ -74,7 +74,11 @@ void *memmove(void *dst, const void *src, size_t n) {
 }
 
 void *memcpy(void *out, const void *in, size_t n) {
-
+  //不支持内存重叠（如果目标在源后面且重叠，从前往后复制会直接把尚未复制的位给覆盖掉）
+  unsigned char *d = out;
+  const unsigned char *s = in;
+  while (n--) *d++ = *s++;
+  return out;
 }
 
 int memcmp(const void *s1, const void *s2, size_t n) {
