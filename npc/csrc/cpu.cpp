@@ -11,8 +11,8 @@ extern NPCState npc_state;
 extern Vrv32 *top;
 
 #ifdef CONFIG_FTRACE 
-extern void RET_Log(uint32_t pc, uint32_t npc);
-extern void J_Log(uint32_t pc, uint32_t npc);
+extern void ftrace_ret(uint32_t pc);
+extern void ftrace_call(uint32_t pc, uint32_t npc);
 #define OPCODE(inst)  ((inst) & 0x7f)
 #endif
 

@@ -1,14 +1,11 @@
 #include "../include/common.h"
 #include "../include/debug.h"
 
-
 /********extern functions or variables********/
 #ifdef CONFIG_FTRACE 
 extern char *elf_file;
 #endif
 /*********************************************/
-
-
 
 /******************************ftrace******************************/
 #ifdef CONFIG_FTRACE 
@@ -69,14 +66,30 @@ void ftrace_ret(uint32_t pc) {
 
 
 void init_ftrace(const char *elf_file) {
-    FILE *fp = fopen(elf_file, "rb");
+    // 提前声明所有变量
+    FILE *fp = NULL;
+    uint8_t e_ident[16];
+    int is_32bit;
+    uint32_t e_shoff;
+    uint16_t e_shentsize, e_shnum, e_shstrndx;
+    uint32_t symtab_off = 0, symtab_size = 0;
+    uint32_t strtab_off = 0, strtab_size = 0;
+    int i;
+    uint32_t sh_type, sh_offset, sh_size, sh_link;
+    int num_syms;
+    uint8_t *symtab_data = NULL;
+    uint8_t *sym;
+    uint8_t st_info;
+    uint32_t st_name, st_value, st_size;
+    int idx;
+
+    fp = fopen(elf_file, "rb");
     if (!fp) {
         printf("Ftrace: cannot open ELF file %s\n", elf_file);
         return;
     }
 
     // 1. 读取ELF头
-    uint8_t e_ident[16];
     if (fread(e_ident, 1, 16, fp) != 16) {
         fclose(fp);
         return;
@@ -90,12 +103,9 @@ void init_ftrace(const char *elf_file) {
     }
 
     // 检查ELF类别 (32/64位)
-    int is_32bit = (e_ident[4] == 1); // 1=32-bit, 2=64-bit
+    is_32bit = (e_ident[4] == 1); // 1=32-bit, 2=64-bit
 
     // 2. 读取ELF头剩余部分
-    uint32_t e_shoff;
-    uint16_t e_shentsize, e_shnum, e_shstrndx;
-    
     fseek(fp, 32, SEEK_SET); // 定位到e_shoff,SEEK_SET是从文件开头开始计算偏移
     if (fread(&e_shoff, 4, 1, fp) != 1) goto cleanup;
     
@@ -109,14 +119,8 @@ void init_ftrace(const char *elf_file) {
     if (fread(&e_shstrndx, 2, 1, fp) != 1) goto cleanup;
 
     // 3. 查找符号表和字符串表
-    uint32_t symtab_off = 0, symtab_size = 0;
-    uint32_t strtab_off = 0, strtab_size = 0;
-    
-    for (int i = 0; i < e_shnum; i++) {
+    for (i = 0; i < e_shnum; i++) {
         fseek(fp, e_shoff + i * e_shentsize, SEEK_SET);
-        
-        // 读取节头基本信息
-        uint32_t sh_type, sh_offset, sh_size, sh_link;
         
         // 跳过 sh_name (4字节)
         fseek(fp, 4, SEEK_CUR);
@@ -146,7 +150,7 @@ void init_ftrace(const char *elf_file) {
 
     // 4. 读取字符串表(函数名)
     if (strtab_off && strtab_size) {
-        strtab = malloc(strtab_size);
+        strtab = (char *)malloc(strtab_size);
         fseek(fp, strtab_off, SEEK_SET);
         if (fread(strtab, 1, strtab_size, fp) != strtab_size) {
             free(strtab);
@@ -157,8 +161,8 @@ void init_ftrace(const char *elf_file) {
     // 5. 处理符号表
     if (symtab_off && symtab_size) {
         // 计算符号数量 (32位ELF每个符号16字节)
-        int num_syms = symtab_size / (is_32bit ? 16 : 24);
-        uint8_t *symtab_data = malloc(symtab_size);
+        num_syms = symtab_size / (is_32bit ? 16 : 24);
+        symtab_data = (uint8_t *)malloc(symtab_size);
         fseek(fp, symtab_off, SEEK_SET);
         if (fread(symtab_data, 1, symtab_size, fp) != symtab_size) {
             free(symtab_data);
@@ -167,9 +171,9 @@ void init_ftrace(const char *elf_file) {
 
         // 第一遍：计算函数符号数量
         sym_count = 0;
-        for (int i = 0; i < num_syms; i++) {
-            uint8_t *sym = symtab_data + i * (is_32bit ? 16 : 24);
-            uint8_t st_info = sym[12]; // 符号类型信息
+        for (i = 0; i < num_syms; i++) {
+            sym = symtab_data + i * (is_32bit ? 16 : 24);
+            st_info = sym[12]; // 符号类型信息
             
             if ((st_info & 0x0F) == 2) { // STT_FUNC
                 sym_count++;
@@ -177,12 +181,10 @@ void init_ftrace(const char *elf_file) {
         }
 
         // 分配内存并存储函数符号
-        func_symtab = malloc(sym_count * sizeof(FuncSymbol));
-        int idx = 0;
-        for (int i = 0; i < num_syms; i++) {
-            uint8_t *sym = symtab_data + i * (is_32bit ? 16 : 24);
-            uint32_t st_name, st_value, st_size;
-            uint8_t st_info;
+        func_symtab = (FuncSymbol *)malloc(sym_count * sizeof(FuncSymbol));
+        idx = 0;
+        for (i = 0; i < num_syms; i++) {
+            sym = symtab_data + i * (is_32bit ? 16 : 24);
             
             memcpy(&st_name, sym, 4);
             memcpy(&st_value, sym + 4, 4);

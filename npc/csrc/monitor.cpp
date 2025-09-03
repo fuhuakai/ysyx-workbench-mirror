@@ -14,7 +14,7 @@ extern void     sdb_set_batch_mode(void);
 extern uint8_t* guest_to_host(paddr_t paddr);
 
 #ifdef CONFIG_FTRACE 
-extern void load_elf(void);
+extern void init_ftrace(const char *elf_file);
 #endif
 /*********************************************/
 
