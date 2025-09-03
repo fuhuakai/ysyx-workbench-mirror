@@ -166,8 +166,8 @@ module PC(
 
   // MUX1 module
   MuxKey #(2, 1, `BitWidth) i1(npc, (pc_sel_1 & result[0]), {
-      1'b0, npc_temp,
-      1'b1, PCaddIMM32}
+      `MUX1_NBpc, npc_temp,
+      `MUX1_Bpc, PCaddIMM32}
   );
 
   // MUX2 module

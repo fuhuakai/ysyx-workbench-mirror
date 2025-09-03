@@ -48,9 +48,9 @@
 // trace
 #define CONFIG_ITRACE   1
 //#define CONFIG_MTRACE   1
-#define CONFIG_FTRACE   1
+//#define CONFIG_FTRACE   1
 //#define CONFIG_IRINGBUF 1
-//#define CONFIG_DIFFTEST 1
+#define CONFIG_DIFFTEST 1
 
 #define MAX_iringbuf_size  20
 
