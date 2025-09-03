@@ -81,7 +81,7 @@ module control_unit(
                 wb_sel    = `MUX5_result;
                 
                 case (fun3_14_12)
-                    `INST_ADDI:  aluc = `AND;
+                    `INST_ADDI:  aluc = `ADD;
                     `INST_SLTIU: aluc = `LTU;
                     `INST_XORI:  aluc = `XOR;
                     `INST_ANDI:  aluc = `AND;

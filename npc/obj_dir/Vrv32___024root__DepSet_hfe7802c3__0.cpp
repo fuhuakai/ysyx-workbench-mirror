@@ -413,7 +413,7 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                     vlSelf->rv32__DOT__aluc = ((0x1000U 
                                                 & vlSelf->rv32__DOT__inst)
                                                 ? 2U
-                                                : 7U);
+                                                : 0U);
                 }
             } else {
                 Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__ebreak_TOP(2U, vlSelf->rv32__DOT__inst, 0xcU);
