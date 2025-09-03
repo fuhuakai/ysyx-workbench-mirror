@@ -9,7 +9,7 @@ LIBS += -ldl        # link the <dlfcn> lib
 # ifdef CONFIG_DIFFTEST
 DIFF_REF_PATH = $(NEMU_HOME)
 DIFF_REF_SO = $(DIFF_REF_PATH)/build/riscv32-nemu-interpreter-so
-ARGS_DIFF = --diff=$(DIFF_REF_SO)
+ARGS_DIFF = --d=$(DIFF_REF_SO)
 
 .PHONY: $(DIFF_REF_SO)
 $(DIFF_REF_SO):
