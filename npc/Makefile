@@ -1,6 +1,7 @@
 MODULE=rv32
 CSRCS = $(shell find $(abspath ./csrc) -name "*.cpp")
 VSRCS = $(shell find $(abspath ./vsrc) -name "*.v")
+HDIRS = $(shell find $(abspath ./include) -name "*.h")
 INC_PATH = $(NPC_HOME)/include/
 LIBS = -lreadline   # link the <readline> lib
 LIBS += -ldl        # link the <dlfcn> lib
@@ -87,7 +88,7 @@ verilate: .stamp.verilate
 # -Wno-STMTDLY 避免弹出所有warning
 # --top-module $(MODULE) 确定顶层模块，否则会将$(VSRCS)中的第一个文件前缀当成顶层模块
 #----------------------------------------------------------------------------------
-.stamp.verilate: $(VSRCS) $(CSRCS)
+.stamp.verilate: $(VSRCS) $(CSRCS) $(HDIRS)
 	@echo
 	@echo "### VERILATING ###"
 	verilator -Wno-STMTDLY --trace --top-module $(MODULE) -cc $(VSRCS) --exe $(CSRCS) -I$(INC_PATH) -I$(NPC_HOME)/vsrc
