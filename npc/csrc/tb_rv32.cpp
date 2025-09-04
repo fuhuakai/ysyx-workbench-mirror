@@ -30,10 +30,12 @@ extern void   ebreak(int station, int inst);                   // control_unit.v
 extern int    pmem_read(int raddr);                            // mem.v
 extern int    pmem_read_inst(int pc);
 extern void   pmem_write(int waddr, int wdata, char wmask);    // mem.v
+extern uint64_t get_time();    
 /*********************************************/
 
 #define start_time 3
 
+static uint32_t rtc_port_base[2] = {0, 0};  //rtc device
 static const char *alu_names[16] = {
   "Unit_ALU", "Unit_MEM", "Unit_CU1", "Unit_CU2",
   "Unit_CU3", "Unit_CU4", "Unit_CU5", "Unit_CU6",
@@ -84,7 +86,19 @@ extern int pmem_read(int raddr)
 
   if(main_time >= start_time)
   {
-    data = pmem_r(raddr, 4);
+    // device rtc
+    if((raddr == CONFIG_RTC_MMIO) || (raddr == CONFIG_RTC_MMIO + 4))
+    {
+      if(raddr == CONFIG_RTC_MMIO + 4)
+      {
+        uint64_t us = get_time();
+        rtc_port_base[0] = (uint32_t)us;
+        rtc_port_base[1] = us >> 32;
+      }
+      data = rtc_port_base[(raddr - CONFIG_RTC_MMIO) / 4];
+    }
+    else
+      data = pmem_r(raddr, 4);
     return data; 
   } 
   else
@@ -97,6 +111,15 @@ void pmem_write(int waddr, int wdata, char wmask)
   if(top->clk == 0)
     return;
 
+  // device serial
+  if(waddr == CONFIG_SERIAL_MMIO)
+  {
+    assert(wmask == WByte);
+    char ch = (char)wdata;
+    putchar(ch);
+  }
+
+  //memory
   switch (wmask)
   {
     case WByte: pmem_w(waddr, 1, wdata);
