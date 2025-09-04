@@ -9,7 +9,7 @@ LIBS += -ldl        # link the <dlfcn> lib
 # ifdef CONFIG_DIFFTEST
 DIFF_REF_PATH = $(NEMU_HOME)
 DIFF_REF_SO = $(DIFF_REF_PATH)/build/riscv32-nemu-interpreter-so
-ARGS_DIFF = --d=$(DIFF_REF_SO)
+ARGS_DIFF = --diff=$(DIFF_REF_SO) #这里使用-d也可，目的就是通过monitor.cpp传入so文件内容
 
 .PHONY: $(DIFF_REF_SO)
 $(DIFF_REF_SO):

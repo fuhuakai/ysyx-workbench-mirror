@@ -17,7 +17,7 @@
 #include <cpu/difftest.h>
 #include "../local-include/reg.h"
 
-//打开difftest config后，src/cpu/difftest/dut.c会引用此函数
+//打开difftest config后，src/cpu/difftest/dut.c会调用此函数
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
     int reg_num = ARRLEN(cpu.gpr);
     bool match = true;
