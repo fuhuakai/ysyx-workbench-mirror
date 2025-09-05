@@ -43,6 +43,7 @@ VM_USER_LDLIBS = \
 VM_USER_CLASSES = \
 	cpu \
 	difftest \
+	disasm \
 	expr \
 	log \
 	monitor \
@@ -70,6 +71,8 @@ VPATH += $(VM_USER_DIR)
 cpu.o: /home/fuhuakai/ysyx-workbench/npc/csrc/cpu.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 difftest.o: /home/fuhuakai/ysyx-workbench/npc/csrc/difftest.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+disasm.o: /home/fuhuakai/ysyx-workbench/npc/csrc/disasm.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 expr.o: /home/fuhuakai/ysyx-workbench/npc/csrc/expr.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
