@@ -88,17 +88,17 @@ extern int pmem_read(int raddr)
   if(main_time >= start_time)
   {
     // device rtc
-    if((raddr == CONFIG_RTC_MMIO) || (raddr == CONFIG_RTC_MMIO + 4))
-    {
-      if(raddr == CONFIG_RTC_MMIO + 4)
-      {
-        uint64_t us = get_time();
-        rtc_port_base[0] = (uint32_t)us;
-        rtc_port_base[1] = us >> 32;
-      }
-      data = rtc_port_base[(raddr - CONFIG_RTC_MMIO) / 4];
-    }
-    else
+    // if((raddr == CONFIG_RTC_MMIO) || (raddr == CONFIG_RTC_MMIO + 4))
+    // {
+    //   if(raddr == CONFIG_RTC_MMIO + 4)
+    //   {
+    //     uint64_t us = get_time();
+    //     rtc_port_base[0] = (uint32_t)us;
+    //     rtc_port_base[1] = us >> 32;
+    //   }
+    //   data = rtc_port_base[(raddr - CONFIG_RTC_MMIO) / 4];
+    // }
+    // else
     data = pmem_r(raddr, 4);
     return data; 
   } 
