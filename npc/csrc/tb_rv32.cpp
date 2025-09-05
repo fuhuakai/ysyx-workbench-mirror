@@ -112,6 +112,15 @@ void pmem_write(int waddr, int wdata, char wmask)
   if(top->clk == 0)
     return;
 
+  // device serial
+  if(waddr == CONFIG_SERIAL_MMIO)
+  {
+    assert(wmask == WByte);
+    char ch = (char)wdata;
+    putchar(ch);
+    return;
+  }
+
   switch (wmask)
   {
     case WByte: pmem_w(waddr, 1, wdata);
