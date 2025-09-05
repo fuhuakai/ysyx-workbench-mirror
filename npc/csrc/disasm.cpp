@@ -1,6 +1,6 @@
 // #include <dlfcn.h>
-// #include <capstone/capstone.h>
-// #include <common.h>
+// #include <../tools/capstone/capstone.h>
+// #include <../include/common.h>
 // #include <stdio.h>
 // #include <assert.h>
 
@@ -38,7 +38,6 @@
 //     assert(0);
 //   }
 
-//   // 初始化 Capstone
 //   cs_arch arch = CS_ARCH_RISCV;
 //   cs_mode mode = CS_MODE_RISCV32;
 //   cs_err ret = cs_open_dl(arch, mode, &handle);

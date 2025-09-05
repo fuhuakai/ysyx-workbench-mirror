@@ -10,6 +10,10 @@ extern void single_cycle(void);
 extern NPCState npc_state;
 extern Vrv32 *top;
 
+// #ifdef CONFIG_ITRACE
+// extern void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+// #endif
+
 #ifdef CONFIG_FTRACE 
 extern void ftrace_ret(uint32_t pc);
 extern void ftrace_call(uint32_t pc, uint32_t npc);

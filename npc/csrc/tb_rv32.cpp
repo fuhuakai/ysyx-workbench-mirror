@@ -30,6 +30,7 @@ extern void   ebreak(int station, int inst);                   // control_unit.v
 extern int    pmem_read(int raddr);                            // mem.v
 extern int    pmem_read_inst(int pc);
 extern void   pmem_write(int waddr, int wdata, char wmask);    // mem.v
+//extern void   init_disasm();
 /*********************************************/
 
 #define start_time 3
@@ -150,6 +151,10 @@ int main(int argc, char *argv[])
 
   /* Initialize differential testing. */
   init_difftest(diff_so_file, img_size, difftest_port);
+
+  // #ifdef CONFIG_ITRACE
+  // init_disasm();
+  // #endif
 
   /* Receive commands from user. */
   sdb_mainloop();
