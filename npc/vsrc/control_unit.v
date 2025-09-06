@@ -84,6 +84,7 @@ module control_unit(
                     `INST_ADDI:  aluc = `ADD;
                     `INST_SLTIU: aluc = `LTU;
                     `INST_XORI:  aluc = `XOR;
+                    `INST_ORI:   aluc = `OR;
                     `INST_ANDI:  aluc = `AND;
                     `INST_SLLI:  aluc = `SLL;
                     `INST_SRLAI: begin 

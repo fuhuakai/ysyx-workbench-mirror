@@ -408,11 +408,11 @@ VL_ATTR_COLD void Vrv32___024root___stl_sequent__TOP__0(Vrv32___024root* vlSelf)
                 vlSelf->rv32__DOT__wb_sel = 2U;
                 if ((0x4000U & vlSelf->rv32__DOT__inst)) {
                     if ((0x2000U & vlSelf->rv32__DOT__inst)) {
-                        if ((0x1000U & vlSelf->rv32__DOT__inst)) {
-                            vlSelf->rv32__DOT__aluc = 7U;
-                        } else {
-                            Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__ebreak_TOP(2U, vlSelf->rv32__DOT__inst, 6U);
-                        }
+                        vlSelf->rv32__DOT__aluc = (
+                                                   (0x1000U 
+                                                    & vlSelf->rv32__DOT__inst)
+                                                    ? 7U
+                                                    : 6U);
                     } else if ((0x1000U & vlSelf->rv32__DOT__inst)) {
                         if ((0U == (vlSelf->rv32__DOT__inst 
                                     >> 0x19U))) {
