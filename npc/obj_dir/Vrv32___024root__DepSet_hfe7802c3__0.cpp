@@ -453,10 +453,10 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                 } else {
                     vlSelf->rv32__DOT__rmask = 0U;
                 }
-            } else if ((0x1000U & vlSelf->rv32__DOT__inst)) {
-                vlSelf->rv32__DOT__rmask = 4U;
             } else {
-                Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__ebreak_TOP(2U, vlSelf->rv32__DOT__inst, 7U);
+                vlSelf->rv32__DOT__rmask = ((0x1000U 
+                                             & vlSelf->rv32__DOT__inst)
+                                             ? 4U : 3U);
             }
         } else {
             Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__ebreak_TOP(2U, vlSelf->rv32__DOT__inst, 0xcU);
@@ -806,18 +806,22 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                                             | (0xffffU 
                                                & vlSelf->rv32__DOT__mem_inst__DOT__rdata_temp));
         }
-    } else if ((2U & (IData)(vlSelf->rv32__DOT__rmask))) {
-        if ((1U & (IData)(vlSelf->rv32__DOT__rmask))) {
-            Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__ebreak_TOP(2U, 0xdeafbeafU, 1U);
-            vlSelf->rv32__DOT__mem_rdata = 0xdeadbeafU;
-        } else {
-            vlSelf->rv32__DOT__mem_rdata = (0xffffU 
-                                            & vlSelf->rv32__DOT__mem_inst__DOT__rdata_temp);
-        }
     } else {
-        vlSelf->rv32__DOT__mem_rdata = ((1U & (IData)(vlSelf->rv32__DOT__rmask))
-                                         ? (0xffU & vlSelf->rv32__DOT__mem_inst__DOT__rdata_temp)
-                                         : vlSelf->rv32__DOT__mem_inst__DOT__rdata_temp);
+        vlSelf->rv32__DOT__mem_rdata = ((2U & (IData)(vlSelf->rv32__DOT__rmask))
+                                         ? ((1U & (IData)(vlSelf->rv32__DOT__rmask))
+                                             ? (((- (IData)(
+                                                            (1U 
+                                                             & (vlSelf->rv32__DOT__mem_inst__DOT__rdata_temp 
+                                                                >> 7U)))) 
+                                                 << 8U) 
+                                                | (0xffU 
+                                                   & vlSelf->rv32__DOT__mem_inst__DOT__rdata_temp))
+                                             : (0xffffU 
+                                                & vlSelf->rv32__DOT__mem_inst__DOT__rdata_temp))
+                                         : ((1U & (IData)(vlSelf->rv32__DOT__rmask))
+                                             ? (0xffU 
+                                                & vlSelf->rv32__DOT__mem_inst__DOT__rdata_temp)
+                                             : vlSelf->rv32__DOT__mem_inst__DOT__rdata_temp));
     }
     vlSelf->rv32__DOT__PC_inst__DOT__i1__DOT__i0__DOT__pair_list[1U] 
         = (QData)((IData)(vlSelf->rv32__DOT__PC_inst__DOT__npc_temp));

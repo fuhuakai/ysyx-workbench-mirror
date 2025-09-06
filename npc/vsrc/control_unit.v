@@ -112,6 +112,7 @@ module control_unit(
                 wb_sel    = `MUX5_memdat;
                 
                 case (fun3_14_12)
+                    `INST_LB:  rmask = `LoadB;
                     `INST_LH:  rmask = `LoadH;
                     `INST_LW:  rmask = `LoadW;
                     `INST_LBU: rmask = `LoadBU;
