@@ -1,5 +1,6 @@
 #include <am.h>
 #include <klib-macros.h>
+#include "../riscv.h"
 
 # define npc_trap(code) asm volatile("mv a0, %0; ebreak" : :"r"(code))
 #define SERIAL_PORT 0xa00003f8
