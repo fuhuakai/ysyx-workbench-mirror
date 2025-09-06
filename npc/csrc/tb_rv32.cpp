@@ -34,7 +34,7 @@ extern uint64_t get_time();
 //extern void   init_disasm();
 /*********************************************/
 
-static uint32_t rtc_port_base[2] = {0, 0};
+//static uint32_t rtc_port_base[2] = {0, 0};
 #define start_time 3
 
 static const char *alu_names[16] = {
@@ -113,13 +113,13 @@ void pmem_write(int waddr, int wdata, char wmask)
     return;
 
   // device serial
-  if(waddr == CONFIG_SERIAL_MMIO)
-  {
-    assert(wmask == WByte);
-    char ch = (char)wdata;
-    putchar(ch);
-    return;
-  }
+  // if(waddr == CONFIG_SERIAL_MMIO)
+  // {
+  //   assert(wmask == WByte);
+  //   char ch = (char)wdata;
+  //   putchar(ch);
+  //   return;
+  // }
 
   switch (wmask)
   {
