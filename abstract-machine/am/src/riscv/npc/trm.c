@@ -2,6 +2,7 @@
 #include <klib-macros.h>
 
 # define npc_trap(code) asm volatile("mv a0, %0; ebreak" : :"r"(code))
+#define SERIAL_PORT 0xa00003f8
 
 extern char _heap_start;
 int main(const char *args);
@@ -14,6 +15,7 @@ Area heap = RANGE(&_heap_start, PMEM_END);
 static const char mainargs[MAINARGS_MAX_LEN] = TOSTRING(MAINARGS_PLACEHOLDER); // defined in CFLAGS
 
 void putch(char ch) {
+  outb(SERIAL_PORT, ch);
 }
 
 //在halt中加入npc-trap，在npc上运行的AM程序结束时执行ebreak结束仿真
