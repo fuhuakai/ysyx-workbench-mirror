@@ -7,6 +7,7 @@
 `define INST_ADD    3'b000
 `define INST_SUB    3'b000
 `define INST_SLL    3'b001
+`define INST_SLT    3'b010
 `define INST_SLTU   3'b011
 `define INST_XOR    3'b100
 `define INST_SRL    3'b101

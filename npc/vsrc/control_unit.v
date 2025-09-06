@@ -49,6 +49,7 @@ module control_unit(
                     case (fun3_14_12)
                         `INST_ADD:  aluc = `ADD;
                         `INST_SLL:  aluc = `SLL;
+                        `INST_SLT:  aluc = `LT;
                         `INST_SLTU: aluc = `LTU;
                         `INST_XOR:  aluc = `XOR;
                         `INST_SRL:  aluc = `SRL;
