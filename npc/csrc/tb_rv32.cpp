@@ -121,6 +121,11 @@ void pmem_write(int waddr, int wdata, char wmask)
     return;
   }
 
+  if((waddr == CONFIG_RTC_MMIO) || (waddr == CONFIG_RTC_MMIO + 4))
+    {
+      return;
+    }
+
   switch (wmask)
   {
     case WByte: pmem_w(waddr, 1, wdata);
