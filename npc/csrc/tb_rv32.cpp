@@ -123,7 +123,7 @@ void pmem_write(int waddr, int wdata, char wmask)
 
   if((waddr == CONFIG_RTC_MMIO) || (waddr == CONFIG_RTC_MMIO + 4))
     {
-      return;
+      //return;
     }
 
   switch (wmask)
