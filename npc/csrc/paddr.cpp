@@ -12,20 +12,6 @@ extern vluint64_t main_time;
 
 uint8_t pmem[PMEM_SIZE] PG_ALIGN = {};
 static const word_t img [] = {
-  0xA0000537, // lui a0, 0xA0000
-  0x3F850513, // addi a0, a0, 0x3F8
-  0x04100593, // addi a1, zero, 65   # 'A' 的ASCII码
-  0x00B50023, // sb a1, 0(a0)        # 写入串口
-
-  0xA0000537, // lui a0, 0xA0000
-  0x04850513, // addi a0, a0, 0x048
-  0x00052583, // lw a1, 0(a0)        # 读取RTC低32位
-  0xA0000537, // lui a0, 0xA0000
-  0x04C50513, // addi a0, a0, 0x04C
-  0x00052603, // lw a2, 0(a0)        # 读取RTC高32位
-
-  0x00100073, // ebreak
-  
   0xffc10113,    //addi	sp,sp,-4
   0x06400593,    //li	  a1,100
   0x06458613,    //addi	a2,a1,100
