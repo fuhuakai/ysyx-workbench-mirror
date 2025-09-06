@@ -98,8 +98,13 @@ extern int pmem_read(int raddr)
       }
       data = rtc_port_base[(raddr - CONFIG_RTC_MMIO) / 4];
     }
+    else if (raddr == CONFIG_SERIAL_MMIO) {
+      // 串口读取通常用于读取状态或输入数据，这里简单返回0
+      data = 0;
+      return data;
+    }
     else
-    data = pmem_r(raddr, 4);
+      data = pmem_r(raddr, 4);
     return data; 
   } 
   else
@@ -123,7 +128,7 @@ void pmem_write(int waddr, int wdata, char wmask)
 
   if((waddr == CONFIG_RTC_MMIO) || (waddr == CONFIG_RTC_MMIO + 4))
     {
-      //return;
+      return;
     }
 
   switch (wmask)
