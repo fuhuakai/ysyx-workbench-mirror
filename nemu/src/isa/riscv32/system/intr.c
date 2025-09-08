@@ -19,8 +19,13 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   /* TODO: Trigger an interrupt/exception with ``NO''.
    * Then return the address of the interrupt/exception vector.
    */
+  cpu.csrs.mstatus = (cpu.csrs.mstatus & ~((1<<7) | (1<<3))) | // 清除MPIE和MIE
+                   ((cpu.csrs.mstatus & (1<<3)) << 4) |      // 将先前的MIE值保存到MPIE中
+                   (3 << 11);                                // 把权限模式改为M（MPP设置为11）
+  cpu.csrs.mcause = NO;
+  cpu.csrs.mepc = epc;
 
-  return 0;
+  return cpu.csrs.mtvec;
 }
 
 word_t isa_query_intr() {
