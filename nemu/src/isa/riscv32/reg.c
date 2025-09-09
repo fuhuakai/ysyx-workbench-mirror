@@ -42,7 +42,7 @@ word_t isa_reg_str2val(const char *s, bool *success) {
   if(strcmp(s, "pc") == 0)
       return cpu.pc; 
       
-  //reg $0
+  //寄存器$0
   if(strcmp(s, regs[0]) == 0)
       return cpu.gpr[0];
       
