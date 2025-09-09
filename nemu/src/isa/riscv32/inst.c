@@ -158,6 +158,7 @@ static int decode_exec(Decode *s) {
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
   //INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, s -> dnpc = isa_raise_intr(11, s -> pc));//模拟自陷指令
   INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, ECALL(s->dnpc));
+  INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, s->dnpc = CSR(0x341));
   INSTPAT_END();
 
   R(0) = 0; // reset $zero to 0
