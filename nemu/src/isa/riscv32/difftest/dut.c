@@ -24,18 +24,33 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
     
     for (int i = 0; i < reg_num; i++) {
         if (ref_r->gpr[i] != cpu.gpr[i]) {
-            printf("difftest fault: gpr[%d] (ref: 0x%08x != dut: 0x%08x) at PC=0x%08x\n", 
-                   i, ref_r->gpr[i], cpu.gpr[i], pc);
+            printf("difftest fault: gpr[%d] (ref: 0x%08x != dut: 0x%08x) at PC=0x%08x\n", i, ref_r->gpr[i], cpu.gpr[i], pc);
             match = false;
         }
     }
     
     if (ref_r->pc != cpu.pc) {
-        printf("difftest fault: PC (ref: 0x%08x != dut: 0x%08x) at PC=0x%08x\n", 
-               ref_r->pc, cpu.pc, pc);
+        printf("difftest fault: PC (ref: 0x%08x != dut: 0x%08x) at PC=0x%08x\n", ref_r->pc, cpu.pc, pc);
         match = false;
     }
-    
+    //添加csr寄存器检查及结果打印
+    if (ref_r->csrs.mstatus != cpu.csrs.mstatus) {
+        printf("difftest fault: mstatus (ref: 0x%08x != dut: 0x%08x) at PC=0x%08x\n", ref_r->csrs.mstatus, cpu.csrs.mstatus, pc);
+        match = false;
+    }
+    if (ref_r->csrs.mcause != cpu.csrs.mcause) {
+        printf("difftest fault: mcause (ref: 0x%08x != dut: 0x%08x) at PC=0x%08x\n", ref_r->csrs.mcause, cpu.csrs.mcause, pc);
+        match = false;
+    }
+    if (ref_r->csrs.mepc != cpu.csrs.mepc) {
+        printf("difftest fault: mepc (ref: 0x%08x != dut: 0x%08x) at PC=0x%08x\n", ref_r->csrs.mepc, cpu.csrs.mepc, pc);
+        match = false;
+    }
+    if (ref_r->csrs.mtvec != cpu.csrs.mtvec) {
+        printf("difftest fault: mtvec (ref: 0x%08x != dut: 0x%08x) at PC=0x%08x\n", ref_r->csrs.mtvec, cpu.csrs.mtvec, pc);
+        match = false;
+    }
+
     return match;
 }
 
