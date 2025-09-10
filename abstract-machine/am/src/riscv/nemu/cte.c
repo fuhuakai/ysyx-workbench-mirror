@@ -14,7 +14,6 @@ Context* __am_irq_handle(Context *c) {
     }
 
     c = user_handler(ev, c);
-    printf("\n[MCAUSE]: %d, [MSTATUS]: %x, [MEPC]: %x\n", c->mcause, c->mstatus, c->mepc);//printf调试
     assert(c != NULL);
   }
 
@@ -25,10 +24,8 @@ extern void __am_asm_trap(void);
 
 bool cte_init(Context*(*handler)(Event, Context*)) {
   // initialize exception entry
-  
   asm volatile("csrw mtvec, %0" : : "r"(__am_asm_trap));
 
-  printf("cte_init called, setting mtvec to 0x%08x\n", (uint32_t)__am_asm_trap);
   // register event handler
   user_handler = handler;
 

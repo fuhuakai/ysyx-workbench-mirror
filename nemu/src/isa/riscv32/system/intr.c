@@ -19,8 +19,6 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   /* TODO: Trigger an interrupt/exception with ``NO''.
    * Then return the address of the interrupt/exception vector.
    */
-  printf("isa_raise_intr: NO=0x%x, epc=0x%x\n", NO, epc);
-  printf("Before: mstatus=0x%x, mtvec=0x%x\n", cpu.csrs.mstatus, cpu.csrs.mtvec);
 
   // cpu.csrs.mstatus &= ~(1<<7);
   // cpu.csrs.mstatus |= ((cpu.csrs.mstatus&(1<<3))<<4);
@@ -29,9 +27,6 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
 
   cpu.csrs.mcause = NO;
   cpu.csrs.mepc = epc;
-
-  printf("After: mstatus=0x%x, mcause=0x%x, mepc=0x%x, returning 0x%x\n", 
-         cpu.csrs.mstatus, cpu.csrs.mcause, cpu.csrs.mepc, cpu.csrs.mtvec);
 
   return cpu.csrs.mtvec;
 }
