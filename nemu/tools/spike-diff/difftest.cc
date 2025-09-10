@@ -41,9 +41,9 @@ struct diff_context_t {
   word_t pc;
   //添加CSR寄存器
   word_t mtvec;
+  vaddr_t mepc;
   word_t mcause;
   word_t mstatus;
-  vaddr_t mepc;
 };
 
 static sim_t* s = NULL;
