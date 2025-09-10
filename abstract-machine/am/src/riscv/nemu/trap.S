@@ -42,15 +42,12 @@ f(30) f(31)
 __am_asm_trap:
   addi sp, sp, -CONTEXT_SIZE
 
-  # 将通用寄存器保存到栈上
   MAP(REGS, PUSH)
 
-  # 将csr读入到临时寄存器
   csrr t0, mcause
   csrr t1, mstatus
   csrr t2, mepc
 
-  # 将csr的值保存到栈帧的特定位置
   STORE t0, OFFSET_CAUSE(sp)
   STORE t1, OFFSET_STATUS(sp)
   STORE t2, OFFSET_EPC(sp)
@@ -63,7 +60,6 @@ __am_asm_trap:
   mv a0, sp
   call __am_irq_handle
 
-  # 恢复csr（先从栈上加载到临时寄存器再写入csr）
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
   csrw mstatus, t1
