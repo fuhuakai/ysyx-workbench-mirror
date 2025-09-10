@@ -23,7 +23,16 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   // cpu.csrs.mstatus |= ((cpu.csrs.mstatus&(1<<3))<<4);
   // cpu.csrs.mstatus &= ~(1<<3);
   // cpu.csrs.mstatus |= ((1<<11)+(1<<12));  // 清除MPIE和MIE;将先前的MIE值保存到MPIE中;把权限模式改为M（MPP设置为11）
-
+  
+  // Save current MIE to MPIE
+  cpu.csrs.mstatus = (cpu.csrs.mstatus & ~(1 << 7)) | 
+                     ((cpu.csrs.mstatus & (1 << 3)) << 4);
+  
+  // Clear MIE to disable interrupts
+  cpu.csrs.mstatus &= ~(1 << 3);
+  
+  // Set MPP to M-mode (11)
+  cpu.csrs.mstatus = (cpu.csrs.mstatus & ~(3 << 11)) | (3 << 11);
   cpu.csrs.mcause = NO;
   cpu.csrs.mepc = epc;
 
