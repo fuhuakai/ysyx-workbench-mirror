@@ -39,15 +39,13 @@ static word_t *csr_reg(word_t imm) {
   return NULL;
 }
 static void handle_mret() {
-  // 保存当前的mstatus值
-  word_t old_mstatus = cpu.csrs.mstatus;
   
   // 从mstatus中提取MPIE和MPP字段
-  word_t mpie = (old_mstatus >> 7) & 0x1;  // 获取MPIE位
-  //word_t mpp = (old_mstatus >> 11) & 0x3;  // 获取MPP字段
+  word_t mpie = (cpu.csrs.mstatus >> 7) & 0x1;  // 获取MPIE位
+  
   
   // 恢复MIE位（将MPIE的值赋给MIE）
-  cpu.csrs.mstatus = (old_mstatus & ~(1 << 3)) | (mpie << 3);
+  cpu.csrs.mstatus = (cpu.csrs.mstatus & ~(1 << 3)) | (mpie << 3);
   
   // 设置MPIE为1（允许后续中断嵌套）
   cpu.csrs.mstatus |= (1 << 7);
