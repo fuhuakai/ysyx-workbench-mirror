@@ -34,10 +34,10 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
         match = false;
     }
     //添加csr寄存器检查及结果打印
-    // if (ref_r->csrs.mstatus != cpu.csrs.mstatus) {
-    //     printf("difftest fault: mstatus (ref: 0x%08x != dut: 0x%08x) at PC=0x%08x\n", ref_r->csrs.mstatus, cpu.csrs.mstatus, pc);
-    //     match = false;
-    // }
+    if (ref_r->csrs.mstatus != cpu.csrs.mstatus) {
+        printf("difftest fault: mstatus (ref: 0x%08x != dut: 0x%08x) at PC=0x%08x\n", ref_r->csrs.mstatus, cpu.csrs.mstatus, pc);
+        match = false;
+    }
     if (ref_r->csrs.mcause != cpu.csrs.mcause) {
         printf("difftest fault: mcause (ref: 0x%08x != dut: 0x%08x) at PC=0x%08x\n", ref_r->csrs.mcause, cpu.csrs.mcause, pc);
         match = false;
