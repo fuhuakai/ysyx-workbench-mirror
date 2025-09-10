@@ -160,7 +160,12 @@ static int decode_exec(Decode *s) {
   INSTPAT("0100000 ????? ????? 101 ????? 01100 11", sra    , R, R(rd) = (sword_t)src1 >> (src2 & 0x1F));
   INSTPAT("0000000 ????? ????? 101 ????? 01100 11", srl    , R, R(rd) = src1 >> (src2 & 0x1F));
 
-  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, ECALL(s->dnpc));
+  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, {ECALL(s->dnpc);
+                                                                #ifdef CONFIG_ETRACE
+                                                                printf("[ETRACE] ecall at PC=0x%08x, mstatus=0x%08x, mepc=0x%08x, mcause=0x%08x, mtvec=0x%08x\n", 
+                                                                      s->pc, cpu.csrs.mstatus, cpu.csrs.mepc, cpu.csrs.mcause, cpu.csrs.mtvec);
+                                                                #endif
+                                                                });
   INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, mstatus_mret();s->dnpc = CSR(0x341));
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
