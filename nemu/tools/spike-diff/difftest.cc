@@ -43,7 +43,7 @@ struct diff_context_t {
   word_t mtvec;
   vaddr_t mepc;
   word_t mcause;
-  word_t mstatus;
+  //word_t mstatus;
 };
 
 static sim_t* s = NULL;
@@ -68,7 +68,7 @@ void sim_t::diff_get_regs(void* diff_context) {
   // CSR
   ctx->mtvec = state->mtvec->read();
   ctx->mepc = state->mepc->read();
-  ctx->mstatus = state->mstatus->read();
+  //ctx->mstatus = state->mstatus->read();
   ctx->mcause = state->mcause->read();
 }
 
@@ -81,7 +81,7 @@ void sim_t::diff_set_regs(void* diff_context) {
   // CSR
   state->mtvec->write(ctx->mtvec);
   state->mepc->write(ctx->mepc);
-  state->mstatus->write(ctx->mstatus);
+  //state->mstatus->write(ctx->mstatus);
   state->mcause->write(ctx->mcause);
 }
 
