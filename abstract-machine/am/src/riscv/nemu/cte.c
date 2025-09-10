@@ -28,7 +28,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
   
   asm volatile("csrw mtvec, %0" : : "r"(__am_asm_trap));
 
-  printf("cte_init called, setting mtvec to %p\n", __am_asm_trap);
+  printf("cte_init called, setting mtvec to %x\n", __am_asm_trap);
   // register event handler
   user_handler = handler;
 
