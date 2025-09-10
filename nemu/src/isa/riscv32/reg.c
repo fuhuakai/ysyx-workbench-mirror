@@ -34,6 +34,12 @@ void isa_reg_display() {
     
     // 打印程序计数器PC
     printf("%-5s       0x%08x    %12d\n", "pc", cpu.pc, cpu.pc);
+
+    // 打印控制状态寄存器CSR
+    printf("%-5s       0x%08x    %12d\n", "mtvec", cpu.csrs.mtvec, cpu.csrs.mtvec);
+    printf("%-5s       0x%08x    %12d\n", "mepc", cpu.csrs.mepc, cpu.csrs.mepc);
+    printf("%-5s       0x%08x    %12d\n", "mcause", cpu.csrs.mcause, cpu.csrs.mcause);
+    printf("%-5s       0x%08x    %12d\n", "mstatus", cpu.csrs.mstatus, cpu.csrs.mstatus);
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
