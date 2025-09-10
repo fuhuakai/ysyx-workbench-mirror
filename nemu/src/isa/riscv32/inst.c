@@ -38,20 +38,12 @@ static word_t *csr_reg(word_t imm) {
   }
   return NULL;
 }
-static void handle_mret() {
-  
-  // 从mstatus中提取MPIE和MPP字段
+static void mstatus_mret() {
   word_t mpie = (cpu.csrs.mstatus >> 7) & 0x1;  // 获取MPIE位
-  
-  
-  // 恢复MIE位（将MPIE的值赋给MIE）
-  cpu.csrs.mstatus = (cpu.csrs.mstatus & ~(1 << 3)) | (mpie << 3);
-  
-  // 设置MPIE为1（允许后续中断嵌套）
-  cpu.csrs.mstatus |= (1 << 7);
-  
-  // 设置MPP为最低特权模式（通常是用户模式，0）
-  cpu.csrs.mstatus &= ~(3 << 11);
+
+  cpu.csrs.mstatus = (cpu.csrs.mstatus & ~(1 << 3)) | (mpie << 3);//将MPIE的值复制到MIE
+  cpu.csrs.mstatus |= (1 << 7); // 设置MPIE为1
+  cpu.csrs.mstatus &= ~(3 << 11); // 设置MPP为最低特权模式0
 }
 
 #define CSR(i) *csr_reg(i)
@@ -169,7 +161,7 @@ static int decode_exec(Decode *s) {
   INSTPAT("0000000 ????? ????? 101 ????? 01100 11", srl    , R, R(rd) = src1 >> (src2 & 0x1F));
 
   INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, ECALL(s->dnpc));
-  INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, handle_mret();s->dnpc = CSR(0x341));
+  INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, mstatus_mret();s->dnpc = CSR(0x341));
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
   INSTPAT_END();
