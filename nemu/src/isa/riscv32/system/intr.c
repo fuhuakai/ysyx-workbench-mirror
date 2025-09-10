@@ -22,17 +22,17 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   printf("isa_raise_intr: NO=0x%x, epc=0x%x\n", NO, epc);
   printf("Before: mstatus=0x%x, mtvec=0x%x\n", cpu.csrs.mstatus, cpu.csrs.mtvec);
 
-  cpu.csrs.mstatus &= ~(1<<7);
-  cpu.csrs.mstatus |= ((cpu.csrs.mstatus&(1<<3))<<4);
-  cpu.csrs.mstatus &= ~(1<<3);
-  cpu.csrs.mstatus |= ((1<<11)+(1<<12));  // 清除MPIE和MIE;将先前的MIE值保存到MPIE中;把权限模式改为M（MPP设置为11）
+  // cpu.csrs.mstatus &= ~(1<<7);
+  // cpu.csrs.mstatus |= ((cpu.csrs.mstatus&(1<<3))<<4);
+  // cpu.csrs.mstatus &= ~(1<<3);
+  // cpu.csrs.mstatus |= ((1<<11)+(1<<12));  // 清除MPIE和MIE;将先前的MIE值保存到MPIE中;把权限模式改为M（MPP设置为11）
 
   cpu.csrs.mcause = NO;
   cpu.csrs.mepc = epc;
 
   printf("After: mstatus=0x%x, mcause=0x%x, mepc=0x%x, returning 0x%x\n", 
          cpu.csrs.mstatus, cpu.csrs.mcause, cpu.csrs.mepc, cpu.csrs.mtvec);
-         
+
   return cpu.csrs.mtvec;
 }
 
