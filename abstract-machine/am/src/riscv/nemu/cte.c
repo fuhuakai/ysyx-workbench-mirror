@@ -32,8 +32,8 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 }
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
-    //栈底在上，栈顶在下
-  Context *c = kstack.end - 4 - sizeof(Context);
+  //栈底在上，栈顶在下
+  Context *c = kstack.end - sizeof(Context);
   
   c->mcause = 0xb;
   c->mstatus = 0x1800;
