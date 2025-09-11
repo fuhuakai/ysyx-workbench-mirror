@@ -33,7 +33,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   //栈底在上，栈顶在下
-  Context *c = kstack.end - sizeof(Context);
+  Context *c = kstack.end - 4 - sizeof(Context);
   
   c->mcause = 0xb;
   c->mstatus = 0x1800;
@@ -43,7 +43,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
     c->gpr[i] = 0;
   
   //观察汇编，a0为传参寄存器
-  c->gpr[10] = (uint32_t)arg;
+  //c->gpr[10] = (uint32_t)arg;
   return c;
 }
 
