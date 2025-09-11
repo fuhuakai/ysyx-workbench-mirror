@@ -63,7 +63,7 @@ __am_asm_trap:
   mv a0, sp
   call __am_irq_handle
   #
-  mv sp, a0
+  #mv sp, a0
   
   # 恢复csr（先从栈上加载到临时寄存器再写入csr）
   LOAD t1, OFFSET_STATUS(sp)
