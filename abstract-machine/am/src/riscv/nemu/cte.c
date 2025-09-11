@@ -43,7 +43,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
     c->gpr[i] = 0;
   
   //观察汇编，a0为传参寄存器
-  //c->gpr[10] = (uint32_t)arg;
+  c->gpr[10] = (uint32_t)arg;
   return c;
 }
 
