@@ -34,10 +34,10 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   Context *c = kstack.end - 4 - sizeof(Context);
   
-  c->mcause = 0xb;
-  c->mstatus = 0x1800;
   //入口为f()
   c->mepc = (uint32_t)entry;
+  c->mcause = 0xb;
+  c->mstatus = 0x1800;
   for(int i = 0; i < NR_REGS; i++)
     c->gpr[i] = 0;
   
