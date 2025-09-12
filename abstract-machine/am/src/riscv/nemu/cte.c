@@ -36,10 +36,10 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   
   //入口为f()
   c->mepc = (uint32_t)entry;
-  // c->mcause = 0xb;
-  // c->mstatus = 0x1800;
-  // for(int i = 0; i < NR_REGS; i++)
-  //   c->gpr[i] = 0;
+  c->mcause = 0xb;
+  c->mstatus = 0x1800;
+  for(int i = 0; i < NR_REGS; i++)
+    c->gpr[i] = 0;
   
   //观察汇编，a0为传参寄存器
   c->gpr[10] = (uint32_t)arg;
