@@ -36,7 +36,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   
   //入口为f()
   c->mepc = (uint32_t)entry;
-  c->mcause = 0xb;
+  //c->mcause = 0xb;
   c->mstatus = 0x1800;
   for(int i = 0; i < NR_REGS; i++)
     c->gpr[i] = 0;
