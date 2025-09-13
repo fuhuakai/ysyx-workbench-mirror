@@ -164,7 +164,7 @@ static void print_iringbuf() {
 void assert_fail_msg() {
   isa_reg_display();
   statistic();
-  print_iringbuf();
+  print_iringbuf(); //内存越界会引起panic，panic的本质是assert（0），我们在这里也加入打印环形缓冲区的功能，更加全面了
 }
 
 /* Simulate how the CPU works. */
