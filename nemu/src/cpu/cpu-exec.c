@@ -137,11 +137,6 @@ static void statistic() {
   else Log("Finish running in less than 1 us and can not calculate the simulation frequency");
 }
 
-void assert_fail_msg() {
-  isa_reg_display();
-  statistic();
-}
-
 // 打印环形缓冲区 函数
 #ifdef CONFIG_ITRACE
 static void print_iringbuf() {
@@ -165,6 +160,12 @@ static void print_iringbuf() {
   }
 }
 #endif
+
+void assert_fail_msg() {
+  isa_reg_display();
+  statistic();
+  print_iringbuf();
+}
 
 /* Simulate how the CPU works. */
 void cpu_exec(uint64_t n) {
