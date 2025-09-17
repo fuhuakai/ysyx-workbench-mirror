@@ -137,7 +137,7 @@ void cpu_exec(uint64_t n)
 
     execute(n);
 
-      // 出错时打印环形缓冲区
+    // 出错时打印环形缓冲区
     #ifdef CONFIG_IRINGBUF
     if (npc_state.state == NPC_ABORT) {
         display_iringbuf();
