@@ -25,7 +25,7 @@ const char *regs[] = {
 };
 
 void isa_reg_display() {
-    printf("\nREGISTER    HEX VALUE    DECIMAL VALUE\n");
+    printf("\nREGISTER      HEX VALUE    DECIMAL VALUE\n");
     
     // 打印通用寄存器
     for (int i = 0; i < (sizeof(regs) / sizeof(regs[0])); i++){
