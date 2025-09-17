@@ -8,7 +8,10 @@ extern Vrv32 *top;
 extern vluint64_t main_time;
 /*********************************************/
 
-
+#ifdef CONFIG_IRINGBUF 
+extern void append_iringbuf(char *s);
+extern void display_iringbuf(void);
+#endif
 
 uint8_t pmem[PMEM_SIZE] PG_ALIGN = {};
 static const word_t img [] = {
@@ -62,6 +65,10 @@ static inline bool in_pmem(paddr_t addr) {
 }
 
 static inline void out_of_bound(paddr_t addr) {
+    // 内存越界时打印环形缓冲区
+    #ifdef CONFIG_IRINGBUF
+        display_iringbuf();
+    #endif
   panic("address = 0x%08x is out of bound of pmem [0x%08x, 0x%08x] at pc = 0x%08x  time = %ld", 
          addr, PMEM_LEFT, PMEM_RIGHT, top->rootp->rv32__DOT__pc, main_time);
 }
