@@ -137,14 +137,18 @@ void cpu_exec(uint64_t n)
 
     execute(n);
 
+      // 出错时打印环形缓冲区
+    #ifdef CONFIG_IRINGBUF
+    if (npc_state.state == NPC_ABORT) {
+        display_iringbuf();
+     }
+    #endif
+
     switch (npc_state.state) 
     {
         case NPC_RUNNING: npc_state.state = NPC_STOP; break;
 
         case NPC_END: case NPC_ABORT:
-#ifdef CONFIG_IRINGBUF 
-            display_iringbuf();
-#endif
             Log("NPC: %s at pc = 0x%08x",
                 (npc_state.state == NPC_ABORT ? ANSI_FMT("ABORT", ANSI_FG_RED) :
                 (npc_state.halt_ret == 0 ? ANSI_FMT("HIT GOOD TRAP", ANSI_FG_GREEN) :
