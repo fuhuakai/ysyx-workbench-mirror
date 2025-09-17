@@ -427,7 +427,7 @@ VL_ATTR_COLD void Vrv32___024root___stl_sequent__TOP__0(Vrv32___024root* vlSelf)
                     } else if ((0x1000U & vlSelf->rv32__DOT__inst)) {
                         if ((0U == (vlSelf->rv32__DOT__inst 
                                     >> 0x19U))) {
-                            vlSelf->rv32__DOT__aluc = 5U;
+                            vlSelf->rv32__DOT__aluc = 4U;
                         } else if ((0x20U == (vlSelf->rv32__DOT__inst 
                                               >> 0x19U))) {
                             vlSelf->rv32__DOT__aluc = 5U;

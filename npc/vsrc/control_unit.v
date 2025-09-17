@@ -90,7 +90,7 @@ module control_unit(
                     `INST_SLLI:  aluc = `SLL;
                     `INST_SRLAI: begin 
                         case (fun7_31_25)
-                            7'b000_0000: aluc = `SRA;
+                            7'b000_0000: aluc = `SRL;
                             7'b010_0000: aluc = `SRA;
                             default: ebreak(`ABORT, inst, `Unit_CU4);
                         endcase
