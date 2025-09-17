@@ -443,11 +443,10 @@ VL_ATTR_COLD void Vrv32___024root___stl_sequent__TOP__0(Vrv32___024root* vlSelf)
                     } else {
                         Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__ebreak_TOP(2U, vlSelf->rv32__DOT__inst, 6U);
                     }
+                } else if ((0x1000U & vlSelf->rv32__DOT__inst)) {
+                    vlSelf->rv32__DOT__aluc = 2U;
                 } else {
-                    vlSelf->rv32__DOT__aluc = ((0x1000U 
-                                                & vlSelf->rv32__DOT__inst)
-                                                ? 2U
-                                                : 0U);
+                    Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__ebreak_TOP(2U, vlSelf->rv32__DOT__inst, 6U);
                 }
             } else {
                 Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__ebreak_TOP(2U, vlSelf->rv32__DOT__inst, 0xcU);
