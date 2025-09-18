@@ -66,6 +66,10 @@
 
 // E type instruction
 `define INST_TYPE_E   7'b111_0011
+`define INST_CSRRW    3'b001
+`define INST_CSRRS    3'b010
+`define INST_MRET     12'b0011_0000_0010
+`define INST_ECALL    12'b0000_0000_0000
 `define INST_EBREAK   12'b0000_0000_0001
 `define HIT_TRAP      1
 `define ABORT         2
@@ -85,6 +89,7 @@
 `define Unit_IE1      13   //imm extended unit
 `define Unit_IE2      14  
 `define Unit_IE3      15 
+`define Unit_CSR      16  //csr regs
 
 
 // type
@@ -104,8 +109,10 @@
 
 
 // MUX2
-`define MUX2_PCadd4  1'b0
-`define MUX2_result  1'b1
+`define MUX2_PCadd4  2'd0
+`define MUX2_result  2'd1
+`define MUX2_csrnpc  2'd2
+`define MUX2_IDLE    2'd3
 
 // MUX3
 `define MUX3_src2  1'b0
@@ -116,10 +123,10 @@
 `define MUX4_src1  1'b1
 
 // MUX5
-`define MUX5_PCadd4 2'd0
-`define MUX5_memdat 2'd1
-`define MUX5_result 2'd2
-`define MUX5_IDLE   2'd3
+`define MUX5_PCadd4  2'd0
+`define MUX5_memdat  2'd1
+`define MUX5_result  2'd2
+`define MUX5_Csrdata 2'd3
 
 
 
@@ -155,6 +162,13 @@
 `define WEnable   1'b1
 
 
+// CSR regs
+`define CSR_MSTATUS 12'h300
+`define CSR_MTVEC   12'h305
+`define CSR_MEPC    12'h341
+`define CSR_MCAUSE  12'h342
+`define Mcause_Ecall 32'd11
+
 // mem
 `define WDisen    1'b0
 `define WEnable   1'b1
@@ -174,4 +188,6 @@
 `define RegBus    31:0
 `define RegRstVal 32'd0
 
+`define TRUE  1'b1
+`define FALSE 1'b0
 

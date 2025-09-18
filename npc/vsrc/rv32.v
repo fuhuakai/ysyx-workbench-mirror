@@ -15,13 +15,15 @@ module rv32(
 /* verilator lint_off UNOPTFLAT */
   wire[`RegBus]   pc;     
   wire[`TYPE_BUS] Inst_type;      //inst type
+  wire            is_ecall;
+  wire            csr_wen;    //csr write enable
   wire            reg_wen;    //RegFile write enable
   wire            mem_wen;    //mem write enable
   wire            mem_ren;    //mem read  enable
   wire[7:0]       wmask;      //mem write mask
   wire[2:0]       rmask;      //mem read  mask
   wire            pc_sel_1;   //mux1 sel
-  wire            pc_sel_2;   //mux2 sel
+  wire[1:0]       pc_sel_2;   //mux2 sel
   wire            alu_sel_2;  //mux3 sel
   wire            alu_sel_1;  //mux4 sel
   wire[1:0]       wb_sel;     //mux5 sel
@@ -35,7 +37,8 @@ module rv32(
   wire[`RegBus]   num1;       //alu operation number1       
   wire[`RegBus]   num2;       //alu operation number2
   wire[`RegBus]   mem_rdata;  //mem read data
-
+  wire[`RegBus]   csr_npc;    //next pc read from csr 
+  wire[`RegBus]   csr_data;   //csr read data
 
   // PC module
   PC PC_inst(
@@ -45,6 +48,7 @@ module rv32(
     .pc_sel_2   (pc_sel_2),
     .result     (result),
     .imm32      (imm32),
+    .csr_npc    (csr_npc),
     .PCadd4     (PCadd4),
     .pc         (pc)   
   );
@@ -74,6 +78,8 @@ module rv32(
     .fun7_31_25 (funct7),
     .Inst_type  (Inst_type),
     .aluc       (aluc),
+    .is_ecall   (is_ecall),
+    .csr_wen    (csr_wen),
     .reg_wen    (reg_wen),    
     .mem_wen    (mem_wen),
     .mem_ren    (mem_ren),  
@@ -97,6 +103,20 @@ module rv32(
     .reg_in     (reg_in),
     .src1       (src1),
     .src2       (src2)
+  );
+
+  // CSR Registers  module
+  csr_regs csr_regs_inst(
+    .clk     (clk),
+    .rst     (rst),
+    .is_ecall(is_ecall),
+    .csr_wen (csr_wen),
+    .funct3  (funct3),
+    .csr_addr({funct7, rs2}),
+    .src1    (src1),
+    .pc      (pc),
+    .csr_npc (csr_npc),
+    .csr_data(csr_data)
   );
 
   // Imm Extend module
@@ -127,7 +147,7 @@ module rv32(
       `MUX5_PCadd4, PCadd4,
       `MUX5_memdat, mem_rdata,
       `MUX5_result, result,
-      `MUX5_IDLE,   32'hdeadbeef}       //uae
+      `MUX5_Csrdata, csr_data}       
   );
   
   // ALU module
@@ -143,9 +163,10 @@ module PC(
   input  wire           clk,
   input  wire           rst,
   input  wire           pc_sel_1,
-  input  wire           pc_sel_2,
+  input  wire [1:0]     pc_sel_2,
   input  wire [`RegBus] result,
   input  wire [`RegBus] imm32,
+  input  wire [`RegBus] csr_npc,
   output wire [`RegBus] PCadd4,
   output reg  [`RegBus] pc
 );
@@ -171,9 +192,11 @@ module PC(
   );
 
   // MUX2 module
-  MuxKey #(2, 1, `BitWidth) i2(npc_temp, (pc_sel_2), {
+  MuxKey #(4, 2, `BitWidth) i2(npc_temp, (pc_sel_2), {
       `MUX2_PCadd4, PCadd4,
-      `MUX2_result, result}
+      `MUX2_result, result,
+      `MUX2_csrnpc, csr_npc,
+      `MUX2_IDLE,   32'hdeadbeef}
   );
 
 endmodule

@@ -10,18 +10,21 @@ module control_unit(
     output reg  [`TYPE_BUS] Inst_type,      // instruction type
     output reg  [`AlucBus]  aluc,           // ALU operation type
     output reg              reg_wen,        // Register File write enable
+    output reg              is_ecall,       // is ecall instruction
+    output reg              csr_wen,        // CSR regs write enable
     output reg              mem_wen,        // memory write enable
     output reg              mem_ren,        // memory read enable
     output reg  [7:0]       wmask,          // memory write mask
     output reg  [2:0]       rmask,          // memory read mask
     output reg              pc_sel_1,       // PC MUX1 select
-    output reg              pc_sel_2,       // PC MUX2 select
+    output reg  [1:0]       pc_sel_2,       // PC MUX2 select
     output reg              alu_sel_2,      // ALU MUX2 select
     output reg              alu_sel_1,      // ALU MUX1 select
     output reg  [1:0]       wb_sel          // write back MUX select
 );
 
     import "DPI-C" function void ebreak(input int station, input int inst, input byte unit);
+    import "DPI-C" function void etrace(input int inst);
 
     wire [6:0] opcode_6_0 = inst[6:0];
     assign rd_11_7        = inst[11:7];
@@ -228,13 +231,47 @@ module control_unit(
             end
             
             `INST_TYPE_E: begin
-                case ({fun7_31_25, rs2_24_20})
-                    `INST_EBREAK: ebreak(`HIT_TRAP, inst, `Unit_CU9);
-                    default:      ebreak(`ABORT, inst, `Unit_CU10);
+                Inst_type  = `INST_I;       
+                aluc       = `ADD;             
+                mem_wen    = `WDisen;   
+                mem_ren    = `WDisen;   
+                wmask      = `WWord;                
+                rmask      = `LoadW;              
+                pc_sel_1   = `MUX1_NBpc;
+                alu_sel_2  = `MUX3_imm32;       
+                alu_sel_1  = `MUX4_pc;          
+                wb_sel     = `MUX5_Csrdata;                
+                case (fun3_14_12)
+                    `INST_CSRRW, `INST_CSRRS: begin
+                            is_ecall = `FALSE;   
+                            csr_wen  = `WEnable;   
+                            reg_wen  = `WEnable;   
+                            pc_sel_2 = `MUX2_PCadd4;
+                        end
+                    default: begin
+                        case ({fun7_31_25, rs2_24_20})
+                            `INST_MRET:   begin
+                                is_ecall = `FALSE;   
+                                csr_wen  = `WDisen;   
+                                reg_wen  = `WDisen; 
+                                pc_sel_2 = `MUX2_csrnpc;
+                            end
+                            `INST_ECALL:  begin
+                                is_ecall = `TRUE;   
+                                csr_wen  = `WEnable;   
+                                reg_wen  = `WEnable;                                  
+                                pc_sel_2 = `MUX2_csrnpc;
+                                etrace(32'hdeadbeef);
+                            end
+                            `INST_EBREAK: ebreak(`HIT_TRAP, inst, `Unit_CU9);
+                            default:      ebreak(`ABORT, inst, `Unit_CU10);
+                        endcase
+                    end
                 endcase
+
             end
-            
-            default: ebreak(`ABORT, inst, `Unit_CU11);
+            default: ebreak(`ABORT, inst, `Unit_CU11);  
         endcase
     end
+    
 endmodule

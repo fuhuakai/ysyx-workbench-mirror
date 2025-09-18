@@ -14,6 +14,7 @@ enum{ DIFFTEST_TO_DUT, DIFFTEST_TO_REF };
 typedef struct {
     word_t gpr[32];
     vaddr_t pc;
+    word_t csr[4];
 }CPU_state;
 
 #endif

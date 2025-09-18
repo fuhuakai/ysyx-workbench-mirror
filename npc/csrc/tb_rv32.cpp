@@ -57,7 +57,8 @@ extern void ebreak(int station, int inst, char unit)
     assert( (unit == Unit_ALU) || (unit == Unit_CU1) || (unit == Unit_CU2) || (unit == Unit_CU3) || 
             (unit == Unit_CU4) || (unit == Unit_CU5) || (unit == Unit_CU6) || (unit == Unit_CU7) || 
             (unit == Unit_CU8) || (unit == Unit_CU9) || (unit == Unit_CU10)|| (unit == Unit_CU11)||
-            (unit == Unit_MEM) || (unit == Unit_IE1) || (unit == Unit_IE2) || (unit == Unit_IE3));
+            (unit == Unit_MEM) || (unit == Unit_IE1) || (unit == Unit_IE2) || (unit == Unit_IE3) ||
+            (unit == Unit_CSR) );
 
     Log("Ebreak takes place in the %s", alu_names[unit]);
     Log("maintime = %ld, state = %d, pc = 0x%08x, inst = 0x%08x", main_time, npc_state.state, top->rootp->rv32__DOT__pc, top->rootp->rv32__DOT__inst);
@@ -78,6 +79,15 @@ extern void ebreak(int station, int inst, char unit)
   }
 }
 
+#define top_mstatus   top->rootp->rv32__DOT__csr_regs_inst__DOT__mstatus
+#define top_mepc      top->rootp->rv32__DOT__csr_regs_inst__DOT__mepc
+#define top_mcause    top->rootp->rv32__DOT__csr_regs_inst__DOT__mcause
+extern void etrace(int inst)
+{
+  _Log(ANSI_FG_YELLOW "[etrace]" ANSI_NONE ANSI_FG_YELLOW "mstatus:" ANSI_NONE "0x%08x, "
+       ANSI_FG_YELLOW "mepc:"    ANSI_NONE " 0x%08x, " ANSI_FG_YELLOW "mcause:" ANSI_NONE " 0x%08x\n", 
+      top_mstatus, top_mepc, top_mcause);
+}
 
 extern int pmem_read(int raddr)
 {
