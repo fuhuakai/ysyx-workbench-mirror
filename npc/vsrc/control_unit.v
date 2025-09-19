@@ -266,9 +266,9 @@ module control_unit(
                                 csr_wen  = `WEnable;   
                                 reg_wen  = `WEnable;                                  
                                 pc_sel_2 = `MUX2_csrnpc;
-                                //`ifdef CONFIG_ETRACE
+                                `ifdef CONFIG_ETRACE
                                     etrace(32'hdeadbeef);
-                                //`endif
+                                `endif
                             end
                             `INST_EBREAK: ebreak(`HIT_TRAP, inst, `Unit_CU9);
                             default:      ebreak(`ABORT, inst, `Unit_CU10);
