@@ -238,7 +238,7 @@ module control_unit(
                 wmask      = `WWord;                
                 rmask      = `LoadW;              
                 pc_sel_1   = `MUX1_NBpc;
-                alu_sel_2  = `MUX3_imm32;       
+                alu_sel_2  = `MUX3_src2;       
                 alu_sel_1  = `MUX4_pc;          
                 wb_sel     = `MUX5_Csrdata;                
                 case (fun3_14_12)

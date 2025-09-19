@@ -192,7 +192,7 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                         vlSelf->rv32__DOT__wmask = 0xfU;
                         vlSelf->rv32__DOT__rmask = 0U;
                         vlSelf->rv32__DOT__pc_sel_1 = 0U;
-                        vlSelf->rv32__DOT__alu_sel_2 = 1U;
+                        vlSelf->rv32__DOT__alu_sel_2 = 0U;
                         vlSelf->rv32__DOT__alu_sel_1 = 0U;
                         vlSelf->rv32__DOT__wb_sel = 3U;
                         if (((1U == (7U & (vlSelf->rv32__DOT__inst 
