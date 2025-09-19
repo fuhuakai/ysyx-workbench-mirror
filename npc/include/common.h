@@ -35,7 +35,7 @@
 #define Unit_IE1      13   //imm extended unit
 #define Unit_IE2      14  
 #define Unit_IE3      15 
-#define Unit_CSR       16   //csr regs
+#define Unit_CSR      16   //csr regs
 
 // npc mem wirte mask
 #define WByte  0b00000001
@@ -50,6 +50,7 @@
 // #define CONFIG_ITRACE   1
 // #define CONFIG_MTRACE   1
 // #define CONFIG_FTRACE   1
+#define CONFIG_ETRACE   1
 // #define CONFIG_IRINGBUF 1
 // #define CONFIG_DIFFTEST 1
 
