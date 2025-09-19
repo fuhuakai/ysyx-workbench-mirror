@@ -284,7 +284,7 @@ module control_unit(
                                 reg_wen  = `WEnable;                                  
                                 pc_sel_2 = `MUX2_csrnpc;
                                 //`ifdef CONFIG_ETRACE
-                                    etrace(32'hdeadbeef);
+                                  //  etrace(32'hdeadbeef);
                                // `endif
                             end
                             `INST_EBREAK: ebreak(`HIT_TRAP, inst, `Unit_CU9);
