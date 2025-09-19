@@ -34,8 +34,21 @@ module control_unit(
     assign fun7_31_25     = inst[31:25];  
 
     always @(*) begin
-        csr_wen = `WDisen;
-        
+        // Set default values for all output signals
+    
+    aluc = `ADD;
+    reg_wen = `WDisen;
+    is_ecall = `FALSE;
+    csr_wen = `WDisen;
+    mem_wen = `WDisen;
+    mem_ren = `WDisen;
+    wmask = `WWord;
+    rmask = `LoadW;
+    pc_sel_1 = `MUX1_NBpc;
+    pc_sel_2 = `MUX2_PCadd4;
+    alu_sel_2 = `MUX3_src2;
+    alu_sel_1 = `MUX4_src1;
+    wb_sel = `MUX5_result;
         case(opcode_6_0)
             `INST_TYPE_R: begin
                 Inst_type = `INST_R;   
