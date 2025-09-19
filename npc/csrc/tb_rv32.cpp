@@ -37,11 +37,12 @@ extern uint64_t get_time();
 static uint32_t rtc_port_base[2] = {0, 0};
 #define start_time 3
 
-static const char *alu_names[16] = {
+static const char *alu_names[17] = {
   "Unit_ALU", "Unit_MEM", "Unit_CU1", "Unit_CU2",
   "Unit_CU3", "Unit_CU4", "Unit_CU5", "Unit_CU6",
   "Unit_CU7", "Unit_CU8", "Unit_CU9", "Unit_CU10",
-  "Unit_CU11","Unit_IE1", "Unit_IE2", "Unit_IE3"
+  "Unit_CU11","Unit_IE1", "Unit_IE2", "Unit_IE3",
+  "Unit_CSR"
 };
 
 extern void ebreak(int station, int inst, char unit)
