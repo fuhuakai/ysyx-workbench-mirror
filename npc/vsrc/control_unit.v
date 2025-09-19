@@ -36,8 +36,7 @@ module control_unit(
     always @(*) begin
         // Set default values for all output signals
 
-    is_ecall = `FALSE;
-    csr_wen = `WDisen;
+  
 
         case(opcode_6_0)
             `INST_TYPE_R: begin
