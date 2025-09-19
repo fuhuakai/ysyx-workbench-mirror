@@ -172,8 +172,6 @@ VL_ATTR_COLD void Vrv32___024root___stl_sequent__TOP__0(Vrv32___024root* vlSelf)
                                                  >> 0x14U))
                                                 ? vlSelf->rv32__DOT__csr_regs_inst__DOT__mcause
                                                 : 0U))));
-    vlSelf->rv32__DOT__is_ecall = 0U;
-    vlSelf->rv32__DOT__csr_wen = 0U;
     if ((0x40U & vlSelf->rv32__DOT__inst)) {
         if ((0x20U & vlSelf->rv32__DOT__inst)) {
             if ((0x10U & vlSelf->rv32__DOT__inst)) {
@@ -209,11 +207,11 @@ VL_ATTR_COLD void Vrv32___024root___stl_sequent__TOP__0(Vrv32___024root* vlSelf)
                             vlSelf->rv32__DOT__pc_sel_2 = 2U;
                         } else if ((0U == (vlSelf->rv32__DOT__inst 
                                            >> 0x14U))) {
-                            Vrv32___024root____Vdpiimwrap_rv32__DOT__control_unit_inst__DOT__etrace_TOP(0xdeadbeefU);
                             vlSelf->rv32__DOT__is_ecall = 1U;
                             vlSelf->rv32__DOT__csr_wen = 1U;
                             vlSelf->rv32__DOT__reg_wen = 1U;
                             vlSelf->rv32__DOT__pc_sel_2 = 2U;
+                            Vrv32___024root____Vdpiimwrap_rv32__DOT__control_unit_inst__DOT__etrace_TOP(0xdeadbeefU);
                         } else if ((1U == (vlSelf->rv32__DOT__inst 
                                            >> 0x14U))) {
                             Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__ebreak_TOP(1U, vlSelf->rv32__DOT__inst, 0xaU);
