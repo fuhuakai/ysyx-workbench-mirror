@@ -36,6 +36,9 @@ module control_unit(
     always @(*) begin
         // Set default values for all output signals
 
+    is_ecall = `FALSE;
+    csr_wen = `WDisen;
+
         case(opcode_6_0)
             `INST_TYPE_R: begin
                 Inst_type = `INST_R;   
@@ -282,7 +285,7 @@ module control_unit(
                                 reg_wen  = `WEnable;                                  
                                 pc_sel_2 = `MUX2_csrnpc;
                                 //`ifdef CONFIG_ETRACE
-                                   // etrace(32'hdeadbeef);
+                                    etrace(32'hdeadbeef);
                                // `endif
                             end
                             `INST_EBREAK: ebreak(`HIT_TRAP, inst, `Unit_CU9);
