@@ -172,19 +172,7 @@ VL_ATTR_COLD void Vrv32___024root___stl_sequent__TOP__0(Vrv32___024root* vlSelf)
                                                  >> 0x14U))
                                                 ? vlSelf->rv32__DOT__csr_regs_inst__DOT__mcause
                                                 : 0U))));
-    vlSelf->rv32__DOT__aluc = 0U;
-    vlSelf->rv32__DOT__reg_wen = 0U;
-    vlSelf->rv32__DOT__is_ecall = 0U;
     vlSelf->rv32__DOT__csr_wen = 0U;
-    vlSelf->rv32__DOT__mem_wen = 0U;
-    vlSelf->rv32__DOT__mem_ren = 0U;
-    vlSelf->rv32__DOT__wmask = 0xfU;
-    vlSelf->rv32__DOT__rmask = 0U;
-    vlSelf->rv32__DOT__pc_sel_1 = 0U;
-    vlSelf->rv32__DOT__pc_sel_2 = 0U;
-    vlSelf->rv32__DOT__alu_sel_2 = 0U;
-    vlSelf->rv32__DOT__alu_sel_1 = 1U;
-    vlSelf->rv32__DOT__wb_sel = 2U;
     if ((0x40U & vlSelf->rv32__DOT__inst)) {
         if ((0x20U & vlSelf->rv32__DOT__inst)) {
             if ((0x10U & vlSelf->rv32__DOT__inst)) {
