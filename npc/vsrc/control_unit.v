@@ -24,7 +24,7 @@ module control_unit(
 );
 
     import "DPI-C" function void ebreak(input int station, input int inst, input byte unit);
-    //import "DPI-C" function void etrace(input int inst);
+    import "DPI-C" function void etrace(input int inst);
 
     wire [6:0] opcode_6_0 = inst[6:0];
     assign rd_11_7        = inst[11:7];
@@ -44,7 +44,9 @@ module control_unit(
                 Inst_type = `INST_R;   
                 reg_wen   = `WEnable;   
                 mem_wen   = `WDisen;   
-                mem_ren   = `WDisen;   
+                mem_ren   = `WDisen;
+                is_ecall  = `FALSE;
+                csr_wen   = `WDisen;   
                 wmask     = `WWord;          
                 rmask     = `LoadW;          
                 pc_sel_1  = `MUX1_NBpc;
@@ -80,7 +82,9 @@ module control_unit(
                 Inst_type = `INST_I;   
                 reg_wen   = `WEnable;   
                 mem_wen   = `WDisen;   
-                mem_ren   = `WDisen;   
+                mem_ren   = `WDisen;
+                is_ecall  = `FALSE;
+                csr_wen   = `WDisen;      
                 wmask     = `WWord;          
                 rmask     = `LoadW;          
                 pc_sel_1  = `MUX1_NBpc;
@@ -112,7 +116,9 @@ module control_unit(
                 aluc      = `ADD;  
                 reg_wen   = `WEnable;   
                 mem_wen   = `WDisen;   
-                mem_ren   = `WEnable;   
+                mem_ren   = `WEnable;
+                is_ecall  = `FALSE;
+                csr_wen   = `WDisen;      
                 wmask     = `WWord;          
                 pc_sel_1  = `MUX1_NBpc;
                 pc_sel_2  = `MUX2_PCadd4;
@@ -135,7 +141,9 @@ module control_unit(
                 aluc      = `ADD;
                 reg_wen   = `WDisen;   
                 mem_wen   = `WEnable;   
-                mem_ren   = `WDisen;   
+                mem_ren   = `WDisen;
+                is_ecall  = `FALSE;
+                csr_wen   = `WDisen;      
                 rmask     = `LoadW;          
                 pc_sel_1  = `MUX1_NBpc;
                 pc_sel_2  = `MUX2_PCadd4;
@@ -155,7 +163,9 @@ module control_unit(
                 Inst_type = `INST_B;   
                 reg_wen   = `WDisen;   
                 mem_wen   = `WDisen;   
-                mem_ren   = `WDisen;   
+                mem_ren   = `WDisen;
+                is_ecall  = `FALSE;
+                csr_wen   = `WDisen;      
                 wmask     = `WWord;            
                 rmask     = `LoadW;            
                 pc_sel_1  = `MUX1_Bpc;
@@ -180,7 +190,9 @@ module control_unit(
                 aluc      = `ADD_LUI;
                 reg_wen   = `WEnable;   
                 mem_wen   = `WDisen;   
-                mem_ren   = `WDisen;   
+                mem_ren   = `WDisen;
+                is_ecall  = `FALSE;
+                csr_wen   = `WDisen;      
                 wmask     = `WWord;          
                 rmask     = `LoadW;          
                 pc_sel_1  = `MUX1_NBpc;
@@ -195,7 +207,9 @@ module control_unit(
                 aluc      = `ADD;
                 reg_wen   = `WEnable;   
                 mem_wen   = `WDisen;   
-                mem_ren   = `WDisen;   
+                mem_ren   = `WDisen;
+                is_ecall  = `FALSE;
+                csr_wen   = `WDisen;      
                 wmask     = `WWord;          
                 rmask     = `LoadW;          
                 pc_sel_1  = `MUX1_NBpc;
@@ -210,7 +224,9 @@ module control_unit(
                 aluc      = `ADD_JALR;
                 reg_wen   = `WEnable;   
                 mem_wen   = `WDisen;   
-                mem_ren   = `WDisen;   
+                mem_ren   = `WDisen;
+                is_ecall  = `FALSE;
+                csr_wen   = `WDisen;      
                 wmask     = `WWord;          
                 rmask     = `LoadW;          
                 pc_sel_1  = `MUX1_NBpc;
@@ -225,7 +241,9 @@ module control_unit(
                 aluc      = `ADD;
                 reg_wen   = `WEnable;   
                 mem_wen   = `WDisen;   
-                mem_ren   = `WDisen;   
+                mem_ren   = `WDisen;
+                is_ecall  = `FALSE;
+                csr_wen   = `WDisen;      
                 wmask     = `WWord;          
                 rmask     = `LoadW;          
                 pc_sel_1  = `MUX1_NBpc;
@@ -267,7 +285,7 @@ module control_unit(
                                 reg_wen  = `WEnable;                                  
                                 pc_sel_2 = `MUX2_csrnpc;
                                 //`ifdef CONFIG_ETRACE
-                                   // etrace(32'hdeadbeef);
+                                    etrace(32'hdeadbeef);
                                // `endif
                             end
                             `INST_EBREAK: ebreak(`HIT_TRAP, inst, `Unit_CU9);

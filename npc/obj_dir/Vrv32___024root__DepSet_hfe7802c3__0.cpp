@@ -15,6 +15,7 @@ void Vrv32___024root___eval_act(Vrv32___024root* vlSelf) {
 
 void Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__ebreak_TOP(IData/*31:0*/ station, IData/*31:0*/ inst, CData/*7:0*/ unit);
 void Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__pmem_read_TOP(IData/*31:0*/ raddr, IData/*31:0*/ &pmem_read__Vfuncrtn);
+void Vrv32___024root____Vdpiimwrap_rv32__DOT__control_unit_inst__DOT__etrace_TOP(IData/*31:0*/ inst);
 void Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__pmem_write_TOP(IData/*31:0*/ waddr, IData/*31:0*/ wdata, CData/*7:0*/ wmask);
 
 VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf) {
@@ -212,6 +213,7 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                             vlSelf->rv32__DOT__pc_sel_2 = 2U;
                         } else if ((0U == (vlSelf->rv32__DOT__inst 
                                            >> 0x14U))) {
+                            Vrv32___024root____Vdpiimwrap_rv32__DOT__control_unit_inst__DOT__etrace_TOP(0xdeadbeefU);
                             vlSelf->rv32__DOT__is_ecall = 1U;
                             vlSelf->rv32__DOT__csr_wen = 1U;
                             vlSelf->rv32__DOT__reg_wen = 1U;
@@ -237,6 +239,8 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                             vlSelf->rv32__DOT__reg_wen = 1U;
                             vlSelf->rv32__DOT__mem_wen = 0U;
                             vlSelf->rv32__DOT__mem_ren = 0U;
+                            vlSelf->rv32__DOT__is_ecall = 0U;
+                            vlSelf->rv32__DOT__csr_wen = 0U;
                             vlSelf->rv32__DOT__wmask = 0xfU;
                             vlSelf->rv32__DOT__rmask = 0U;
                             vlSelf->rv32__DOT__pc_sel_1 = 0U;
@@ -261,6 +265,8 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                         vlSelf->rv32__DOT__reg_wen = 1U;
                         vlSelf->rv32__DOT__mem_wen = 0U;
                         vlSelf->rv32__DOT__mem_ren = 0U;
+                        vlSelf->rv32__DOT__is_ecall = 0U;
+                        vlSelf->rv32__DOT__csr_wen = 0U;
                         vlSelf->rv32__DOT__wmask = 0xfU;
                         vlSelf->rv32__DOT__rmask = 0U;
                         vlSelf->rv32__DOT__pc_sel_1 = 0U;
@@ -280,6 +286,8 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                     vlSelf->rv32__DOT__reg_wen = 0U;
                     vlSelf->rv32__DOT__mem_wen = 0U;
                     vlSelf->rv32__DOT__mem_ren = 0U;
+                    vlSelf->rv32__DOT__is_ecall = 0U;
+                    vlSelf->rv32__DOT__csr_wen = 0U;
                     vlSelf->rv32__DOT__wmask = 0xfU;
                     vlSelf->rv32__DOT__rmask = 0U;
                     vlSelf->rv32__DOT__pc_sel_1 = 1U;
@@ -331,6 +339,8 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                         vlSelf->rv32__DOT__reg_wen = 1U;
                         vlSelf->rv32__DOT__mem_wen = 0U;
                         vlSelf->rv32__DOT__mem_ren = 0U;
+                        vlSelf->rv32__DOT__is_ecall = 0U;
+                        vlSelf->rv32__DOT__csr_wen = 0U;
                         vlSelf->rv32__DOT__wmask = 0xfU;
                         vlSelf->rv32__DOT__rmask = 0U;
                         vlSelf->rv32__DOT__pc_sel_1 = 0U;
@@ -350,6 +360,8 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                     vlSelf->rv32__DOT__reg_wen = 1U;
                     vlSelf->rv32__DOT__mem_wen = 0U;
                     vlSelf->rv32__DOT__mem_ren = 0U;
+                    vlSelf->rv32__DOT__is_ecall = 0U;
+                    vlSelf->rv32__DOT__csr_wen = 0U;
                     vlSelf->rv32__DOT__wmask = 0xfU;
                     vlSelf->rv32__DOT__rmask = 0U;
                     vlSelf->rv32__DOT__pc_sel_1 = 0U;
@@ -419,6 +431,8 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                 vlSelf->rv32__DOT__reg_wen = 0U;
                 vlSelf->rv32__DOT__mem_wen = 1U;
                 vlSelf->rv32__DOT__mem_ren = 0U;
+                vlSelf->rv32__DOT__is_ecall = 0U;
+                vlSelf->rv32__DOT__csr_wen = 0U;
                 vlSelf->rv32__DOT__rmask = 0U;
                 vlSelf->rv32__DOT__pc_sel_1 = 0U;
                 vlSelf->rv32__DOT__pc_sel_2 = 0U;
@@ -454,6 +468,8 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                     vlSelf->rv32__DOT__reg_wen = 1U;
                     vlSelf->rv32__DOT__mem_wen = 0U;
                     vlSelf->rv32__DOT__mem_ren = 0U;
+                    vlSelf->rv32__DOT__is_ecall = 0U;
+                    vlSelf->rv32__DOT__csr_wen = 0U;
                     vlSelf->rv32__DOT__wmask = 0xfU;
                     vlSelf->rv32__DOT__rmask = 0U;
                     vlSelf->rv32__DOT__pc_sel_1 = 0U;
@@ -473,6 +489,8 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                 vlSelf->rv32__DOT__reg_wen = 1U;
                 vlSelf->rv32__DOT__mem_wen = 0U;
                 vlSelf->rv32__DOT__mem_ren = 0U;
+                vlSelf->rv32__DOT__is_ecall = 0U;
+                vlSelf->rv32__DOT__csr_wen = 0U;
                 vlSelf->rv32__DOT__wmask = 0xfU;
                 vlSelf->rv32__DOT__rmask = 0U;
                 vlSelf->rv32__DOT__pc_sel_1 = 0U;
@@ -529,6 +547,8 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
             vlSelf->rv32__DOT__reg_wen = 1U;
             vlSelf->rv32__DOT__mem_wen = 0U;
             vlSelf->rv32__DOT__mem_ren = 1U;
+            vlSelf->rv32__DOT__is_ecall = 0U;
+            vlSelf->rv32__DOT__csr_wen = 0U;
             vlSelf->rv32__DOT__wmask = 0xfU;
             vlSelf->rv32__DOT__pc_sel_1 = 0U;
             vlSelf->rv32__DOT__pc_sel_2 = 0U;
