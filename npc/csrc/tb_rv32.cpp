@@ -88,9 +88,9 @@ extern void ebreak(int station, int inst, char unit)
 #ifdef CONFIG_ETRACE
 extern void etrace(int inst)
 {
-  // _Log(ANSI_FG_YELLOW "[etrace]" ANSI_NONE ANSI_FG_YELLOW "mstatus:" ANSI_NONE "0x%08x, "
-  //      ANSI_FG_YELLOW "mepc:"    ANSI_NONE " 0x%08x, " ANSI_FG_YELLOW "mcause:" ANSI_NONE " 0x%08x\n", 
-  //     top_mstatus, top_mepc, top_mcause);
+  _Log(ANSI_FG_YELLOW "[etrace]" ANSI_NONE ANSI_FG_YELLOW "mstatus:" ANSI_NONE "0x%08x, "
+       ANSI_FG_YELLOW "mepc:"    ANSI_NONE " 0x%08x, " ANSI_FG_YELLOW "mcause:" ANSI_NONE " 0x%08x\n", 
+      top_mstatus, top_mepc, top_mcause);
 }
 #endif  
 
