@@ -52,14 +52,10 @@ __am_asm_trap:
   STORE t1, OFFSET_STATUS(sp)
   STORE t2, OFFSET_EPC(sp)
 
-  fence
-
   mv a0, sp
   call __am_irq_handle
   mv sp, a0                 #将栈指针切换到返回的上下文指针
 
-  fence
-  
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
   csrw mstatus, t1
