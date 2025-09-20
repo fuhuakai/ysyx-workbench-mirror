@@ -28,7 +28,8 @@ module csr_regs(
     //csr_addr =  {funct7, rs2}
     //rs2 == 00000 : ecall : npc =mtvec
     //rs2 == 00010 : mret : npc =mepc
-    assign csr_npc = (csr_addr[1] == 1'b0) ? mtvec : mepc;
+assign csr_npc = (is_ecall == 1'b1) ? mtvec : 
+                 (csr_addr[1] == 1'b0) ? mtvec : mepc;
 
     //write csr
     always @(posedge clk) begin
@@ -51,19 +52,16 @@ module csr_regs(
         end
     end
 
-//read csr
-always @(posedge clk) begin
-    if (rst == `RST_VAL) begin
-        csr_data <= `RegRstVal;
-    end else begin
+    //read csr
+    always @(*) begin
         case (csr_addr)
-            `CSR_MSTATUS: csr_data <= mstatus;
-            `CSR_MTVEC  : csr_data <= mtvec;
-            `CSR_MEPC   : csr_data <= mepc;
-            `CSR_MCAUSE : csr_data <= mcause;
-            default     : csr_data <= `RegRstVal;
+            `CSR_MSTATUS: csr_data = mstatus;
+            `CSR_MTVEC  : csr_data = mtvec;
+            `CSR_MEPC   : csr_data = mepc;
+            `CSR_MCAUSE : csr_data = mcause;
+            default     : csr_data = `RegRstVal;
         endcase
     end
-end
+
 endmodule
 
