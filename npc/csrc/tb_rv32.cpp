@@ -93,7 +93,9 @@ extern void etrace(int inst)
        ANSI_FG_YELLOW "mepc:"    ANSI_NONE " 0x%08x, " ANSI_FG_YELLOW "mcause:" ANSI_NONE " 0x%08x\n", 
       top_mstatus, top_mepc, top_mcause);
   #endif 
-  
+  _Log_dummy(ANSI_FG_YELLOW "[etrace]" ANSI_NONE ANSI_FG_YELLOW "mstatus:" ANSI_NONE "0x%08x, "
+       ANSI_FG_YELLOW "mepc:"    ANSI_NONE " 0x%08x, " ANSI_FG_YELLOW "mcause:" ANSI_NONE " 0x%08x\n", 
+      top_mstatus, top_mepc, top_mcause);
 }
  
 
