@@ -281,6 +281,7 @@ module control_unit(
                                 csr_wen  = `WEnable;   
                                 reg_wen  = `WDisen;                                  
                                 pc_sel_2 = `MUX2_csrnpc;
+                                 $display("ECALL: mtvec");
                                 etrace(32'h0);
                             end
                             `INST_EBREAK: ebreak(`HIT_TRAP, inst, `Unit_CU9);

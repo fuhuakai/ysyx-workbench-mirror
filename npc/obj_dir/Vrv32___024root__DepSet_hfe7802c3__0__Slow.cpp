@@ -205,8 +205,11 @@ VL_ATTR_COLD void Vrv32___024root___stl_sequent__TOP__0(Vrv32___024root* vlSelf)
                             vlSelf->rv32__DOT__csr_wen = 0U;
                             vlSelf->rv32__DOT__reg_wen = 0U;
                             vlSelf->rv32__DOT__pc_sel_2 = 2U;
-                        } else if ((0U == (vlSelf->rv32__DOT__inst 
-                                           >> 0x14U))) {
+                        } else if (VL_UNLIKELY((0U 
+                                                == 
+                                                (vlSelf->rv32__DOT__inst 
+                                                 >> 0x14U)))) {
+                            VL_WRITEF("ECALL: mtvec\n");
                             vlSelf->rv32__DOT__is_ecall = 1U;
                             vlSelf->rv32__DOT__csr_wen = 1U;
                             vlSelf->rv32__DOT__reg_wen = 0U;
