@@ -279,9 +279,9 @@ module control_unit(
                             `INST_ECALL:  begin
                                 is_ecall = `TRUE;   
                                 csr_wen  = `WEnable;   
-                                reg_wen  = `WEnable;                                  
+                                reg_wen  = `WDisen;                                  
                                 pc_sel_2 = `MUX2_csrnpc;
-
+                                etrace(32'h0);
                             end
                             `INST_EBREAK: ebreak(`HIT_TRAP, inst, `Unit_CU9);
                             default:      ebreak(`ABORT, inst, `Unit_CU10);

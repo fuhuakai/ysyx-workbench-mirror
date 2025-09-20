@@ -30,7 +30,7 @@ extern void   ebreak(int station, int inst);                   // control_unit.v
 extern int    pmem_read(int raddr);                            // mem.v
 extern int    pmem_read_inst(int pc);
 extern void   pmem_write(int waddr, int wdata, char wmask);    // mem.v
-//extern void   etrace(int inst);                                // control_unit.v
+extern void   etrace(int inst);                                // control_unit.v
 extern uint64_t get_time();
 //extern void   init_disasm();
 /*********************************************/
@@ -85,7 +85,6 @@ extern void ebreak(int station, int inst, char unit)
 #define top_mepc      top->rootp->rv32__DOT__csr_regs_inst__DOT__mepc
 #define top_mcause    top->rootp->rv32__DOT__csr_regs_inst__DOT__mcause
 
-
 extern void etrace(int inst)
 {
   #ifdef CONFIG_ETRACE
@@ -95,7 +94,6 @@ extern void etrace(int inst)
   #endif 
   
 }
- 
 
 extern int pmem_read(int raddr)
 {
