@@ -28,14 +28,13 @@ module csr_regs(
     //csr_addr =  {funct7, rs2}
     //rs2 == 00000 : ecall : npc =mtvec
     //rs2 == 00010 : mret : npc =mepc
-assign csr_npc = (is_ecall == 1'b1) ? mtvec : 
-                 (csr_addr[1] == 1'b0) ? mtvec : mepc;
+    assign csr_npc = (csr_addr[1] == 1'b0) ? mtvec : mepc;
 
     //write csr
     always @(posedge clk) begin
         if(rst == `RST_VAL) begin
             mstatus <= `RegRstVal;
-            mtvec   <= `RegRstVal;
+            mtvec   <= 32'h80000000;
             mepc    <= `RegRstVal;
             mcause  <= `RegRstVal;
         end else if (is_ecall == 1'b1) begin
