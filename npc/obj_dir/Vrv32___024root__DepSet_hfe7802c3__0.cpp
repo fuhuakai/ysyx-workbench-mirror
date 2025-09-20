@@ -211,6 +211,7 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                             vlSelf->rv32__DOT__pc_sel_2 = 2U;
                         } else if ((0U == (vlSelf->rv32__DOT__inst 
                                            >> 0x14U))) {
+                            Vrv32___024root____Vdpiimwrap_rv32__DOT__control_unit_inst__DOT__etrace_TOP(0U);
                             vlSelf->rv32__DOT__is_ecall = 1U;
                             vlSelf->rv32__DOT__csr_wen = 1U;
                             vlSelf->rv32__DOT__reg_wen = 1U;

@@ -282,6 +282,7 @@ module control_unit(
                                 reg_wen  = `WEnable;                                  
                                 pc_sel_2 = `MUX2_csrnpc;
                                 etrace(32'h0);
+                                etrace(32'h0);
                             end
                             `INST_EBREAK: ebreak(`HIT_TRAP, inst, `Unit_CU9);
                             default:      ebreak(`ABORT, inst, `Unit_CU10);
