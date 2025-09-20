@@ -15,7 +15,6 @@ module register_file(
     integer i;
     reg[`RegBus] regs[`BitWidth-1 : 0];
 
-
     //wire register
     always @(posedge clk) begin
         if(rst == `RST_VAL) begin
