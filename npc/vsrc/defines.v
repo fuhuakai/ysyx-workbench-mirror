@@ -160,7 +160,6 @@
 `define Reg0_VAL  32'd0
 `define WDisen    1'b0
 `define WEnable   1'b1
-`define Mcause_gpr 17  // riscve : a5 ; others a7
 
 
 // CSR regs
@@ -192,4 +191,3 @@
 `define TRUE  1'b1
 `define FALSE 1'b0
 
-`define ETRACE 1'b1
