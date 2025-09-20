@@ -55,7 +55,8 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
     } else if (vlSelf->rv32__DOT__is_ecall) {
         vlSelf->rv32__DOT__csr_regs_inst__DOT__mepc 
             = vlSelf->rv32__DOT__pc;
-        vlSelf->rv32__DOT__csr_regs_inst__DOT__mcause = 0xbU;
+        vlSelf->rv32__DOT__csr_regs_inst__DOT__mcause 
+            = vlSelf->rv32__DOT__csr_regs_inst__DOT__csr_wdata;
     } else if (vlSelf->rv32__DOT__csr_wen) {
         if ((0x300U == (vlSelf->rv32__DOT__inst >> 0x14U))) {
             vlSelf->rv32__DOT__csr_regs_inst__DOT__mstatus 
@@ -149,16 +150,6 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
             = vlSelf->rv32__DOT__register_file_inst__DOT__regs
             [(0x1fU & (vlSelf->rv32__DOT__inst >> 0x14U))];
     }
-    if ((0U == (0x1fU & (vlSelf->rv32__DOT__inst >> 0xfU)))) {
-        vlSelf->rv32__DOT__src1 = 0U;
-        vlSelf->rv32__DOT__i4__DOT__i0__DOT__data_list[0U] = 0U;
-    } else {
-        vlSelf->rv32__DOT__src1 = vlSelf->rv32__DOT__register_file_inst__DOT__regs
-            [(0x1fU & (vlSelf->rv32__DOT__inst >> 0xfU))];
-        vlSelf->rv32__DOT__i4__DOT__i0__DOT__data_list[0U] 
-            = vlSelf->rv32__DOT__register_file_inst__DOT__regs
-            [(0x1fU & (vlSelf->rv32__DOT__inst >> 0xfU))];
-    }
     vlSelf->rv32__DOT__csr_data = ((0x300U == (vlSelf->rv32__DOT__inst 
                                                >> 0x14U))
                                     ? vlSelf->rv32__DOT__csr_regs_inst__DOT__mstatus
@@ -175,6 +166,10 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                                                  >> 0x14U))
                                                 ? vlSelf->rv32__DOT__csr_regs_inst__DOT__mcause
                                                 : 0U))));
+    vlSelf->rv32__DOT__register_file_inst__DOT__src1_temp 
+        = ((0U == (0x1fU & (vlSelf->rv32__DOT__inst 
+                            >> 0xfU))) ? 0U : vlSelf->rv32__DOT__register_file_inst__DOT__regs
+           [(0x1fU & (vlSelf->rv32__DOT__inst >> 0xfU))]);
     if ((0x40U & vlSelf->rv32__DOT__inst)) {
         if ((0x20U & vlSelf->rv32__DOT__inst)) {
             if ((0x10U & vlSelf->rv32__DOT__inst)) {
@@ -581,12 +576,6 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
         = (0x200000000ULL | (QData)((IData)(vlSelf->rv32__DOT__csr_npc)));
     vlSelf->rv32__DOT__i3__DOT__i0__DOT__pair_list[1U] 
         = (QData)((IData)(vlSelf->rv32__DOT__src2));
-    vlSelf->rv32__DOT__i4__DOT__i0__DOT__pair_list[0U] 
-        = (0x100000000ULL | (QData)((IData)(vlSelf->rv32__DOT__src1)));
-    vlSelf->rv32__DOT__csr_regs_inst__DOT__csr_wdata 
-        = ((0x2000U & vlSelf->rv32__DOT__inst) ? (vlSelf->rv32__DOT__csr_data 
-                                                  | vlSelf->rv32__DOT__src1)
-            : vlSelf->rv32__DOT__src1);
     vlSelf->rv32__DOT__i5__DOT__i0__DOT__pair_list[0U] 
         = (0x300000000ULL | (QData)((IData)(vlSelf->rv32__DOT__csr_data)));
     vlSelf->rv32__DOT__i5__DOT__i0__DOT__data_list[0U] 
@@ -647,18 +636,17 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                                                    == 
                                                    vlSelf->rv32__DOT__i4__DOT__i0__DOT__key_list
                                                    [1U]));
-    vlSelf->rv32__DOT__i4__DOT__i0__DOT__lut_out = 
-        ((- (IData)(((IData)(vlSelf->rv32__DOT__alu_sel_1) 
-                     == vlSelf->rv32__DOT__i4__DOT__i0__DOT__key_list
-                     [0U]))) & vlSelf->rv32__DOT__i4__DOT__i0__DOT__data_list
-         [0U]);
-    vlSelf->rv32__DOT__i4__DOT__i0__DOT__lut_out = 
-        (vlSelf->rv32__DOT__i4__DOT__i0__DOT__lut_out 
-         | ((- (IData)(((IData)(vlSelf->rv32__DOT__alu_sel_1) 
-                        == vlSelf->rv32__DOT__i4__DOT__i0__DOT__key_list
-                        [1U]))) & vlSelf->rv32__DOT__i4__DOT__i0__DOT__data_list
-            [1U]));
-    vlSelf->rv32__DOT__num1 = vlSelf->rv32__DOT__i4__DOT__i0__DOT__lut_out;
+    if (vlSelf->rv32__DOT__is_ecall) {
+        vlSelf->rv32__DOT__src1 = vlSelf->rv32__DOT__register_file_inst__DOT__regs
+            [0xfU];
+        vlSelf->rv32__DOT__i4__DOT__i0__DOT__data_list[0U] 
+            = vlSelf->rv32__DOT__register_file_inst__DOT__regs
+            [0xfU];
+    } else {
+        vlSelf->rv32__DOT__src1 = vlSelf->rv32__DOT__register_file_inst__DOT__src1_temp;
+        vlSelf->rv32__DOT__i4__DOT__i0__DOT__data_list[0U] 
+            = vlSelf->rv32__DOT__register_file_inst__DOT__src1_temp;
+    }
     if ((4U & (IData)(vlSelf->rv32__DOT__Inst_type))) {
         if ((2U & (IData)(vlSelf->rv32__DOT__Inst_type))) {
             if ((1U & (IData)(vlSelf->rv32__DOT__Inst_type))) {
@@ -731,6 +719,24 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
         Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__ebreak_TOP(2U, 0xdeafbeafU, 0xeU);
         vlSelf->rv32__DOT__imm_extend_inst__DOT__imm_20 = 0U;
     }
+    vlSelf->rv32__DOT__i4__DOT__i0__DOT__pair_list[0U] 
+        = (0x100000000ULL | (QData)((IData)(vlSelf->rv32__DOT__src1)));
+    vlSelf->rv32__DOT__csr_regs_inst__DOT__csr_wdata 
+        = ((0x2000U & vlSelf->rv32__DOT__inst) ? (vlSelf->rv32__DOT__csr_data 
+                                                  | vlSelf->rv32__DOT__src1)
+            : vlSelf->rv32__DOT__src1);
+    vlSelf->rv32__DOT__i4__DOT__i0__DOT__lut_out = 
+        ((- (IData)(((IData)(vlSelf->rv32__DOT__alu_sel_1) 
+                     == vlSelf->rv32__DOT__i4__DOT__i0__DOT__key_list
+                     [0U]))) & vlSelf->rv32__DOT__i4__DOT__i0__DOT__data_list
+         [0U]);
+    vlSelf->rv32__DOT__i4__DOT__i0__DOT__lut_out = 
+        (vlSelf->rv32__DOT__i4__DOT__i0__DOT__lut_out 
+         | ((- (IData)(((IData)(vlSelf->rv32__DOT__alu_sel_1) 
+                        == vlSelf->rv32__DOT__i4__DOT__i0__DOT__key_list
+                        [1U]))) & vlSelf->rv32__DOT__i4__DOT__i0__DOT__data_list
+            [1U]));
+    vlSelf->rv32__DOT__num1 = vlSelf->rv32__DOT__i4__DOT__i0__DOT__lut_out;
     vlSelf->rv32__DOT__imm_extend_inst__DOT__imm_12_to_32 
         = (((- (IData)((1U & ((IData)(vlSelf->rv32__DOT__imm_extend_inst__DOT__imm_12) 
                               >> 0xbU)))) << 0xcU) 

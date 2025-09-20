@@ -39,7 +39,8 @@ module csr_regs(
             mcause  <= `RegRstVal;
         end else if (is_ecall == 1'b1) begin
             mepc   <= pc;
-            mcause <= `Mcause_Ecall;//直接赋值为11,可靠性存疑
+            //mcause <= `Mcause_Ecall;//直接赋值为11,可靠性存疑
+            mcause <= csr_wdata;
         end else if (csr_wen == 1'b1) begin
             case (csr_addr)
                 `CSR_MSTATUS: mstatus <= csr_wdata;

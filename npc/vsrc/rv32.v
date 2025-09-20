@@ -96,6 +96,7 @@ module rv32(
   register_file register_file_inst(
     .clk        (clk),
     .rst        (rst),
+    .is_ecall   (is_ecall),
     .reg_wen    (reg_wen),
     .rs1        (rs1),
     .rs2        (rs2),

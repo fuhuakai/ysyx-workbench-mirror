@@ -241,9 +241,10 @@ void Vrv32___024root__trace_chg_sub_0(Vrv32___024root* vlSelf, VerilatedVcd::Buf
         bufp->chgIData(oldp+165,(vlSelf->rv32__DOT__register_file_inst__DOT__regs[29]),32);
         bufp->chgIData(oldp+166,(vlSelf->rv32__DOT__register_file_inst__DOT__regs[30]),32);
         bufp->chgIData(oldp+167,(vlSelf->rv32__DOT__register_file_inst__DOT__regs[31]),32);
+        bufp->chgIData(oldp+168,(vlSelf->rv32__DOT__register_file_inst__DOT__src1_temp),32);
     }
-    bufp->chgBit(oldp+168,(vlSelf->clk));
-    bufp->chgBit(oldp+169,(vlSelf->rst));
+    bufp->chgBit(oldp+169,(vlSelf->clk));
+    bufp->chgBit(oldp+170,(vlSelf->rst));
 }
 
 void Vrv32___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {
