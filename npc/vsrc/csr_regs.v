@@ -40,7 +40,6 @@ module csr_regs(
         end else if (is_ecall == 1'b1) begin
             mepc   <= pc;
             mcause <= `Mcause_Ecall;//mcause赋值为11
-            //mcause <= csr_wdata;
         end else if (csr_wen == 1'b1) begin
             case (csr_addr)
                 `CSR_MSTATUS: mstatus <= csr_wdata;
