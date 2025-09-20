@@ -24,7 +24,7 @@ module control_unit(
 );
 
     import "DPI-C" function void ebreak(input int station, input int inst, input byte unit);
-    //import "DPI-C" function void etrace(input int inst);
+    import "DPI-C" function void etrace(input int inst);
 
     wire [6:0] opcode_6_0 = inst[6:0];
     assign rd_11_7        = inst[11:7];
@@ -281,9 +281,7 @@ module control_unit(
                                 csr_wen  = `WEnable;   
                                 reg_wen  = `WEnable;                                  
                                 pc_sel_2 = `MUX2_csrnpc;
-                                //`ifdef CONFIG_ETRACE
-                                    //etrace(32'hdeadbeef);
-                               // `endif
+                                etrace(32'hdeadbeef);
                             end
                             `INST_EBREAK: ebreak(`HIT_TRAP, inst, `Unit_CU9);
                             default:      ebreak(`ABORT, inst, `Unit_CU10);

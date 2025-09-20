@@ -48,6 +48,16 @@ VL_INLINE_OPT void Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__ebrea
     ebreak(station__Vcvt, inst__Vcvt, unit__Vcvt);
 }
 
+extern "C" void etrace(int inst);
+
+VL_INLINE_OPT void Vrv32___024root____Vdpiimwrap_rv32__DOT__control_unit_inst__DOT__etrace_TOP(IData/*31:0*/ inst) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root____Vdpiimwrap_rv32__DOT__control_unit_inst__DOT__etrace_TOP\n"); );
+    // Body
+    int inst__Vcvt;
+    for (size_t inst__Vidx = 0; inst__Vidx < 1; ++inst__Vidx) inst__Vcvt = inst;
+    etrace(inst__Vcvt);
+}
+
 #ifdef VL_DEBUG
 VL_ATTR_COLD void Vrv32___024root___dump_triggers__act(Vrv32___024root* vlSelf);
 #endif  // VL_DEBUG
