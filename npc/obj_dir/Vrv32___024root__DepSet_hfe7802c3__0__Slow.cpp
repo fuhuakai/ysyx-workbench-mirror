@@ -633,10 +633,10 @@ VL_ATTR_COLD void Vrv32___024root___stl_sequent__TOP__0(Vrv32___024root* vlSelf)
                                                    [1U]));
     if (vlSelf->rv32__DOT__is_ecall) {
         vlSelf->rv32__DOT__src1 = vlSelf->rv32__DOT__register_file_inst__DOT__regs
-            [0xfU];
+            [0x11U];
         vlSelf->rv32__DOT__i4__DOT__i0__DOT__data_list[0U] 
             = vlSelf->rv32__DOT__register_file_inst__DOT__regs
-            [0xfU];
+            [0x11U];
     } else {
         vlSelf->rv32__DOT__src1 = vlSelf->rv32__DOT__register_file_inst__DOT__src1_temp;
         vlSelf->rv32__DOT__i4__DOT__i0__DOT__data_list[0U] 
