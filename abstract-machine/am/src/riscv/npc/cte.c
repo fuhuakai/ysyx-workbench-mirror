@@ -4,8 +4,8 @@
 
 static Context* (*user_handler)(Event, Context*) = NULL;
 
-Context* __attribute__((noinline)) __am_irq_handle(Context *c){
-  //printf("trap entered: mepc=0x%x, mcause=0x%x\n", c->mepc, c->mcause);
+Context* __am_irq_handle(Context *c) {
+  printf("trap entered: mepc=0x%x, mcause=0x%x\n", c->mepc, c->mcause);
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
