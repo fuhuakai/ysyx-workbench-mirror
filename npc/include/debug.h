@@ -21,11 +21,6 @@
   } while (0)
 
 
-#define _Log_dummy(...) \
-  do { \
-    log_write(__VA_ARGS__); \
-  } while (0)
-
 #define Log(format, ...) \
     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
         __FILE__, __LINE__, __func__, ## __VA_ARGS__)

@@ -92,10 +92,11 @@ extern void etrace(int inst)
   _Log(ANSI_FG_YELLOW "[etrace]" ANSI_NONE ANSI_FG_YELLOW "mstatus:" ANSI_NONE "0x%08x, "
        ANSI_FG_YELLOW "mepc:"    ANSI_NONE " 0x%08x, " ANSI_FG_YELLOW "mcause:" ANSI_NONE " 0x%08x\n", 
       top_mstatus, top_mepc, top_mcause);
+  #else
+  // 空实现：确保符号存在，避免 DPI 无定义行为
+  (void)inst;
   #endif 
-  _Log_dummy(ANSI_FG_YELLOW "[etrace]" ANSI_NONE ANSI_FG_YELLOW "mstatus:" ANSI_NONE "0x%08x, "
-       ANSI_FG_YELLOW "mepc:"    ANSI_NONE " 0x%08x, " ANSI_FG_YELLOW "mcause:" ANSI_NONE " 0x%08x\n", 
-      top_mstatus, top_mepc, top_mcause);
+  
 }
  
 
