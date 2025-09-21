@@ -50,7 +50,7 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
     }
     if (vlSelf->rst) {
         vlSelf->rv32__DOT__csr_regs_inst__DOT__mstatus = 0U;
-        vlSelf->rv32__DOT__csr_regs_inst__DOT__mtvec = 0x80000000U;
+        vlSelf->rv32__DOT__csr_regs_inst__DOT__mtvec = 0U;
         vlSelf->rv32__DOT__csr_regs_inst__DOT__mepc = 0U;
         vlSelf->rv32__DOT__csr_regs_inst__DOT__mcause = 0U;
     } else if (vlSelf->rv32__DOT__is_ecall) {
