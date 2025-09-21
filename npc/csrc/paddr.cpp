@@ -12,16 +12,6 @@ extern vluint64_t main_time;
 
 uint8_t pmem[PMEM_SIZE] PG_ALIGN = {};
 static const word_t img [] = {
-  0xffc10113,    //addi	sp,sp,-4
-  0x06400593,    //li	  a1,100
-  0x06458613,    //addi	a2,a1,100
-  0x0c860693,    //addi	a3,a2,200
-  0xed468713,    //addi	a4,a3,-300
-  0xe7070793,    //addi	a5,a4,-400
-  0x80178813,    //addi	a6,a5,-2047
-  0x7fa80893,    //addi	a7,a6,2042
-  0x7fa88893,    //addi	a7,a7,2042
-  0x00100073,    //ebreak
   0x06458613,    //addi	a2,a1,100
   0x0c860693,    //addi	a3,a2,200
   0x00000297,    // auipc t0,0
