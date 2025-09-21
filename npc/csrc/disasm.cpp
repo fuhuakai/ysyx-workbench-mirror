@@ -1,6 +1,6 @@
 #include <dlfcn.h>
 #include <../include/common.h>
-#include <../include/capstone/repo/include/capstone/capstone.h>
+#include <../tools/capstone/repo/include/capstone/capstone.h>
 #include <assert.h>
 
 static size_t (*cs_disasm_dl)(csh handle, const uint8_t *code,
