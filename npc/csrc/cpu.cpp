@@ -78,11 +78,9 @@ static void execute_once()
     p += space_len;
     
     // 调用反汇编函数
-    disassemble(p, logbuf + sizeof(logbuf) - p, PCSet.pc, inst_bytes, 4);
-
-    
-    p += snprintf(p, sizeof(logbuf), "0x%08x: 0x%08x ", PCSet.pc, PCSet.inst);
-    *p = '\0';
+    // disassemble(p, logbuf + sizeof(logbuf) - p, PCSet.pc, inst_bytes, 4);
+    // p += snprintf(p, sizeof(logbuf), "0x%08x: 0x%08x ", PCSet.pc, PCSet.inst);
+    // *p = '\0';
 #endif
 
 #ifdef CONFIG_FTRACE
