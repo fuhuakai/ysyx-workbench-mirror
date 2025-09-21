@@ -10,9 +10,9 @@ extern void single_cycle(void);
 extern NPCState npc_state;
 extern Vrv32 *top;
 
-// #ifdef CONFIG_ITRACE
-// extern void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
-// #endif
+#ifdef CONFIG_ITRACE
+extern void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+#endif
 
 #ifdef CONFIG_FTRACE 
 extern void ftrace_ret(uint32_t pc);
@@ -78,11 +78,11 @@ static void execute_once()
     p += space_len;
     
     // 调用反汇编函数
-    //disassemble(p, logbuf + sizeof(logbuf) - p, PCSet.pc, inst_bytes, 4);
+    disassemble(p, logbuf + sizeof(logbuf) - p, PCSet.pc, inst_bytes, 4);
 
-    // char *p = logbuf;
-    // p += snprintf(p, sizeof(logbuf), "0x%08x: 0x%08x ", PCSet.pc, PCSet.inst);
-    // *p = '\0';
+    
+    p += snprintf(p, sizeof(logbuf), "0x%08x: 0x%08x ", PCSet.pc, PCSet.inst);
+    *p = '\0';
 #endif
 
 #ifdef CONFIG_FTRACE
