@@ -46,56 +46,56 @@ void init_disasm() {
   }
 }
 
-// void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte) {
-//   cs_insn *insn;
-//   size_t count = cs_disasm_dl(handle, code, nbyte, pc, 0, &insn);
-//   if (count == 0) {
-//     snprintf(str, size, "unknown");
-//     return;
-//   }
-  
-//   int ret = snprintf(str, size, "%s", insn->mnemonic);
-//   if (insn->op_str[0] != '\0') {
-//     snprintf(str + ret, size - ret, "\t%s", insn->op_str);
-//   }
-//   cs_free_dl(insn, count);
-// }
-
 void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte) {
   cs_insn *insn;
-  size_t count = cs_disasm_dl(handle, code, nbyte, pc, 1, &insn); // 只解码一条指令
-  
-  // 确保缓冲区至少有一个空字符
-  if (size <= 0) {
-    return;
-  }
-  str[0] = '\0';
-  
+  size_t count = cs_disasm_dl(handle, code, nbyte, pc, 0, &insn);
   if (count == 0) {
     snprintf(str, size, "unknown");
     return;
   }
   
-  // 计算需要的总空间
-  int needed = snprintf(NULL, 0, "%s", insn->mnemonic);
+  int ret = snprintf(str, size, "%s", insn->mnemonic);
   if (insn->op_str[0] != '\0') {
-    needed += snprintf(NULL, 0, "\t%s", insn->op_str);
+    snprintf(str + ret, size - ret, "\t%s", insn->op_str);
   }
-  
-  // 检查是否有足够空间
-  if (needed >= size) {
-    // 空间不足，只复制部分内容
-    int ret = snprintf(str, size, "%s", insn->mnemonic);
-    if (ret < size - 1 && insn->op_str[0] != '\0') {
-      snprintf(str + ret, size - ret, "\t%s", insn->op_str);
-    }
-  } else {
-    // 空间足够
-    int ret = snprintf(str, size, "%s", insn->mnemonic);
-    if (insn->op_str[0] != '\0') {
-      snprintf(str + ret, size - ret, "\t%s", insn->op_str);
-    }
-  }
-  
   cs_free_dl(insn, count);
 }
+
+// void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte) {
+//   cs_insn *insn;
+//   size_t count = cs_disasm_dl(handle, code, nbyte, pc, 1, &insn); // 只解码一条指令
+  
+//   // 确保缓冲区至少有一个空字符
+//   if (size <= 0) {
+//     return;
+//   }
+//   str[0] = '\0';
+  
+//   if (count == 0) {
+//     snprintf(str, size, "unknown");
+//     return;
+//   }
+  
+//   // 计算需要的总空间
+//   int needed = snprintf(NULL, 0, "%s", insn->mnemonic);
+//   if (insn->op_str[0] != '\0') {
+//     needed += snprintf(NULL, 0, "\t%s", insn->op_str);
+//   }
+  
+//   // 检查是否有足够空间
+//   if (needed >= size) {
+//     // 空间不足，只复制部分内容
+//     int ret = snprintf(str, size, "%s", insn->mnemonic);
+//     if (ret < size - 1 && insn->op_str[0] != '\0') {
+//       snprintf(str + ret, size - ret, "\t%s", insn->op_str);
+//     }
+//   } else {
+//     // 空间足够
+//     int ret = snprintf(str, size, "%s", insn->mnemonic);
+//     if (insn->op_str[0] != '\0') {
+//       snprintf(str + ret, size - ret, "\t%s", insn->op_str);
+//     }
+//   }
+  
+//   cs_free_dl(insn, count);
+// }
