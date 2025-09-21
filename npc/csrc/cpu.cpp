@@ -84,60 +84,19 @@ static void execute_once()
 // #endif
 
 #ifdef CONFIG_ITRACE
-    // 确保 logbuf 足够大
-    char *p = logbuf;
-    int remaining = sizeof(logbuf);
-    
-    // 格式化 PC 地址
-    int written = snprintf(p, remaining, "0x%08x: ", PCSet.pc);
-    if (written < 0 || written >= remaining) {
-        // 处理错误
-        strncpy(logbuf, "format error", sizeof(logbuf));
-        logbuf[sizeof(logbuf)-1] = '\0';
-        return;
-    }
-    p += written;
-    remaining -= written;
-    
     // 将指令拆分为字节
     uint8_t inst_bytes[4];
     for (int i = 0; i < 4; i++) {
         inst_bytes[i] = (PCSet.inst >> (i * 8)) & 0xFF;
     }
     
-    // 打印指令字节（从高位到低位）
-    for (int i = 3; i >= 0; i--) {
-        written = snprintf(p, remaining, " %02x", inst_bytes[i]);
-        if (written < 0 || written >= remaining) {
-            // 处理错误
-            strncpy(logbuf, "format error", sizeof(logbuf));
-            logbuf[sizeof(logbuf)-1] = '\0';
-            return;
-        }
-        p += written;
-        remaining -= written;
-    }
+    // 直接格式化输出
+    snprintf(logbuf, sizeof(logbuf), "0x%08x: %02x %02x %02x %02x  ", PCSet.pc, 
+             inst_bytes[3], inst_bytes[2], inst_bytes[1], inst_bytes[0]);
     
-    // 添加空格对齐
-    int space_needed = 15 - (p - logbuf); // 调整这个值以获得适当的对齐
-    if (space_needed > 0 && space_needed < remaining) {
-        memset(p, ' ', space_needed);
-        p += space_needed;
-        remaining -= space_needed;
-    } else if (space_needed > 0) {
-        // 没有足够空间，添加尽可能多的空格
-        int spaces_to_add = remaining - 1;
-        if (spaces_to_add > 0) {
-            memset(p, ' ', spaces_to_add);
-            p += spaces_to_add;
-            remaining -= spaces_to_add;
-        }
-    }
-    
-    // 调用反汇编函数
-    disassemble(p, remaining, PCSet.pc, inst_bytes, 4);
-    
-    // 不需要再添加额外的信息，因为 disassemble 已经处理了
+    // 调用反汇编函数，追加到logbuf
+    int len = strlen(logbuf);
+    disassemble(logbuf + len, sizeof(logbuf) - len, PCSet.pc, inst_bytes, 4);
 #endif
 
 #ifdef CONFIG_FTRACE
