@@ -115,12 +115,12 @@
 `define MUX2_IDLE    2'd3
 
 // MUX3
-`define MUX3_src2  1'b0
-`define MUX3_imm32 1'b1
+`define MUX3_pc    1'b0
+`define MUX3_src1  1'b1
 
 // MUX4
-`define MUX4_pc    1'b0
-`define MUX4_src1  1'b1
+`define MUX4_src2  1'b0
+`define MUX4_imm32 1'b1
 
 // MUX5
 `define MUX5_PCadd4  2'd0

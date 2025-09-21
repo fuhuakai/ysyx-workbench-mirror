@@ -24,8 +24,8 @@ void Vrv32___024root__trace_chg_sub_0(Vrv32___024root* vlSelf, VerilatedVcd::Buf
     uint32_t* const oldp VL_ATTR_UNUSED = bufp->oldp(vlSymsp->__Vm_baseCode + 1);
     VlWide<3>/*95:0*/ __Vtemp_h9def89ec__0;
     VlWide<5>/*159:0*/ __Vtemp_h155c0adf__0;
-    VlWide<3>/*95:0*/ __Vtemp_h3751e24b__0;
     VlWide<3>/*95:0*/ __Vtemp_h0807cf62__0;
+    VlWide<3>/*95:0*/ __Vtemp_h3751e24b__0;
     VlWide<5>/*159:0*/ __Vtemp_hb43057ff__0;
     // Body
     if (VL_UNLIKELY(vlSelf->__Vm_traceActivity[0U])) {
@@ -67,8 +67,8 @@ void Vrv32___024root__trace_chg_sub_0(Vrv32___024root* vlSelf, VerilatedVcd::Buf
         bufp->chgCData(oldp+28,(vlSelf->rv32__DOT__rmask),3);
         bufp->chgBit(oldp+29,(vlSelf->rv32__DOT__pc_sel_1));
         bufp->chgCData(oldp+30,(vlSelf->rv32__DOT__pc_sel_2),2);
-        bufp->chgBit(oldp+31,(vlSelf->rv32__DOT__alu_sel_2));
-        bufp->chgBit(oldp+32,(vlSelf->rv32__DOT__alu_sel_1));
+        bufp->chgBit(oldp+31,(vlSelf->rv32__DOT__alu_sel_1));
+        bufp->chgBit(oldp+32,(vlSelf->rv32__DOT__alu_sel_2));
         bufp->chgCData(oldp+33,(vlSelf->rv32__DOT__wb_sel),2);
         bufp->chgCData(oldp+34,(vlSelf->rv32__DOT__aluc),5);
         bufp->chgIData(oldp+35,(((IData)(4U) + vlSelf->rv32__DOT__pc)),32);
@@ -142,22 +142,6 @@ void Vrv32___024root__trace_chg_sub_0(Vrv32___024root* vlSelf, VerilatedVcd::Buf
         bufp->chgIData(oldp+86,(vlSelf->rv32__DOT__csr_regs_inst__DOT__mepc),32);
         bufp->chgIData(oldp+87,(vlSelf->rv32__DOT__csr_regs_inst__DOT__mcause),32);
         bufp->chgIData(oldp+88,(vlSelf->rv32__DOT__csr_regs_inst__DOT__csr_wdata),32);
-        __Vtemp_h3751e24b__0[0U] = (IData)((0x100000000ULL 
-                                            | (QData)((IData)(vlSelf->rv32__DOT__imm32))));
-        __Vtemp_h3751e24b__0[1U] = ((vlSelf->rv32__DOT__src2 
-                                     << 1U) | (IData)(
-                                                      ((0x100000000ULL 
-                                                        | (QData)((IData)(vlSelf->rv32__DOT__imm32))) 
-                                                       >> 0x20U)));
-        __Vtemp_h3751e24b__0[2U] = (vlSelf->rv32__DOT__src2 
-                                    >> 0x1fU);
-        bufp->chgWData(oldp+89,(__Vtemp_h3751e24b__0),66);
-        bufp->chgQData(oldp+92,(vlSelf->rv32__DOT__i3__DOT__i0__DOT__pair_list[0]),33);
-        bufp->chgQData(oldp+94,(vlSelf->rv32__DOT__i3__DOT__i0__DOT__pair_list[1]),33);
-        bufp->chgIData(oldp+96,(vlSelf->rv32__DOT__i3__DOT__i0__DOT__data_list[0]),32);
-        bufp->chgIData(oldp+97,(vlSelf->rv32__DOT__i3__DOT__i0__DOT__data_list[1]),32);
-        bufp->chgIData(oldp+98,(vlSelf->rv32__DOT__i3__DOT__i0__DOT__lut_out),32);
-        bufp->chgBit(oldp+99,(vlSelf->rv32__DOT__i3__DOT__i0__DOT__hit));
         __Vtemp_h0807cf62__0[0U] = (IData)((0x100000000ULL 
                                             | (QData)((IData)(vlSelf->rv32__DOT__src1))));
         __Vtemp_h0807cf62__0[1U] = ((vlSelf->rv32__DOT__pc 
@@ -167,7 +151,23 @@ void Vrv32___024root__trace_chg_sub_0(Vrv32___024root* vlSelf, VerilatedVcd::Buf
                                                        >> 0x20U)));
         __Vtemp_h0807cf62__0[2U] = (vlSelf->rv32__DOT__pc 
                                     >> 0x1fU);
-        bufp->chgWData(oldp+100,(__Vtemp_h0807cf62__0),66);
+        bufp->chgWData(oldp+89,(__Vtemp_h0807cf62__0),66);
+        bufp->chgQData(oldp+92,(vlSelf->rv32__DOT__i3__DOT__i0__DOT__pair_list[0]),33);
+        bufp->chgQData(oldp+94,(vlSelf->rv32__DOT__i3__DOT__i0__DOT__pair_list[1]),33);
+        bufp->chgIData(oldp+96,(vlSelf->rv32__DOT__i3__DOT__i0__DOT__data_list[0]),32);
+        bufp->chgIData(oldp+97,(vlSelf->rv32__DOT__i3__DOT__i0__DOT__data_list[1]),32);
+        bufp->chgIData(oldp+98,(vlSelf->rv32__DOT__i3__DOT__i0__DOT__lut_out),32);
+        bufp->chgBit(oldp+99,(vlSelf->rv32__DOT__i3__DOT__i0__DOT__hit));
+        __Vtemp_h3751e24b__0[0U] = (IData)((0x100000000ULL 
+                                            | (QData)((IData)(vlSelf->rv32__DOT__imm32))));
+        __Vtemp_h3751e24b__0[1U] = ((vlSelf->rv32__DOT__src2 
+                                     << 1U) | (IData)(
+                                                      ((0x100000000ULL 
+                                                        | (QData)((IData)(vlSelf->rv32__DOT__imm32))) 
+                                                       >> 0x20U)));
+        __Vtemp_h3751e24b__0[2U] = (vlSelf->rv32__DOT__src2 
+                                    >> 0x1fU);
+        bufp->chgWData(oldp+100,(__Vtemp_h3751e24b__0),66);
         bufp->chgQData(oldp+103,(vlSelf->rv32__DOT__i4__DOT__i0__DOT__pair_list[0]),33);
         bufp->chgQData(oldp+105,(vlSelf->rv32__DOT__i4__DOT__i0__DOT__pair_list[1]),33);
         bufp->chgIData(oldp+107,(vlSelf->rv32__DOT__i4__DOT__i0__DOT__data_list[0]),32);

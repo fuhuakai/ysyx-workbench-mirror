@@ -27,8 +27,8 @@ class Vrv32___024root final : public VerilatedModule {
         CData/*2:0*/ rv32__DOT__rmask;
         CData/*0:0*/ rv32__DOT__pc_sel_1;
         CData/*1:0*/ rv32__DOT__pc_sel_2;
-        CData/*0:0*/ rv32__DOT__alu_sel_2;
         CData/*0:0*/ rv32__DOT__alu_sel_1;
+        CData/*0:0*/ rv32__DOT__alu_sel_2;
         CData/*1:0*/ rv32__DOT__wb_sel;
         CData/*4:0*/ rv32__DOT__aluc;
         CData/*0:0*/ rv32__DOT__PC_inst__DOT____Vcellinp__i1____pinNumber2;

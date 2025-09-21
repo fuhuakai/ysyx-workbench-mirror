@@ -18,8 +18,8 @@ module control_unit(
     output reg  [2:0]       rmask,          // memory read mask
     output reg              pc_sel_1,       // PC MUX1 select
     output reg  [1:0]       pc_sel_2,       // PC MUX2 select
-    output reg              alu_sel_2,      // ALU MUX2 select
     output reg              alu_sel_1,      // ALU MUX1 select
+    output reg              alu_sel_2,      // ALU MUX2 select
     output reg  [1:0]       wb_sel          // write back MUX select
 );
 
@@ -48,8 +48,8 @@ module control_unit(
                 rmask     = `LoadW;          
                 pc_sel_1  = `MUX1_NBpc;
                 pc_sel_2  = `MUX2_PCadd4;
-                alu_sel_2 = `MUX3_src2;
-                alu_sel_1 = `MUX4_src1;
+                alu_sel_1 = `MUX3_src1;
+                alu_sel_2 = `MUX4_src2;
                 wb_sel    = `MUX5_result;
                 
                 if(fun7_31_25 == 7'b000_0000) begin
@@ -86,8 +86,8 @@ module control_unit(
                 rmask     = `LoadW;          
                 pc_sel_1  = `MUX1_NBpc;
                 pc_sel_2  = `MUX2_PCadd4;
-                alu_sel_2 = `MUX3_imm32;
-                alu_sel_1 = `MUX4_src1;
+                alu_sel_1 = `MUX3_src1;
+                alu_sel_2 = `MUX4_imm32;
                 wb_sel    = `MUX5_result;
                 
                 case (fun3_14_12)
@@ -119,8 +119,8 @@ module control_unit(
                 wmask     = `WWord;          
                 pc_sel_1  = `MUX1_NBpc;
                 pc_sel_2  = `MUX2_PCadd4;
-                alu_sel_2 = `MUX3_imm32;
-                alu_sel_1 = `MUX4_src1;
+                alu_sel_1 = `MUX3_src1;
+                alu_sel_2 = `MUX4_imm32;
                 wb_sel    = `MUX5_memdat;
                 
                 case (fun3_14_12)
@@ -144,8 +144,8 @@ module control_unit(
                 rmask     = `LoadW;          
                 pc_sel_1  = `MUX1_NBpc;
                 pc_sel_2  = `MUX2_PCadd4;
-                alu_sel_2 = `MUX3_imm32;
-                alu_sel_1 = `MUX4_src1;
+                alu_sel_1 = `MUX3_src1;
+                alu_sel_2 = `MUX4_imm32;
                 wb_sel    = `MUX5_memdat;
                 
                 case (fun3_14_12)
@@ -167,8 +167,8 @@ module control_unit(
                 rmask     = `LoadW;            
                 pc_sel_1  = `MUX1_Bpc;
                 pc_sel_2  = `MUX2_PCadd4;      // not used in branch
-                alu_sel_2 = `MUX3_src2;
-                alu_sel_1 = `MUX4_src1;
+                alu_sel_1 = `MUX3_src1;
+                alu_sel_2 = `MUX4_src2;
                 wb_sel    = `MUX5_result;      // not used in branch
                 
                 case (fun3_14_12)
@@ -194,8 +194,8 @@ module control_unit(
                 rmask     = `LoadW;          
                 pc_sel_1  = `MUX1_NBpc;
                 pc_sel_2  = `MUX2_PCadd4;
-                alu_sel_2 = `MUX3_imm32;
-                alu_sel_1 = `MUX4_src1;      // not used for LUI
+                alu_sel_1 = `MUX3_src1;      // not used for LUI
+                alu_sel_2 = `MUX4_imm32;
                 wb_sel    = `MUX5_result;
             end
             
@@ -211,8 +211,8 @@ module control_unit(
                 rmask     = `LoadW;          
                 pc_sel_1  = `MUX1_NBpc;
                 pc_sel_2  = `MUX2_PCadd4;
-                alu_sel_2 = `MUX3_imm32;
-                alu_sel_1 = `MUX4_pc;
+                alu_sel_1 = `MUX3_pc;
+                alu_sel_2 = `MUX4_imm32;
                 wb_sel    = `MUX5_result;
             end
             
@@ -228,8 +228,8 @@ module control_unit(
                 rmask     = `LoadW;          
                 pc_sel_1  = `MUX1_NBpc;
                 pc_sel_2  = `MUX2_result;
-                alu_sel_2 = `MUX3_imm32;
-                alu_sel_1 = `MUX4_src1;
+                alu_sel_1 = `MUX3_src1;
+                alu_sel_2 = `MUX4_imm32;
                 wb_sel    = `MUX5_PCadd4;
             end            
             
@@ -245,8 +245,8 @@ module control_unit(
                 rmask     = `LoadW;          
                 pc_sel_1  = `MUX1_NBpc;
                 pc_sel_2  = `MUX2_result;
-                alu_sel_2 = `MUX3_imm32;
-                alu_sel_1 = `MUX4_pc;
+                alu_sel_1 = `MUX3_pc;
+                alu_sel_2 = `MUX4_imm32;
                 wb_sel    = `MUX5_PCadd4;
             end
             
@@ -258,8 +258,8 @@ module control_unit(
                 wmask      = `WWord;                
                 rmask      = `LoadW;              
                 pc_sel_1   = `MUX1_NBpc;
-                alu_sel_2  = `MUX3_imm32;       
-                alu_sel_1  = `MUX4_pc;          
+                alu_sel_1  = `MUX3_pc;          
+                alu_sel_2  = `MUX4_imm32;       
                 wb_sel     = `MUX5_Csrdata;                
                 case (fun3_14_12)
                     `INST_CSRRW, `INST_CSRRS: begin

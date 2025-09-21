@@ -24,8 +24,8 @@ module rv32(
   wire[2:0]       rmask;      //mem read  mask
   wire            pc_sel_1;   //mux1 sel
   wire[1:0]       pc_sel_2;   //mux2 sel
-  wire            alu_sel_2;  //mux3 sel
-  wire            alu_sel_1;  //mux4 sel
+  wire            alu_sel_1;  //mux3 sel
+  wire            alu_sel_2;  //mux4 sel
   wire[1:0]       wb_sel;     //mux5 sel
   wire[`AlucBus]  aluc;       //alu operation type, like add, sub...
   wire[`RegBus]   PCadd4;     //pc + 4
@@ -86,9 +86,9 @@ module rv32(
     .wmask      (wmask),
     .rmask      (rmask),
     .pc_sel_1   (pc_sel_1),    
-    .pc_sel_2   (pc_sel_2),    
-    .alu_sel_2  (alu_sel_2),   
-    .alu_sel_1  (alu_sel_1),   
+    .pc_sel_2   (pc_sel_2), 
+    .alu_sel_1  (alu_sel_1),    
+    .alu_sel_2  (alu_sel_2),     
     .wb_sel     (wb_sel)
   );
 
@@ -131,15 +131,15 @@ module rv32(
   );
 
   // MUX3 module
-  MuxKey #(2, 1, `BitWidth) i3(num2, alu_sel_2, {
-      `MUX3_src2,  src2,
-      `MUX3_imm32, imm32}
+  MuxKey #(2, 1, `BitWidth) i3(num1, alu_sel_1, {
+      `MUX3_pc,   pc,
+      `MUX3_src1, src1}
   );
 
   // MUX4 module
-  MuxKey #(2, 1, `BitWidth) i4(num1, alu_sel_1, {
-      `MUX4_pc,   pc,
-      `MUX4_src1, src1}
+  MuxKey #(2, 1, `BitWidth) i4(num2, alu_sel_2, {
+      `MUX4_src2,  src2,
+      `MUX4_imm32, imm32}
   );
 
   // MUX5 module
