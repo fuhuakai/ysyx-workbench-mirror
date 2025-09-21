@@ -9,6 +9,7 @@
 /********extern functions or variables********/
 extern void     init_log(const char *log_file);
 extern void     init_sdb();
+extern void     init_disasm();
 extern void     init_mem(void);
 extern void     sdb_set_batch_mode(void); 
 extern uint8_t* guest_to_host(paddr_t paddr);
@@ -136,6 +137,10 @@ void init_monitor(int argc, char *argv[]) {
 
     /* Initialize the simple debugger. */
     init_sdb();
+
+    #ifdef CONFIG_ITRACE 
+        init_disasm();
+    #endif
 
     /* Display welcome message. */
     welcome();
