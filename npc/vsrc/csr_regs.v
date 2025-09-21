@@ -34,7 +34,7 @@ module csr_regs(
     always @(posedge clk) begin
         if(rst == `RST_VAL) begin
             mstatus <= `RegRstVal;
-            mtvec   <= 32'h80000000;
+            mtvec   <= `RegRstVal;
             mepc    <= `RegRstVal;
             mcause  <= `RegRstVal;
         end else if (is_ecall == 1'b1) begin
