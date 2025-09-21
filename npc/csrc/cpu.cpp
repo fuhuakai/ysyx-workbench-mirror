@@ -55,34 +55,6 @@ static void execute_once()
     single_cycle();  
     PCSet.npc = top->rootp->rv32__DOT__pc;  PCSet.ninst = top->rootp->rv32__DOT__inst;
 
-// #ifdef CONFIG_ITRACE
-//     char *p = logbuf;
-//     p += snprintf(p, sizeof(logbuf), "0x%08x: ", PCSet.pc);
-    
-//     // 将指令拆分为字节
-//     uint8_t inst_bytes[4];
-//     for (int i = 0; i < 4; i++) {
-//         inst_bytes[i] = (PCSet.inst >> (i * 8)) & 0xFF;
-//     }
-    
-//     // 打印指令字节
-//     for (int i = 3; i >= 0; i--) {
-//         p += snprintf(p, 4, " %02x", inst_bytes[i]);
-//     }
-    
-//     // 添加空格对齐
-//     int space_len = 8 - 4; // 假设最大指令长度为8字节
-//     if (space_len < 0) space_len = 0;
-//     space_len = space_len * 3 + 1;
-//     memset(p, ' ', space_len);
-//     p += space_len;
-    
-//     // 调用反汇编函数
-//     disassemble(p, logbuf + sizeof(logbuf) - p, PCSet.pc, inst_bytes, 4);
-//     p += snprintf(p, sizeof(logbuf), "0x%08x: 0x%08x ", PCSet.pc, PCSet.inst);
-//     *p = '\0';
-// #endif
-
 #ifdef CONFIG_ITRACE
     // 将指令拆分为字节
     uint8_t inst_bytes[4];
@@ -90,11 +62,11 @@ static void execute_once()
         inst_bytes[i] = (PCSet.inst >> (i * 8)) & 0xFF;
     }
     
-    // 直接格式化输出
+    // 格式化输出
     snprintf(logbuf, sizeof(logbuf), "0x%08x: %02x %02x %02x %02x  ", PCSet.pc, 
              inst_bytes[3], inst_bytes[2], inst_bytes[1], inst_bytes[0]);
     
-    // 调用反汇编函数，追加到logbuf
+    // 调用反汇编函数
     int len = strlen(logbuf);
     disassemble(logbuf + len, sizeof(logbuf) - len, PCSet.pc, inst_bytes, 4);
 #endif
