@@ -201,20 +201,12 @@ int main(int argc, char *argv[])
   /* Initialize differential testing. */
   init_difftest(diff_so_file, img_size, difftest_port);
 
-  // #ifdef CONFIG_ITRACE
-  // init_disasm();
-  // #endif
-
   /* Receive commands from user. */
   sdb_mainloop();
 
   /* End the simulation */
   top->final();
   tfp->close();
-
-  fflush(stdout);
-  fsync(fileno(stdout));
-
   delete top;
 
   return is_exit_status_bad();
