@@ -139,7 +139,6 @@ void pmem_write(int waddr, int wdata, char wmask)
     assert(wmask == WByte);
     char ch = (char)wdata;
     putchar(ch);
-    if (ch == '\n') fflush(stdout);
     return;
   }
 
@@ -212,6 +211,10 @@ int main(int argc, char *argv[])
   /* End the simulation */
   top->final();
   tfp->close();
+
+  fflush(stdout);
+  fsync(fileno(stdout));
+
   delete top;
 
   return is_exit_status_bad();
