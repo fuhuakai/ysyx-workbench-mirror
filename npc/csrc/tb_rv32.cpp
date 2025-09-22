@@ -139,7 +139,7 @@ void pmem_write(int waddr, int wdata, char wmask)
     assert(wmask == WByte);
     char ch = (char)wdata;
     putchar(ch);
-    fflush(stdout);
+    if (ch == '\n') fflush(stdout);
     return;
   }
 
