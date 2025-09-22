@@ -11,9 +11,9 @@
 #include "Vrv32___024root.h"
 
 
-VerilatedVcdC* tfp = new VerilatedVcdC(); //导出vcd波形需要加此语句
+VerilatedVcdC* tfp = new VerilatedVcdC(); //创建VCD波形导出对象
 Vrv32 *top = new Vrv32("top");
-vluint64_t main_time = 0;  //initial 仿真时间
+vluint64_t main_time = 0;  //仿真时间计数器
 
 /********extern functions or variables********/
 extern char *diff_so_file;
@@ -32,7 +32,6 @@ extern int    pmem_read_inst(int pc);
 extern void   pmem_write(int waddr, int wdata, char wmask);    // mem.v
 extern void   etrace(int inst);                                // control_unit.v
 extern uint64_t get_time();
-//extern void   init_disasm();
 /*********************************************/
 
 static uint32_t rtc_port_base[2] = {0, 0};
@@ -166,7 +165,7 @@ void single_cycle(void)
   if(!Verilated::gotFinish())
   { 
     top->clk = 0; top->eval(); tfp->dump(main_time);  main_time++; //推动仿真时间
-    top->clk = 1; top->eval(); tfp->dump(main_time);  main_time++; //推动仿真时间
+    top->clk = 1; top->eval(); tfp->dump(main_time);  main_time++; 
   }
 }
 
