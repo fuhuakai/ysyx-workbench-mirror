@@ -40,7 +40,7 @@ void *malloc(size_t size) {
   size = (size_t)ROUNDUP(size,8);
   char *old = start_addr;
   start_addr +=size;
-  return old;
+  return old; //[start_addr, start_addr + size]
 }
 
 void free(void *ptr) {
