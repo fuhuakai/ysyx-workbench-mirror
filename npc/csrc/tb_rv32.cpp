@@ -139,6 +139,7 @@ void pmem_write(int waddr, int wdata, char wmask)
     assert(wmask == WByte);
     char ch = (char)wdata;
     putchar(ch);
+    if (ch == '\n') fflush(stdout);
     return;
   }
 
@@ -193,7 +194,7 @@ int main(int argc, char *argv[])
   init_monitor(argc, argv);
 
   /* Make stdout unbuffered so serial characters are printed immediately. */
-  setvbuf(stdout, NULL, _IONBF, 0);
+  //setvbuf(stdout, NULL, _IONBF, 0);
 
   /* Initialize the verilator. */
   init_verilator();
