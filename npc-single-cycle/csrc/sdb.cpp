@@ -14,6 +14,7 @@ extern word_t   reg_str2val(const char *s, bool *success);
 extern uint8_t* guest_to_host(paddr_t paddr);
 extern word_t   host_read(void *addr, int len);
 extern word_t   expr(char *e, bool *success);
+extern NPCState npc_state;
 
 /*********************************************/
 
@@ -25,7 +26,10 @@ static int cmd_c(char *args) {
     cpu_exec(-1);
     return 0;
 }
-static int cmd_q(char *args) {return -1;}
+static int cmd_q(char *args) {
+    npc_state.state = NPC_QUIT;//优雅的退出
+    return -1;}
+
 static int cmd_help(char *args);
 static int cmd_si(char *args);
 static int cmd_info(char *args);
@@ -52,25 +56,30 @@ static struct {
 #define NR_CMD ARRLEN(cmd_table)
 
 
-static int cmd_si(char *args) 
-{
-    /* extract the first argument */
-    char *buff = strtok(NULL, " ");
-    //The number of instruction to excute.
-    int inst_num = 0;
+//单步执行
+static int cmd_si(char *args){
+	char *step_arg = strtok(NULL, " ");
+	int step_count = 1;
+	if (step_arg == NULL){
+		cpu_exec(1);
+		return 0;
+	}
+	//确认输入参数格式正确
+	if (sscanf(step_arg, "%d", &step_count) != 1){
+		fprintf(stderr, "ERROR:Invalid step count format\n");
+		return 0;
+	}
+	//确认步数为正
+	if (step_count <= 0){
+		fprintf(stderr, "ERROR: Step count must be positive (got %d)\n", step_count);
+		return 0;
+	}
 
-    if (buff == NULL) 
-        /* no argument given */
-        inst_num = 1;
-    else 
-        //extract the number by converting  char* into int
-        sscanf(buff, "%d", &inst_num);
-    
-    _Log(ANSI_FG_BLUE "%d instruction(s) excuted.\n" ANSI_NONE, inst_num);
-    cpu_exec(inst_num);
-    return 0;
+	for(int i =0; i< step_count; i++){
+		cpu_exec(1);
+	}
+	return 0;
 }
-
 
 static int cmd_info(char *args) 
 {
@@ -196,7 +205,7 @@ static char* rl_gets()
         line_read = NULL;
     }
 
-    line_read = readline("(ysyx)--" ANSI_FG_MAGENTA "npc@uae: " ANSI_NONE);
+    line_read = readline("(ysyx)--" ANSI_FG_GREEN "npc@fhk: " ANSI_NONE);
     if (line_read && *line_read) 
         add_history(line_read);
 

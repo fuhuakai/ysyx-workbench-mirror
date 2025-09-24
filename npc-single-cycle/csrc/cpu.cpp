@@ -3,16 +3,20 @@
 #include "../include/debug.h"
 #include "../include/macro.h"
 #include "Vrv32.h"
-
+#include "Vrv32___024root.h"
 
 /********extern functions or variables********/
 extern void single_cycle(void); 
 extern NPCState npc_state;
 extern Vrv32 *top;
 
+#ifdef CONFIG_ITRACE
+extern void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+#endif
+
 #ifdef CONFIG_FTRACE 
-extern void RET_Log(uint32_t pc, uint32_t npc);
-extern void J_Log(uint32_t pc, uint32_t npc);
+extern void ftrace_ret(uint32_t pc);
+extern void ftrace_call(uint32_t pc, uint32_t npc);
 #define OPCODE(inst)  ((inst) & 0x7f)
 #endif
 
@@ -34,10 +38,10 @@ IFDEF(CONFIG_ITRACE, char logbuf[128]);
 
 
 static struct {
-  word_t pc;        // current pc
-  word_t npc;       // next pc
-  word_t inst;      // current instruction
-  word_t ninst;     // next instruction
+  word_t pc;
+  word_t npc;
+  word_t inst;
+  word_t ninst;
 } PCSet = {0, 0, 0, 0};
 
 
@@ -47,30 +51,31 @@ static void statistic() {
 
 static void execute_once() 
 {
-    PCSet.pc = top->rv32__DOT__bru_inst__DOT__npc_reg;  PCSet.inst = top->rv32__DOT__ifu_inst__DOT__ifu_inst;
-    // take 5 cycles to excute one instruction
-    single_cycle(); single_cycle(); single_cycle(); single_cycle(); single_cycle();     
-    PCSet.npc = top->rv32__DOT__bru_inst__DOT__npc_reg;  PCSet.ninst = top->rv32__DOT__ifu_inst__DOT__ifu_inst;
-    
+    PCSet.pc = top->rootp->rv32__DOT__pc;  PCSet.inst = top->rootp->rv32__DOT__inst;
+    single_cycle();  
+    PCSet.npc = top->rootp->rv32__DOT__pc;  PCSet.ninst = top->rootp->rv32__DOT__inst;
 
 #ifdef CONFIG_ITRACE
-    char *p = logbuf;
-    p += snprintf(p, sizeof(logbuf), "0x%08x: 0x%08x ", PCSet.pc, PCSet.inst);
-    *p = '\0';
-    // // Log("%s",logbuf);
-    // // Log("%ld, 0x%08x %d", logbuf + sizeof(logbuf) - p, PCSet.pc, 4);
-    // char temp[64] = {0};
-    // uint32_t inst = 0x00000513;
-    // void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
-    // // disassemble(p, logbuf + sizeof(logbuf) - p, PCSet.pc, (uint8_t *)&PCSet.inst, 4);
-    // disassemble(temp, sizeof(temp), 0x8000000c, (uint8_t *)&inst, 4);
+    // 将指令拆分为字节
+    uint8_t inst_bytes[4];
+    for (int i = 0; i < 4; i++) {
+        inst_bytes[i] = (PCSet.inst >> (i * 8)) & 0xFF;
+    }
+    
+    // 格式化输出
+    snprintf(logbuf, sizeof(logbuf), "0x%08x: %02x %02x %02x %02x  ", PCSet.pc, 
+             inst_bytes[3], inst_bytes[2], inst_bytes[1], inst_bytes[0]);
+    
+    // 调用反汇编函数
+    int len = strlen(logbuf);
+    disassemble(logbuf + len, sizeof(logbuf) - len, PCSet.pc, inst_bytes, 4);
 #endif
 
 #ifdef CONFIG_FTRACE
   if(PCSet.inst == 0x00008067)  //ret
-    RET_Log(PCSet.pc, PCSet.npc);
+    ftrace_ret(PCSet.pc);
   else if((OPCODE(PCSet.inst)==0b1100111) || (OPCODE(PCSet.inst)== 0b1101111))  //jalr or jal
-    J_Log(PCSet.pc, PCSet.npc);
+    ftrace_call(PCSet.pc, PCSet.npc);
 #endif
 
 #ifdef CONFIG_IRINGBUF 
@@ -118,14 +123,18 @@ void cpu_exec(uint64_t n)
 
     execute(n);
 
+    // 出错时打印环形缓冲区
+    #ifdef CONFIG_IRINGBUF
+    if (npc_state.state == NPC_ABORT) {
+        display_iringbuf();
+     }
+    #endif
+
     switch (npc_state.state) 
     {
         case NPC_RUNNING: npc_state.state = NPC_STOP; break;
 
         case NPC_END: case NPC_ABORT:
-#ifdef CONFIG_IRINGBUF 
-            display_iringbuf();
-#endif
             Log("NPC: %s at pc = 0x%08x",
                 (npc_state.state == NPC_ABORT ? ANSI_FMT("ABORT", ANSI_FG_RED) :
                 (npc_state.halt_ret == 0 ? ANSI_FMT("HIT GOOD TRAP", ANSI_FG_GREEN) :

@@ -1,62 +1,111 @@
-#include <dlfcn.h>
-#include <../include/common.h>
-#include <../tools/capstone/repo/include/capstone/capstone.h>
-#include <assert.h>
+// /***************************************************************************************
+// * Copyright (c) 2014-2022 Zihao Yu, Nanjing University
+// *
+// * NEMU is licensed under Mulan PSL v2.
+// * You can use this software according to the terms and conditions of the Mulan PSL v2.
+// * You may obtain a copy of Mulan PSL v2 at:
+// *          http://license.coscl.org.cn/MulanPSL2
+// *
+// * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+// * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+// * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+// *
+// * See the Mulan PSL v2 for more details.
+// ***************************************************************************************/
 
-static size_t (*cs_disasm_dl)(csh handle, const uint8_t *code,
-    size_t code_size, uint64_t address, size_t count, cs_insn **insn);
-static void (*cs_free_dl)(cs_insn *insn, size_t count);
+// #if defined(__GNUC__) && !defined(__clang__)
+// #pragma GCC diagnostic push
+// #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+// #endif
 
-static csh handle;
+// #include "llvm/MC/MCAsmInfo.h"
+// #include "llvm/MC/MCContext.h"
+// #include "llvm/MC/MCDisassembler/MCDisassembler.h"
+// #include "llvm/MC/MCInstPrinter.h"
+// #if LLVM_VERSION_MAJOR >= 14
+// #include "llvm/MC/TargetRegistry.h"
+// #if LLVM_VERSION_MAJOR >= 15
+// #include "llvm/MC/MCSubtargetInfo.h"
+// #endif
+// #else
+// #include "llvm/Support/TargetRegistry.h"
+// #endif
+// #include "llvm/Support/TargetSelect.h"
 
-void init_disasm() {
-  void *dl_handle;
-  dl_handle = dlopen("tools/capstone/repo/libcapstone.so.5", RTLD_LAZY);
-  if (!dl_handle) {
-    printf("Failed to load capstone library: %s\n", dlerror());
-    assert(0);
-  }
+// #if defined(__GNUC__) && !defined(__clang__)
+// #pragma GCC diagnostic pop
+// #endif
 
-  cs_err (*cs_open_dl)(cs_arch arch, cs_mode mode, csh *handle) = 
-      (cs_err (*)(cs_arch, cs_mode, csh*))dlsym(dl_handle, "cs_open");
-  if (!cs_open_dl) {
-    printf("Failed to find cs_open: %s\n", dlerror());
-    assert(0);
-  }
+// #if LLVM_VERSION_MAJOR < 11
+// #error Please use LLVM with major version >= 11
+// #endif
 
-  cs_disasm_dl = (size_t (*)(csh, const uint8_t*, size_t, uint64_t, size_t, cs_insn**))
-      dlsym(dl_handle, "cs_disasm");
-  if (!cs_disasm_dl) {
-    printf("Failed to find cs_disasm: %s\n", dlerror());
-    assert(0);
-  }
+// using namespace llvm;
 
-  cs_free_dl = (void (*)(cs_insn*, size_t))dlsym(dl_handle, "cs_free");
-  if (!cs_free_dl) {
-    printf("Failed to find cs_free: %s\n", dlerror());
-    assert(0);
-  }
+// static llvm::MCDisassembler *gDisassembler = nullptr;
+// static llvm::MCSubtargetInfo *gSTI = nullptr;
+// static llvm::MCInstPrinter *gIP = nullptr;
 
-  cs_arch arch = CS_ARCH_RISCV;
-  cs_mode mode = CS_MODE_RISCV32;
-  cs_err ret = cs_open_dl(arch, mode, &handle);
-  if (ret != CS_ERR_OK) {
-    printf("Failed to initialize Capstone: %d\n", ret);
-    assert(0);
-  }
-}
+// extern void init_disasm(const char *triple) {
+//     llvm::InitializeAllTargetInfos();
+//     llvm::InitializeAllTargetMCs();
+//     llvm::InitializeAllAsmParsers();
+//     llvm::InitializeAllDisassemblers();
 
-void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte) {
-  cs_insn *insn;
-  size_t count = cs_disasm_dl(handle, code, nbyte, pc, 0, &insn);
-  if (count == 0) {
-    snprintf(str, size, "unknown");
-    return;
-  }
-  
-  int ret = snprintf(str, size, "%s", insn->mnemonic);
-  if (insn->op_str[0] != '\0') {
-    snprintf(str + ret, size - ret, "\t%s", insn->op_str);
-  }
-  cs_free_dl(insn, count);
-}
+//     std::string errstr;
+//     std::string gTriple(triple);
+
+//     llvm::MCInstrInfo *gMII = nullptr;
+//     llvm::MCRegisterInfo *gMRI = nullptr;
+//     auto target = llvm::TargetRegistry::lookupTarget(gTriple, errstr);
+//     if (!target) {
+//         llvm::errs() << "Can't find target for " << gTriple << ": " << errstr << "\n";
+//         assert(0);
+//     }
+
+//     MCTargetOptions MCOptions;
+//     gSTI = target->createMCSubtargetInfo(gTriple, "", "");
+//     std::string isa = target->getName();
+//     if (isa == "riscv32" || isa == "riscv64") {
+//         gSTI->ApplyFeatureFlag("+m");
+//         gSTI->ApplyFeatureFlag("+a");
+//         gSTI->ApplyFeatureFlag("+c");
+//         gSTI->ApplyFeatureFlag("+f");
+//         gSTI->ApplyFeatureFlag("+d");
+//     }
+//     gMII = target->createMCInstrInfo();
+//     gMRI = target->createMCRegInfo(gTriple);
+//     auto AsmInfo = target->createMCAsmInfo(*gMRI, gTriple, MCOptions);
+// #if LLVM_VERSION_MAJOR >= 13
+//     auto llvmTripleTwine = Twine(triple);
+//     auto llvmtriple = llvm::Triple(llvmTripleTwine);
+//     auto Ctx = new llvm::MCContext(llvmtriple,AsmInfo, gMRI, nullptr);
+// #else
+//     auto Ctx = new llvm::MCContext(AsmInfo, gMRI, nullptr);
+// #endif
+//     gDisassembler = target->createMCDisassembler(*gSTI, *Ctx);
+//     gIP = target->createMCInstPrinter(llvm::Triple(gTriple),
+//         AsmInfo->getAssemblerDialect(), *AsmInfo, *gMII, *gMRI);
+//     gIP->setPrintImmHex(true);
+//     gIP->setPrintBranchImmAsAddress(true);
+//     if (isa == "riscv32" || isa == "riscv64")
+//         gIP->applyTargetSpecificCLOption("no-aliases");
+// }
+
+// void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte) {
+//     MCInst inst;
+//     llvm::ArrayRef<uint8_t> arr(code, nbyte);
+//     uint64_t dummy_size = 0;
+//     printf("%d, 0x%08lx %d\n", size, pc, 4);
+//     printf("0x%08x \n", ((uint32_t *)code)[0]);
+//     gDisassembler->getInstruction(inst, dummy_size, arr, pc, llvm::nulls());
+
+//     std::string s;
+//     raw_string_ostream os(s);
+//     gIP->printInst(&inst, pc, "", *gSTI, os);
+
+//     int skip = s.find_first_not_of('\t');
+//     const char *p = s.c_str() + skip;
+//     assert((int)s.length() - skip < size);
+//     strcpy(str, p);
+// }

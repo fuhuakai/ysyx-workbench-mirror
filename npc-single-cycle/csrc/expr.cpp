@@ -21,7 +21,6 @@ enum
     TK_HEX,
     TK_DEC,
     TK_RNAME,
-    TK_CSR,    //csr names
     TK_DEREF,
 };
 
@@ -30,20 +29,19 @@ static struct rule
     const char *regex;
     int token_type;
 } rules[] = {
-    {" +", TK_NOTYPE},                     // spaces
-    {"&&", TK_AND},                        // and
-    {"==", TK_EQ},                         // equal
-    {"!=", TK_INEQ},                       // inequal
-    {"\\+", '+'},                          // plus
-    {"\\-", '-'},                          // substract
-    {"\\*", '*'},                          // multiply
-    {"\\/", '/'},                          // divide
-    {"0x([0-9A-Fa-f])+", TK_HEX},          // hex unsigned int, 0x...
-    {"[0-9]+", TK_DEC},                    // dec unsigned int, 0x...
-    {"\\$([$a-z0-9])+", TK_RNAME},         // reg name
-    {"m(epc|status|status|tvec)", TK_CSR}, // csr name
-    {"\\(", '('},                          // left parenthesis
-    {"\\)", ')'},                          // right parenthesis
+    {" +", TK_NOTYPE},             // spaces
+    {"&&", TK_AND},                // and
+    {"==", TK_EQ},                 // equal
+    {"!=", TK_INEQ},               // inequal
+    {"\\+", '+'},                  // plus
+    {"\\-", '-'},                  // substract
+    {"\\*", '*'},                  // multiply
+    {"\\/", '/'},                  // divide
+    {"0x([0-9A-Fa-f])+", TK_HEX},  // hex unsigned int, 0x...
+    {"[0-9]+", TK_DEC},            // dec unsigned int, 0x...
+    {"\\$([$a-z0-9])+", TK_RNAME}, // reg name
+    {"\\(", '('},                  // left parenthesis
+    {"\\)", ')'},                  // right parenthesis
 };
 
 #define NR_REGEX ARRLEN(rules)

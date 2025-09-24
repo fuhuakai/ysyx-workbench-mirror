@@ -9,12 +9,13 @@
 /********extern functions or variables********/
 extern void     init_log(const char *log_file);
 extern void     init_sdb();
+extern void     init_disasm();
 extern void     init_mem(void);
 extern void     sdb_set_batch_mode(void); 
 extern uint8_t* guest_to_host(paddr_t paddr);
 
 #ifdef CONFIG_FTRACE 
-extern void load_elf(void);
+extern void init_ftrace(const char *elf_file);
 #endif
 /*********************************************/
 
@@ -119,18 +120,27 @@ void init_monitor(int argc, char *argv[]) {
 
 #ifdef CONFIG_FTRACE 
     /* Load the ELF file of the image */
-    load_elf();
+    if (elf_file) {
+    init_ftrace(elf_file);
+  } else {
+    printf("Warning: ftrace requires ELF file (use -e option)\n");
+  }
 #endif
 
     /* Initialize memory. */
     init_mem();
 
+    
     /* Load the image to memory. This will overwrite the built-in image. */
     // long img_size = load_img();
     img_size = load_img();
 
     /* Initialize the simple debugger. */
     init_sdb();
+
+    #ifdef CONFIG_ITRACE 
+        init_disasm();
+    #endif
 
     /* Display welcome message. */
     welcome();

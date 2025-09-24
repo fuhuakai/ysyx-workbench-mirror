@@ -1,211 +1,181 @@
 #include "../include/common.h"
 #include "../include/debug.h"
 
+
 /********extern functions or variables********/
 #ifdef CONFIG_FTRACE 
 extern char *elf_file;
 #endif
 /*********************************************/
 
+
+
 /******************************ftrace******************************/
 #ifdef CONFIG_FTRACE 
 
+#include <elf.h>
 typedef struct {
-    uint32_t addr;
-    uint32_t size;
-    const char *name;
-} FuncSymbol;
+    uint32_t   name_index;            //Elf32_Sym.st_name
+    char       name[20];              //Elf32_Sym's name
+    Elf32_Addr value;                 //Elf32_Sym.st_value
+    uint32_t   size;                  //Elf32_Sym.st_size
+}Func_Sym;
 
-static FuncSymbol *func_symtab = NULL;
-static int sym_count = 0;
-static char *strtab = NULL;
+#define Is_FUNC(info)  ((ELF32_ST_TYPE(info)) == STT_FUNC)
+#define MAX_func_size 32               //the max amount of FUNC symbols
+static int func_amount = 0;            //FUNC symbol amount
+static Func_Sym sym_fun_group[MAX_func_size] = {0};
 
-#define CALL_STACK_DEPTH 64
-static uint32_t call_stack[CALL_STACK_DEPTH];
-static int call_stack_top = -1;
+static Elf32_Ehdr ELF_header = {0};     //ELF Header
+static Elf32_Shdr symtab = {0};         //symbol table section
+static Elf32_Shdr strtab = {0};         //string table section (containing name strings of symbols)
+static Elf32_Sym sym_temp = {0};        //symbol temp
 
-//地址——>函数名
-const char *ftrace_func_name(uint32_t addr) {
-    for (int i = 0; i < sym_count; i++) {
-        if (addr >= func_symtab[i].addr && 
-            addr < func_symtab[i].addr + func_symtab[i].size) {
-            return func_symtab[i].name;
-        }
-    }
-    return "???";
-}
-
-static int call_depth = 0;
-
-void ftrace_call(uint32_t pc, uint32_t target) {
-    if (call_stack_top < CALL_STACK_DEPTH - 1) {
-        call_stack[++call_stack_top] = pc + 4;
-    }
-    const char *target_name = ftrace_func_name(target);
-    
-    printf("0x%08x: ", pc);
-    for (int i = 0; i < call_depth; i++) {
-        printf("  "); // 每层缩进两个空格
-    }
-    printf("call [%s@0x%08x]\n", target_name, target);
-    call_depth++;
-}
-
-void ftrace_ret(uint32_t pc) {
-    if (call_stack_top >= 0) {
-        call_depth--;
-        const char *func_name = ftrace_func_name(pc);
-        
-        printf("0x%08x: ", pc);
-        for (int i = 0; i < call_depth; i++) {
-            printf("  "); 
-        }
-        printf("ret  [%s]\n", func_name);
-    }
-}
+FILE *fp;                               //ELF FILE
+static int sym_amount = 0;              //symbok amount
+static char sym_name_buff[20] = {0};    //symbol name string temp
 
 
-void init_ftrace(const char *elf_file) {
-    // 提前声明所有变量
-    FILE *fp = NULL;
-    uint8_t e_ident[16];
-    int is_32bit;
-    uint32_t e_shoff;
-    uint16_t e_shentsize, e_shnum, e_shstrndx;
-    uint32_t symtab_off = 0, symtab_size = 0;
-    uint32_t strtab_off = 0, strtab_size = 0;
+FILE *ftrace_log ;    // the log recording ftrace infomation
+uint32_t loop = 0;    // the depth of calls
+static uint32_t check_func_interval(uint32_t pc)
+{
     int i;
-    uint32_t sh_type, sh_offset, sh_size, sh_link;
-    int num_syms;
-    uint8_t *symtab_data = NULL;
-    uint8_t *sym;
-    uint8_t st_info;
-    uint32_t st_name, st_value, st_size;
-    int idx;
+    for(i = 0; i < func_amount; i++)
+    {
+        uint32_t addr_s = sym_fun_group[i].value;
+        uint32_t addr_e = sym_fun_group[i].value + sym_fun_group[i].size;
+        if(addr_s <= pc && pc < addr_e)
+            break;
+    }
+    assert(i < func_amount);
+    return i;
+}
+
+
+// if the inst is ret, log the call
+void RET_Log(uint32_t pc, uint32_t npc)
+{
+    loop--;
+    //get the FUNC symbol index in sym_fun_group
+    uint32_t index = check_func_interval(npc);   
+    fprintf(ftrace_log, "[ftrace] 0x%08x: ", pc); 
+    //print the certain amount of '  '
+    for(int i=0; i<loop; i++)                           
+        fprintf(ftrace_log, "  "); 
+    fprintf(ftrace_log, "ret [%s]\n", sym_fun_group[index].name); 
+    fflush(ftrace_log); 
+}
+
+
+
+// if the inst is jal or jalr(other than ret), log the call
+void J_Log(uint32_t pc, uint32_t npc)
+{
+    //get the FUNC symbol index in sym_fun_group
+    uint32_t index = check_func_interval(npc);
+    fprintf(ftrace_log, "[ftrace] 0x%08x: ", pc); 
+    //print the certain amount of '  '
+    for(int i=0; i<loop; i++)
+        fprintf(ftrace_log, "  "); 
+    fprintf(ftrace_log, "call[%s@0x%08x]\n", sym_fun_group[index].name, sym_fun_group[index].value); 
+    fflush(ftrace_log); 
+    loop++;
+}
+
+
+//look up names of symbols in the strtab
+static void Get_sym_name(uint32_t name_index, char *name)
+{
+    int i = 0;
+    fseek(fp, (strtab.sh_offset + name_index), SEEK_SET);      //strtab.sh_offset is the start of string table (those strings are the names of symbols)
+    int ret = fread((sym_name_buff + i), 1, 1, fp);  assert(ret == 1);
+    i++;
+    while(1)
+    {
+        ret = fread((sym_name_buff + i), 1, 1, fp);   assert(ret == 1);
+        if(sym_name_buff[i++] == 0)   // == '.' in strtab
+            break;
+    }
+    sym_name_buff[i-1] = '\0';     
+    strcpy(name, sym_name_buff);
+}
+
+void load_elf(void) 
+{
+    if (elf_file == NULL){
+        Log("No ELF file is given.");
+            return;
+    }
+
+    ftrace_log = fopen("./log/ftrace-log.txt", "w");
+    assert(ftrace_log != NULL);
 
     fp = fopen(elf_file, "rb");
-    if (!fp) {
-        printf("Ftrace: cannot open ELF file %s\n", elf_file);
-        return;
-    }
+    Assert(fp, "Can not open '%s'", elf_file);
 
-    // 1. 读取ELF头
-    if (fread(e_ident, 1, 16, fp) != 16) {
-        fclose(fp);
-        return;
-    }
+    fseek(fp, 0, SEEK_END);
+    long size = ftell(fp);
+    _Log(ANSI_FG_BLUE "The ELF file is %s, size = %ld.\n" ANSI_NONE, elf_file, size);
+    fprintf(ftrace_log, "The ELF file is %s, size = %ld.\n", elf_file, size); 
 
-    // 检查ELF魔数
-    if (memcmp(e_ident, "\x7F""ELF", 4) != 0) {
-        printf("Ftrace: invalid ELF magic\n");
-        fclose(fp);
-        return;
-    }
-
-    // 检查ELF类别 (32/64位)
-    is_32bit = (e_ident[4] == 1); // 1=32-bit, 2=64-bit
-
-    // 2. 读取ELF头剩余部分
-    fseek(fp, 32, SEEK_SET); // 定位到e_shoff,SEEK_SET是从文件开头开始计算偏移
-    if (fread(&e_shoff, 4, 1, fp) != 1) goto cleanup;
+    // ELF Header
+    fseek(fp, 0, SEEK_SET); 
+    int ret = fread(&ELF_header, sizeof(Elf32_Ehdr), 1, fp);  
+    assert(ret == 1); 
+    _Log(ANSI_FG_BLUE "Amount of section headers: %d.\n" ANSI_NONE, ELF_header.e_shnum);
+    _Log(ANSI_FG_BLUE "Start of section headers: 0x%x.\n" ANSI_NONE, ELF_header.e_shoff);
+    fprintf(ftrace_log, "Amount of section headers: %d.\n", ELF_header.e_shnum); 
+    fprintf(ftrace_log, "Start of section headers: 0x%x.\n", ELF_header.e_shoff); 
     
-    fseek(fp, 46, SEEK_SET); // e_shentsize
-    if (fread(&e_shentsize, 2, 1, fp) != 1) goto cleanup;
-    
-    fseek(fp, 48, SEEK_SET); // e_shnum
-    if (fread(&e_shnum, 2, 1, fp) != 1) goto cleanup;
-    
-    fseek(fp, 50, SEEK_SET); // e_shstrndx
-    if (fread(&e_shstrndx, 2, 1, fp) != 1) goto cleanup;
+    // symbol table
+    fseek(fp, ELF_header.e_shoff + (ELF_header.e_shnum - 3) * sizeof(Elf32_Shdr), SEEK_SET); //symtab section in Section Headers
+    ret = fread(&symtab, sizeof(Elf32_Shdr), 1, fp);
+    assert(ret == 1);
+    _Log(ANSI_FG_BLUE "Start of symtab: 0x%x.\n" ANSI_NONE, symtab.sh_offset);
+    fprintf(ftrace_log, "Start of symtab: 0x%x\n", symtab.sh_offset); 
+    sym_amount = symtab.sh_size / sizeof(Elf32_Sym);
+    _Log(ANSI_FG_BLUE "The amount of symbol(s): %d\n" ANSI_NONE, sym_amount);
+    fprintf(ftrace_log, "The amount of symbol(s): %d\n", sym_amount); 
 
-    // 3. 查找符号表和字符串表
-    for (i = 0; i < e_shnum; i++) {
-        fseek(fp, e_shoff + i * e_shentsize, SEEK_SET);
-        
-        // 跳过 sh_name (4字节)
-        fseek(fp, 4, SEEK_CUR);
-        
-        if (fread(&sh_type, 4, 1, fp) != 1) continue;
-        
-        // 跳过 sh_flags (4字节) 和 sh_addr (4字节)
-        fseek(fp, 8, SEEK_CUR);
-        
-        if (fread(&sh_offset, 4, 1, fp) != 1) continue;
-        if (fread(&sh_size, 4, 1, fp) != 1) continue;
-        if (fread(&sh_link, 4, 1, fp) != 1) continue;
-        
-        if (sh_type == 2 || sh_type == 11) { // SHT_SYMTAB 或 SHT_DYNSYM
-            symtab_off = sh_offset;
-            symtab_size = sh_size;
-            
-            // 获取关联的字符串表
-            if (sh_link < e_shnum) {
-                fseek(fp, e_shoff + sh_link * e_shentsize + 16, SEEK_SET);
-                if (fread(&strtab_off, 4, 1, fp) != 1) continue;
-                if (fread(&strtab_size, 4, 1, fp) != 1) continue;
-            }
-            break; // 找到符号表后退出循环
+    //string table
+    ret = fread(&strtab, sizeof(Elf32_Shdr), 1, fp);         //strtab section in Section Headers
+    assert(ret == 1);
+    _Log(ANSI_FG_BLUE "Start of strtab: 0x%x\n" ANSI_NONE, strtab.sh_offset);     //name strings of symbols
+    fprintf(ftrace_log, "Start of strtab: 0x%x\n", strtab.sh_offset); 
+
+    // read every symbol to find FUNC symbol
+    fseek(fp, symtab.sh_offset, SEEK_SET);                //Start of symbol table
+    for(int i = 0; i < sym_amount; i++)
+    {
+        ret = fread(&sym_temp, sizeof(Elf32_Sym), 1, fp);
+        assert(ret == 1);
+        if(Is_FUNC(sym_temp.st_info))
+        {
+            sym_fun_group[func_amount].name_index = sym_temp.st_name;
+            sym_fun_group[func_amount].size = sym_temp.st_size;
+            sym_fun_group[func_amount].value = sym_temp.st_value;
+            func_amount++;
         }
+        assert(func_amount <= MAX_func_size);   // avoid sym_fun_group overflow
     }
 
-    // 4. 读取字符串表(函数名)
-    if (strtab_off && strtab_size) {
-        strtab = (char *)malloc(strtab_size);
-        fseek(fp, strtab_off, SEEK_SET);
-        if (fread(strtab, 1, strtab_size, fp) != strtab_size) {
-            free(strtab);
-            strtab = NULL;
-        }
+
+    //get the name for every func symbol
+    _Log(ANSI_FG_BLUE "Infomation about FUNC symbol(s):\n" ANSI_NONE);
+    fprintf(ftrace_log, "Infomation about FUNC symbol(s):\n"); 
+    for(int i = 0; i < func_amount; i++)
+    {
+        Get_sym_name(sym_fun_group[i].name_index, sym_fun_group[i].name);
+        printf(ANSI_FG_BLUE " %-10s" ANSI_NONE "   addr: 0x%08x   size: %d\n", 
+               sym_fun_group[i].name, sym_fun_group[i].value, sym_fun_group[i].size);
+        fprintf(ftrace_log, " %-10s   addr: 0x%08x   size: %d\n", 
+                sym_fun_group[i].name, sym_fun_group[i].value, sym_fun_group[i].size); 
     }
 
-    // 5. 处理符号表
-    if (symtab_off && symtab_size) {
-        // 计算符号数量 (32位ELF每个符号16字节)
-        num_syms = symtab_size / (is_32bit ? 16 : 24);
-        symtab_data = (uint8_t *)malloc(symtab_size);
-        fseek(fp, symtab_off, SEEK_SET);
-        if (fread(symtab_data, 1, symtab_size, fp) != symtab_size) {
-            free(symtab_data);
-            goto cleanup;
-        }
-
-        // 第一遍：计算函数符号数量
-        sym_count = 0;
-        for (i = 0; i < num_syms; i++) {
-            sym = symtab_data + i * (is_32bit ? 16 : 24);
-            st_info = sym[12]; // 符号类型信息
-            
-            if ((st_info & 0x0F) == 2) { // STT_FUNC
-                sym_count++;
-            }
-        }
-
-        // 分配内存并存储函数符号
-        func_symtab = (FuncSymbol *)malloc(sym_count * sizeof(FuncSymbol));
-        idx = 0;
-        for (i = 0; i < num_syms; i++) {
-            sym = symtab_data + i * (is_32bit ? 16 : 24);
-            
-            memcpy(&st_name, sym, 4);
-            memcpy(&st_value, sym + 4, 4);
-            memcpy(&st_size, sym + 8, 4);
-            st_info = sym[12];
-
-            if ((st_info & 0x0F) == 2) { // STT_FUNC
-                func_symtab[idx].addr = st_value;
-                func_symtab[idx].size = st_size;
-                func_symtab[idx].name = (strtab && st_name < strtab_size) ? 
-                                        (strtab + st_name) : "???";
-                idx++;
-            }
-        }
-        
-        free(symtab_data);
-    }
-
-cleanup:
+    fprintf(ftrace_log, "\n\n");
+    fflush(ftrace_log); 
     fclose(fp);
-    printf("Ftrace: loaded %d functions from %s\n", sym_count, elf_file);
 }
 #endif
 /******************************************************************/
@@ -228,6 +198,7 @@ static struct IRINGBUF iringbuf = {
 
 void append_iringbuf(char *s)
 {
+    // if(iringbuf.inst_buf[iringbuf.head] != NULL)
     if(strcmp(iringbuf.inst_buf[iringbuf.head], ""))    //the iringbuf is not currently empty
     {
         iringbuf.tail = (iringbuf.tail + 1) % MAX_iringbuf_size;  
