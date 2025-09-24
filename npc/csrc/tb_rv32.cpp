@@ -181,7 +181,7 @@ static void init_verilator(void)
   Verilated::traceEverOn(true); //导出vcd波形需要加此语句
 
   top->trace(tfp, 0);
-  tfp->open("wavefor.vcd"); //打开vcd
+  tfp->open("waveform.vcd"); //打开vcd
 
   reset();  //复位
 }
