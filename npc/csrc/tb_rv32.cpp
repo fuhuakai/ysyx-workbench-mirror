@@ -175,10 +175,11 @@ void single_cycle(void)
   }
 }
 
-static void reset(void) {
-  top->rst = 1;
-  for (int i = 0; i < 10; i++) single_cycle();
-  top->rst = 0;
+static void reset(void)
+{
+  top->rst = 0; single_cycle();
+  top->rst = 1; single_cycle();
+  top->rst = 0; single_cycle();
 }
 
 static void init_verilator(void)
