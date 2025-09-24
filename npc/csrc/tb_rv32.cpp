@@ -8,7 +8,7 @@
 #include "../include/common.h"
 #include "../include/utils.h"
 #include "../include/debug.h"
-
+#include "Vrv32___024root.h"
 
 
 Vrv32         *top = new Vrv32("top");
@@ -55,8 +55,8 @@ extern void TRAP(int station, char unit)
   // at the begining (main_time < start_time and before the reset), all gprs are zeros
   if(main_time >= start_time + 1)   
   {
-    npc_state.halt_ret = top->rv32__DOT__register_file_inst__DOT__regs[10]; //a0
-    npc_state.halt_pc = top->rv32__DOT__bru_inst__DOT__npc_reg;
+    npc_state.halt_ret = top->rootp->rv32__DOT__register_file_inst__DOT__regs[10]; //a0
+    npc_state.halt_pc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;
 
     assert( (unit == Unit_IDU1) || (unit == Unit_IDU2) || (unit == Unit_IDU3) || (unit == Unit_IDU4) || 
             (unit == Unit_IDU5) || (unit == Unit_IDU6) || (unit == Unit_IDU7) || (unit == Unit_IDU8) ||
@@ -65,7 +65,7 @@ extern void TRAP(int station, char unit)
 
     Log("TRAP takes place in the %s", unit_names[unit]);
     Log("maintime = %ld, state = %d, pc = 0x%08x, inst = 0x%08x", main_time, npc_state.state, 
-         top->rv32__DOT__bru_inst__DOT__npc_reg, top->rv32__DOT__ifu_inst__DOT__ifu_inst);
+         top->rootp->rv32__DOT__bru_inst__DOT__npc_reg, top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst);
 
     switch(station)
     {
@@ -101,7 +101,7 @@ extern int dmem_read(int raddr)
   static int data = 0xdead000a;
 
   // 因为是是周期CPU，所以理论上来说应该轮到LSU工作的时候才读/写dmem
-  if(main_time < start_time || top->rv32__DOT__clk_cnt != 3)
+  if(main_time < start_time || top->rootp->rv32__DOT__clk_cnt != 3)
     return data;
 
   // device rtc
@@ -126,7 +126,7 @@ extern int dmem_read(int raddr)
 void pmem_write(int waddr, int wdata, char wmask)
 {
   // 因为是是周期CPU，所以理论上来说应该轮到LSU工作的时候才读/写dmem
-  if(main_time < start_time || top->rv32__DOT__clk_cnt != 3)
+  if(main_time < start_time || top->rootp->rv32__DOT__clk_cnt != 3)
     return;
 
   // device serial

@@ -1,7 +1,7 @@
 #include "../include/difftest.h"
 #include <dlfcn.h>
 #include "Vrv32.h"
-
+#include "Vrv32___024root.h"
 
 /********extern functions or variables********/
 extern Vrv32 *top;
@@ -11,7 +11,7 @@ extern uint8_t* guest_to_host(paddr_t paddr);
 
 #ifdef CONFIG_DIFFTEST
 
-#define top_gprs top->rv32__DOT__register_file_inst__DOT__regs
+#define top_gprs top->rootp->rv32__DOT__register_file_inst__DOT__regs
 
 CPU_state cpu;
 static bool skip_flag = false; // the flag to skip the ref 
@@ -34,7 +34,7 @@ const char *ref_regs[] = {
 
 static void update_cpu_state(CPU_state *cpu)
 {
-    cpu->pc = top->rv32__DOT__bru_inst__DOT__npc_reg;
+    cpu->pc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;
     for(int i = 0; i < 32; i++)
         cpu->gpr[i] = top_gprs[i];
     
@@ -42,10 +42,10 @@ static void update_cpu_state(CPU_state *cpu)
     // 0x305 -> 1.mtvec;
     // 0x341 -> 2.mepc;
     // 0x342 -> 3.mcause;
-    cpu->csr[0] = top->rv32__DOT__csr_ctrl_inst__DOT__mstatus;
-    cpu->csr[1] = top->rv32__DOT__csr_ctrl_inst__DOT__mtvec;
-    cpu->csr[2] = top->rv32__DOT__csr_ctrl_inst__DOT__mepc;
-    cpu->csr[3] = top->rv32__DOT__csr_ctrl_inst__DOT__mcause;
+    cpu->csr[0] = top->rootp->rv32__DOT__csr_ctrl_inst__DOT__mstatus;
+    cpu->csr[1] = top->rootp->rv32__DOT__csr_ctrl_inst__DOT__mtvec;
+    cpu->csr[2] = top->rootp->rv32__DOT__csr_ctrl_inst__DOT__mepc;
+    cpu->csr[3] = top->rootp->rv32__DOT__csr_ctrl_inst__DOT__mcause;
 }
 
 

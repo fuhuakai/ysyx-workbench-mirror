@@ -3,7 +3,7 @@
 #include "../include/debug.h"
 #include "../include/macro.h"
 #include "Vrv32.h"
-
+#include "Vrv32___024root.h"
 
 /********extern functions or variables********/
 extern void single_cycle(void); 
@@ -47,10 +47,10 @@ static void statistic() {
 
 static void execute_once() 
 {
-    PCSet.pc = top->rv32__DOT__bru_inst__DOT__npc_reg;  PCSet.inst = top->rv32__DOT__ifu_inst__DOT__ifu_inst;
+    PCSet.pc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;  PCSet.inst = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst;
     // take 5 cycles to excute one instruction
     single_cycle(); single_cycle(); single_cycle(); single_cycle(); single_cycle();     
-    PCSet.npc = top->rv32__DOT__bru_inst__DOT__npc_reg;  PCSet.ninst = top->rv32__DOT__ifu_inst__DOT__ifu_inst;
+    PCSet.npc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;  PCSet.ninst = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst;
     
 
 #ifdef CONFIG_ITRACE
