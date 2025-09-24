@@ -19,20 +19,23 @@
 // npc trap
 #define HIT_TRAP  1
 #define ABORT     2
-#define Unit_IDU1     0  
-#define Unit_IDU2     1   
-#define Unit_IDU3     2  
-#define Unit_IDU4     3   
-#define Unit_IDU5     4   
-#define Unit_IDU6     5   
-#define Unit_IDU7     6   
-#define Unit_IDU8     7   
-#define Unit_IDU9     8   
-#define Unit_EXU1     9   
-#define Unit_LSU1     10  
-#define Unit_LSU2     11  
-#define Unit_CC1      12 
-#define Unit_CC2      13
+#define Unit_ALU      0   //alu
+#define Unit_MEM      1   //memory
+#define Unit_CU1      2   //contril unit
+#define Unit_CU2      3   
+#define Unit_CU3      4   
+#define Unit_CU4      5   
+#define Unit_CU5      6   
+#define Unit_CU6      7   
+#define Unit_CU7      8   
+#define Unit_CU8      9   
+#define Unit_CU9      10   
+#define Unit_CU10     11   
+#define Unit_CU11     12   
+#define Unit_IE1      13   //imm extended unit
+#define Unit_IE2      14  
+#define Unit_IE3      15 
+#define Unit_CSR      16   //csr regs
 
 // npc mem wirte mask
 #define WByte  0b00000001
@@ -44,21 +47,19 @@
 #define ARRLEN(arr) (int)(sizeof(arr) / sizeof(arr[0]))
 
 // trace
- #define CONFIG_ITRACE      1
-// #define CONFIG_MTRACE      1
-// #define CONFIG_FTRACE      1
-// #define CONFIG_ETRACE      1
-// #define CONFIG_IRINGBUF    1
-// #define CONFIG_DIFFTEST    1
-#define MAX_iringbuf_size  20
-#define CONFIG_WAVES       1
+// #define CONFIG_ITRACE   1
+// #define CONFIG_MTRACE   1
+// #define CONFIG_FTRACE   1
+// #define CONFIG_ETRACE   1
+// #define CONFIG_IRINGBUF 1
+// #define CONFIG_DIFFTEST 1
 
+#define MAX_iringbuf_size  20
 
 // device 
-#define CONFIG_DEVICE        1
-#define CONFIG_SERIAL_MMIO   0xa00003f8
-#define CONFIG_RTC_MMIO      0xa0000048
-
+#define CONFIG_DEVICE             1
+#define CONFIG_SERIAL_MMIO 0xa00003f8
+#define CONFIG_RTC_MMIO    0xa0000048
 
 // CSR
 #define MSTATUS 0

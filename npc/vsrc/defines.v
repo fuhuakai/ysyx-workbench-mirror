@@ -3,22 +3,23 @@
 
 
 // R type instruction
-`define TYPE_R        7'b011_0011
-`define INST_ADD_SUB  3'b000
-`define INST_SLL      3'b001
-`define INST_SLT      3'b010
-`define INST_SLTU     3'b011
-`define INST_XOR      3'b100
-`define INST_SRL_SRA  3'b101
-`define INST_OR       3'b110
-`define INST_AND      3'b111
+`define INST_TYPE_R 7'b011_0011
+`define INST_ADD    3'b000
+`define INST_SUB    3'b000
+`define INST_SLL    3'b001
+`define INST_SLT    3'b010
+`define INST_SLTU   3'b011
+`define INST_XOR    3'b100
+`define INST_SRL    3'b101
+`define INST_SRA    3'b101
+`define INST_OR     3'b110
+`define INST_AND    3'b111
 
 
 // I type instruction
-`define TYPE_I       7'b001_0011
+`define INST_TYPE_I  7'b001_0011
 `define INST_ADDI    3'b000
 `define INST_SLLI    3'b001
-`define INST_SLTI    3'b010
 `define INST_SLTIU   3'b011
 `define INST_XORI    3'b100
 `define INST_ORI     3'b110
@@ -27,7 +28,7 @@
 
 
 // L type instruction
-`define TYPE_I_LOAD 7'b000_0011
+`define INST_TYPE_L 7'b000_0011
 `define INST_LB     3'b000
 `define INST_LH     3'b001
 `define INST_LW     3'b010
@@ -36,14 +37,14 @@
 
 
 // S type instruction
-`define TYPE_STORE  7'b010_0011
+`define INST_TYPE_S 7'b010_0011
 `define INST_SB     3'b000
 `define INST_SH     3'b001
 `define INST_SW     3'b010
 
 
 // B type instruction
-`define TYPE_B      7'b110_0011
+`define INST_TYPE_B 7'b110_0011
 `define INST_BEQ    3'b000
 `define INST_BNE    3'b001
 `define INST_BLT    3'b100
@@ -53,69 +54,99 @@
 
 
 // U type instruction
-`define TYPE_U_LUI   7'b011_0111
-`define TYPE_U_AUIPC 7'b001_0111
+`define INST_TYPE_LUI   7'b011_0111
+`define INST_TYPE_AUIPC 7'b001_0111
 
 
 // JALR type instruction
-`define TYPE_I_JALR  7'b110_0111
+`define INST_TYPE_JALR 7'b110_0111
 // JAL type instruction
-`define TYPE_JAL     7'b110_1111
+`define INST_TYPE_JAL  7'b110_1111
 
 
 // E type instruction
-`define TYPE_SYS      7'b111_0011
-`define INST_E_M      3'b000
+`define INST_TYPE_E   7'b111_0011
 `define INST_CSRRW    3'b001
 `define INST_CSRRS    3'b010
 `define INST_MRET     12'b0011_0000_0010
 `define INST_ECALL    12'b0000_0000_0000
 `define INST_EBREAK   12'b0000_0000_0001
-
 `define HIT_TRAP      1
 `define ABORT         2
+`define Unit_ALU      0   //alu
+`define Unit_MEM      1   //memory
+`define Unit_CU1      2   //contril unit
+`define Unit_CU2      3   
+`define Unit_CU3      4   
+`define Unit_CU4      5   
+`define Unit_CU5      6   
+`define Unit_CU6      7   
+`define Unit_CU7      8   
+`define Unit_CU8      9   
+`define Unit_CU9      10   
+`define Unit_CU10     11   
+`define Unit_CU11     12   
+`define Unit_IE1      13   //imm extended unit
+`define Unit_IE2      14  
+`define Unit_IE3      15 
+`define Unit_CSR      16  //csr regs
 
-`define Unit_IDU1     0  
-`define Unit_IDU2     1   
-`define Unit_IDU3     2  
-`define Unit_IDU4     3   
-`define Unit_IDU5     4   
-`define Unit_IDU6     5   
-`define Unit_IDU7     6   
-`define Unit_IDU8     7   
-`define Unit_IDU9     8   
-`define Unit_EXU1     9   
-`define Unit_LSU1     10  
-`define Unit_LSU2     11 
-`define Unit_CC1      12 
-`define Unit_CC2      13 
+
+// type
+`define TYPE_BUS 2:0
+`define INST_R   3'd1
+`define INST_I   3'd2
+`define INST_S   3'd3
+`define INST_U   3'd4
+`define INST_B   3'd5
+`define INST_J   3'd6
+`define INST_E   3'd7
 
 
+// MUX1
+`define MUX1_NBpc  1'b0   //not bump inst
+`define MUX1_Bpc   1'b1   //is bump inst
 
 
-// ALU operation type
-`define ALU_ADD   4'b0000
-`define ALU_SUB   4'b0001
-`define ALU_SLL   4'b0010
-`define ALU_XOR   4'b0011
-`define ALU_SRL   4'b0100
-`define ALU_SRA   4'b0101
-`define ALU_OR    4'b0110
-`define ALU_AND   4'b0111
-`define ALU_EQ    4'b1000
-`define ALU_NE    4'b1001
-`define ALU_LT    4'b1010
-`define ALU_GE    4'b1011
-`define ALU_LTU   4'b1100
-`define ALU_GEU   4'b1101
-`define ALU_Bus   3:0
-`define ALU_Width 4
+// MUX2
+`define MUX2_PCadd4  2'd0
+`define MUX2_result  2'd1
+`define MUX2_csrnpc  2'd2
+`define MUX2_IDLE    2'd3
 
-// ALU operators
-`define RS1_RS2  2'b00
-`define RS1_IMM  2'b01
-`define PC_IMM   2'b10
-`define PC_4     2'b11
+// MUX3
+`define MUX3_pc    1'b0
+`define MUX3_src1  1'b1
+
+// MUX4
+`define MUX4_src2  1'b0
+`define MUX4_imm32 1'b1
+
+// MUX5
+`define MUX5_PCadd4  2'd0
+`define MUX5_memdat  2'd1
+`define MUX5_result  2'd2
+`define MUX5_Csrdata 2'd3
+
+
+// ALU
+`define ADD       5'b00000
+`define SUB       5'b00001
+`define SLL       5'b00010
+`define XOR       5'b00011
+`define SRL       5'b00100
+`define SRA       5'b00101
+`define OR        5'b00110
+`define AND       5'b00111
+`define EQ        5'b01000
+`define NE        5'b01001
+`define LT        5'b01010
+`define GE        5'b01011
+`define LTU       5'b01100
+`define GEU       5'b01101
+`define ADD_LUI   5'b01110
+`define ADD_JALR  5'b01111
+`define AlucBus   4:0
 
 
 // PC
@@ -124,11 +155,22 @@
 
 
 // RegisterFile
-`define Reg_x0     5'd0
-`define Reg0_VAL   32'd0
+`define Reg0      5'd0
+`define Reg0_VAL  32'd0
+`define WDisen    1'b0
+`define WEnable   1'b1
 
 
-// memory
+// CSR regs
+`define CSR_MSTATUS 12'h300
+`define CSR_MTVEC   12'h305
+`define CSR_MEPC    12'h341
+`define CSR_MCAUSE  12'h342
+`define Mcause_Ecall 32'd11
+
+// mem
+`define WDisen    1'b0
+`define WEnable   1'b1
 `define WByte     8'b0000_0001
 `define WHalf     8'b0000_0011
 `define WWord     8'b0000_1111
@@ -139,27 +181,12 @@
 `define LoadH     3'd4
 
 
-// CSR
-`define CSR_Bus      11:0
-`define CSR_Nop      2'b00
-`define CSR_RW       2'b01
-`define CSR_RS       2'b10
-`define CSR_RC       2'b11
-`define MCASUSE_GPR  5'd15  // riscve : a5 ; others a7
-
-
-
 // ARCH
-`define CPU_Width  32
-`define CPU_Bus    31:0
-`define RegNum     32
-`define RegBus     31:0
-`define RegRstVal  32'd0
+`define BitWidth  32
+`define RegNum    32
+`define RegBus    31:0
+`define RegRstVal 32'd0
 
-
-// Logic
-`define TRUE      1'b1
-`define FALSE     1'b0
-`define Disen     1'b0
-`define Enable    1'b1
+`define TRUE  1'b1
+`define FALSE 1'b0
 

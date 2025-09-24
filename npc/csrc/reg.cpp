@@ -3,17 +3,16 @@
 #include "Vrv32.h"
 #include "Vrv32___024root.h"
 
-
 /********extern functions or variables********/
 extern Vrv32 *top;
 /*********************************************/
 
 
-#define top_gprs      top->rootp->rv32__DOT__register_file_inst__DOT__regs
-#define top_mstatus   top->rootp->rv32__DOT__csr_ctrl_inst__DOT__mstatus
-#define top_mtvec     top->rootp->rv32__DOT__csr_ctrl_inst__DOT__mtvec
-#define top_mepc      top->rootp->rv32__DOT__csr_ctrl_inst__DOT__mepc
-#define top_mcause    top->rootp->rv32__DOT__csr_ctrl_inst__DOT__mcause
+#define gpr top->rootp->rv32__DOT__register_file_inst__DOT__regs
+#define top_mstatus   top->rootp->rv32__DOT__csr_regs_inst__DOT__mstatus
+#define top_mtvec     top->rootp->rv32__DOT__csr_regs_inst__DOT__mtvec
+#define top_mepc      top->rootp->rv32__DOT__csr_regs_inst__DOT__mepc
+#define top_mcause    top->rootp->rv32__DOT__csr_regs_inst__DOT__mcause
 
 static const char *regs[] = {
     "$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
@@ -25,12 +24,12 @@ static const char *regs[] = {
 void regs_display() 
 {
     _Log(ANSI_FG_RED "RegName  Hex_Value       Dec_Value\n" ANSI_NONE);
-    _Log(ANSI_FG_YELLOW "$%s\t" ANSI_NONE " 0x%08x\t %010u\n", "pc", 
-         top->rootp->rv32__DOT__bru_inst__DOT__npc_reg, top->rootp->rv32__DOT__bru_inst__DOT__npc_reg);
+    _Log(ANSI_FG_YELLOW "$%s\t" ANSI_NONE " 0x%08x\t %010d\n", "pc", 
+         top->rootp->rv32__DOT__pc, top->rootp->rv32__DOT__pc);
     for(int i = 0; i < 32; i++)
     {
         _Log(ANSI_FG_YELLOW "$%s\t " ANSI_NONE, regs[i]);
-        _Log("0x%08x\t %010u\n", top_gprs[i], top_gprs[i]);
+        _Log("0x%08x\t %010u\n", gpr[i], gpr[i]);
     }
 }
 
@@ -42,8 +41,7 @@ void single_reg_display(char *reg_name)
     if(strcmp(reg_name, "pc") == 0)
     {
         _Log(ANSI_FG_YELLOW "$%s\t" ANSI_NONE " 0x%08x\t %010u %010d\n", "pc", 
-             top->rootp->rv32__DOT__bru_inst__DOT__npc_reg, top->rootp->rv32__DOT__bru_inst__DOT__npc_reg, 
-             top->rootp->rv32__DOT__bru_inst__DOT__npc_reg);
+             top->rootp->rv32__DOT__pc, top->rootp->rv32__DOT__pc, top->rootp->rv32__DOT__pc);
         return;
     }
 
@@ -51,19 +49,19 @@ void single_reg_display(char *reg_name)
     if(strcmp(reg_name, regs[0]) == 0)
     {
         _Log(ANSI_FG_YELLOW "$%s\t" ANSI_NONE " 0x%08x\t %010u\t   %010d\n", 
-             "$0", top_gprs[1], top_gprs[1], top_gprs[1]);
+             "$0", gpr[1], gpr[1], gpr[1]);
         return;
     }      
 
-    //other gprs
+    //others
     for(i = 1; i < 32; i++)
         if(strcmp(reg_name, regs[i]) == 0)
         {
             _Log(ANSI_FG_YELLOW "$%s\t" ANSI_NONE " 0x%08x\t %010u\t   %010d\n", 
-                 regs[i], top_gprs[i], top_gprs[i], top_gprs[i]);
+                 regs[i], gpr[i], gpr[i], gpr[i]);
             return;
         }
-    
+
     // mstatus
     if(strcmp(reg_name, "mstatus") == 0)
     {
@@ -92,7 +90,6 @@ void single_reg_display(char *reg_name)
             top_mcause, top_mcause, top_mcause);
         return;
     }
-
     Warn("No register %s.", reg_name);
 }
 
@@ -101,16 +98,16 @@ word_t reg_str2val(const char *s, bool *success)
     int i;
     //pc
     if(strcmp(s, "pc") == 0)
-        return top->rootp->rv32__DOT__bru_inst__DOT__npc_reg; 
+        return top->rootp->rv32__DOT__pc; 
         
     //reg $0
     if(strcmp(s, regs[0]) == 0)
-        return top_gprs[0];
+        return gpr[0];
         
     //others
     for(i = 1; i < 32; i++)
         if(strcmp(s, regs[i]) == 0)
-        return top_gprs[i];
+        return gpr[i];
 
     //no reg name matched
     *success = false;

@@ -1,4 +1,4 @@
-`include "/home/uae/ysyx/ysyx-workbench/npc/vsrc/defines.v"
+`include "defines.v"
 
 module alu(
     input  wire [`AlucBus] aluc,
@@ -18,7 +18,7 @@ module alu(
         case (aluc)
             `ADD:      result = num1 + num2;
             `SUB:      result = num1 + num2_cplm;
-            `SLL:      result = num1 << (num2 & 32'h1f);
+            `SLL:      result = num1 << num2;
             `XOR:      result = num1 ^ num2;
             `SRL:      result = num1 >> (num2 & 32'h1f);
             `SRA:      result = ($signed(num1)) >>> (num2 & 32'h1f);
@@ -33,7 +33,7 @@ module alu(
             `ADD_LUI:  result = num2;
             `ADD_JALR: result = (num1 + num2) & temp;
             default:   begin
-                        ebreak(`ABORT, 32'hdead0000, `Unit_ALU);
+                        ebreak(`ABORT, 32'hdeafbeaf, `Unit_ALU);
                         result = 0;
                        end
         endcase

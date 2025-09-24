@@ -3,21 +3,18 @@
 #include "Vrv32___024root.h"
 
 
-
 /********extern functions or variables********/
-extern Vrv32      *top;
+extern Vrv32 *top;
 extern vluint64_t main_time;
-extern void close_tfp(void);
 /*********************************************/
 
 
 
 uint8_t pmem[PMEM_SIZE] PG_ALIGN = {};
 static const word_t img [] = {
-  0x00000297,    // auipc t0,0
   0x06458613,    //addi	a2,a1,100
   0x0c860693,    //addi	a3,a2,200
-
+  0x00000297,    // auipc t0,0
   0x00000513,    //	li	a0,0
   0x00100073,    // ebreak 
   0xdeadbeef,    // some data
@@ -55,9 +52,8 @@ static inline bool in_pmem(paddr_t addr) {
 }
 
 static inline void out_of_bound(paddr_t addr) {
-  close_tfp();
   panic("address = 0x%08x is out of bound of pmem [0x%08x, 0x%08x] at pc = 0x%08x  time = %ld", 
-         addr, PMEM_LEFT, PMEM_RIGHT, top->rootp->rv32__DOT__bru_inst__DOT__npc_reg, main_time);
+         addr, PMEM_LEFT, PMEM_RIGHT, top->rootp->rv32__DOT__pc, main_time);
 }
 
 word_t pmem_r(paddr_t addr, int len) 

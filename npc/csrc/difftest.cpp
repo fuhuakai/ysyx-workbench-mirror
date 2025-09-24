@@ -11,18 +11,11 @@ extern uint8_t* guest_to_host(paddr_t paddr);
 
 #ifdef CONFIG_DIFFTEST
 
-#define top_gprs top->rootp->rv32__DOT__register_file_inst__DOT__regs
-
-CPU_state cpu;
-static bool skip_flag = false; // the flag to skip the ref 
+#define top_regs top->rootp->rv32__DOT__register_file_inst__DOT__regs
 
 void (*ref_difftest_memcpy)(paddr_t addr, void *buf, size_t n, bool direction) = NULL;
 void (*ref_difftest_regcpy)(void *dut, bool direction) = NULL;
 void (*ref_difftest_exec)(uint64_t n) = NULL;
-
-void difftest_skip_ref() {
-  skip_flag = true;
-}
 
 const char *ref_regs[] = {
   "$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
@@ -32,26 +25,23 @@ const char *ref_regs[] = {
 };
 
 
-static void update_cpu_state(CPU_state *cpu)
+static void init_cpu_state(CPU_state *cpu)
 {
-    cpu->pc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;
+    cpu->pc = top->rootp->rv32__DOT__pc;
     for(int i = 0; i < 32; i++)
-        cpu->gpr[i] = top_gprs[i];
-    
-    // 0x300 -> 0.mstatus;
-    // 0x305 -> 1.mtvec;
-    // 0x341 -> 2.mepc;
-    // 0x342 -> 3.mcause;
-    cpu->csr[0] = top->rootp->rv32__DOT__csr_ctrl_inst__DOT__mstatus;
-    cpu->csr[1] = top->rootp->rv32__DOT__csr_ctrl_inst__DOT__mtvec;
-    cpu->csr[2] = top->rootp->rv32__DOT__csr_ctrl_inst__DOT__mepc;
-    cpu->csr[3] = top->rootp->rv32__DOT__csr_ctrl_inst__DOT__mcause;
+        cpu->gpr[i] = top_regs[i];
+
+    cpu->csr[0] = top->rootp->rv32__DOT__csr_regs_inst__DOT__mstatus;
+    cpu->csr[1] = top->rootp->rv32__DOT__csr_regs_inst__DOT__mtvec;
+    cpu->csr[2] = top->rootp->rv32__DOT__csr_regs_inst__DOT__mepc;
+    cpu->csr[3] = top->rootp->rv32__DOT__csr_regs_inst__DOT__mcause;
 }
 
 
 void init_difftest(char *ref_so_file, long img_size, int port) 
 {
-    update_cpu_state(&cpu);
+    CPU_state cpu;
+    init_cpu_state(&cpu);
 
     assert(ref_so_file != NULL);
 
@@ -68,9 +58,6 @@ void init_difftest(char *ref_so_file, long img_size, int port)
     ref_difftest_exec = (void (*)(uint64_t))dlsym(handle, "difftest_exec");
     assert(ref_difftest_exec);
 
-    // ref_difftest_raise_intr = dlsym(handle, "difftest_raise_intr");
-    // assert(ref_difftest_raise_intr);
-
     void (*ref_difftest_init)(int) = (void (*)(int))dlsym(handle, "difftest_init");
     assert(ref_difftest_init);
 
@@ -85,26 +72,26 @@ void init_difftest(char *ref_so_file, long img_size, int port)
 
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) 
 {
-    bool success = true;
+    bool match = true;
 
     //check pc
     if(ref_r->pc != pc)
     {
         _Log(ANSI_FG_YELLOW "[difftest]" ANSI_NONE   ANSI_FG_RED "pc" 
              ANSI_NONE "  dut:0x%08x   ref:0x%08x\n", pc, ref_r->pc);
-        success = false;
+        match = false;
     }
 
     //check general purpose registers
     for(int i = 0; i < 32; i++)
-        if(top_gprs[i] != ref_r->gpr[i])
+        if(top_regs[i] != ref_r->gpr[i])
         {
             _Log(ANSI_FG_YELLOW "[difftest]" ANSI_NONE   ANSI_FG_RED "%s" 
-                 ANSI_NONE "  dut:0x%08x   ref:0x%08x\n", ref_regs[i], top_gprs[i], ref_r->gpr[i]);
-            success = false;
+                 ANSI_NONE "  dut:0x%08x   ref:0x%08x\n", ref_regs[i], top_regs[i], ref_r->gpr[i]);
+            match = false;
         }
         
-    return success;
+    return match;
 }
 
 static void checkregs(CPU_state *ref, vaddr_t pc, vaddr_t npc) 
@@ -120,15 +107,6 @@ static void checkregs(CPU_state *ref, vaddr_t pc, vaddr_t npc)
 void difftest_step(vaddr_t pc, vaddr_t npc) 
 {
     CPU_state ref_r;
-    update_cpu_state(&cpu);
-
-    if(skip_flag == true)
-    {
-        // to skip the checking of an instruction, just copy the reg state to reference design
-        ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
-        skip_flag = false;
-        return;
-    }
 
     ref_difftest_exec(1);
     ref_difftest_regcpy(&ref_r, DIFFTEST_TO_DUT);

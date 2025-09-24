@@ -8,46 +8,22 @@
 #include "Vrv32__Syms.h"
 #include "Vrv32___024root.h"
 
-extern "C" int imem_read(int raddr);
+extern "C" int pmem_read(int raddr);
 
-VL_INLINE_OPT void Vrv32___024root____Vdpiimwrap_rv32__DOT__ifu_inst__DOT__imem_read_TOP(IData/*31:0*/ raddr, IData/*31:0*/ &imem_read__Vfuncrtn) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root____Vdpiimwrap_rv32__DOT__ifu_inst__DOT__imem_read_TOP\n"); );
+VL_INLINE_OPT void Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__pmem_read_TOP(IData/*31:0*/ raddr, IData/*31:0*/ &pmem_read__Vfuncrtn) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__pmem_read_TOP\n"); );
     // Body
     int raddr__Vcvt;
     for (size_t raddr__Vidx = 0; raddr__Vidx < 1; ++raddr__Vidx) raddr__Vcvt = raddr;
-    int imem_read__Vfuncrtn__Vcvt;
-    imem_read__Vfuncrtn__Vcvt = imem_read(raddr__Vcvt);
-    imem_read__Vfuncrtn = imem_read__Vfuncrtn__Vcvt;
-}
-
-extern "C" void TRAP(int station, char unit);
-
-VL_INLINE_OPT void Vrv32___024root____Vdpiimwrap_rv32__DOT__idu_inst__DOT__TRAP_TOP(IData/*31:0*/ station, CData/*7:0*/ unit) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root____Vdpiimwrap_rv32__DOT__idu_inst__DOT__TRAP_TOP\n"); );
-    // Body
-    int station__Vcvt;
-    for (size_t station__Vidx = 0; station__Vidx < 1; ++station__Vidx) station__Vcvt = station;
-    char unit__Vcvt;
-    for (size_t unit__Vidx = 0; unit__Vidx < 1; ++unit__Vidx) unit__Vcvt = unit;
-    TRAP(station__Vcvt, unit__Vcvt);
-}
-
-extern "C" int dmem_read(int raddr);
-
-VL_INLINE_OPT void Vrv32___024root____Vdpiimwrap_rv32__DOT__lsu_inst__DOT__dmem_read_TOP(IData/*31:0*/ raddr, IData/*31:0*/ &dmem_read__Vfuncrtn) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root____Vdpiimwrap_rv32__DOT__lsu_inst__DOT__dmem_read_TOP\n"); );
-    // Body
-    int raddr__Vcvt;
-    for (size_t raddr__Vidx = 0; raddr__Vidx < 1; ++raddr__Vidx) raddr__Vcvt = raddr;
-    int dmem_read__Vfuncrtn__Vcvt;
-    dmem_read__Vfuncrtn__Vcvt = dmem_read(raddr__Vcvt);
-    dmem_read__Vfuncrtn = dmem_read__Vfuncrtn__Vcvt;
+    int pmem_read__Vfuncrtn__Vcvt;
+    pmem_read__Vfuncrtn__Vcvt = pmem_read(raddr__Vcvt);
+    pmem_read__Vfuncrtn = pmem_read__Vfuncrtn__Vcvt;
 }
 
 extern "C" void pmem_write(int waddr, int wdata, char wmask);
 
-VL_INLINE_OPT void Vrv32___024root____Vdpiimwrap_rv32__DOT__lsu_inst__DOT__pmem_write_TOP(IData/*31:0*/ waddr, IData/*31:0*/ wdata, CData/*7:0*/ wmask) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root____Vdpiimwrap_rv32__DOT__lsu_inst__DOT__pmem_write_TOP\n"); );
+VL_INLINE_OPT void Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__pmem_write_TOP(IData/*31:0*/ waddr, IData/*31:0*/ wdata, CData/*7:0*/ wmask) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__pmem_write_TOP\n"); );
     // Body
     int waddr__Vcvt;
     for (size_t waddr__Vidx = 0; waddr__Vidx < 1; ++waddr__Vidx) waddr__Vcvt = waddr;
@@ -56,6 +32,30 @@ VL_INLINE_OPT void Vrv32___024root____Vdpiimwrap_rv32__DOT__lsu_inst__DOT__pmem_
     char wmask__Vcvt;
     for (size_t wmask__Vidx = 0; wmask__Vidx < 1; ++wmask__Vidx) wmask__Vcvt = wmask;
     pmem_write(waddr__Vcvt, wdata__Vcvt, wmask__Vcvt);
+}
+
+extern "C" void ebreak(int station, int inst, char unit);
+
+VL_INLINE_OPT void Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__ebreak_TOP(IData/*31:0*/ station, IData/*31:0*/ inst, CData/*7:0*/ unit) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__ebreak_TOP\n"); );
+    // Body
+    int station__Vcvt;
+    for (size_t station__Vidx = 0; station__Vidx < 1; ++station__Vidx) station__Vcvt = station;
+    int inst__Vcvt;
+    for (size_t inst__Vidx = 0; inst__Vidx < 1; ++inst__Vidx) inst__Vcvt = inst;
+    char unit__Vcvt;
+    for (size_t unit__Vidx = 0; unit__Vidx < 1; ++unit__Vidx) unit__Vcvt = unit;
+    ebreak(station__Vcvt, inst__Vcvt, unit__Vcvt);
+}
+
+extern "C" void etrace(int inst);
+
+VL_INLINE_OPT void Vrv32___024root____Vdpiimwrap_rv32__DOT__control_unit_inst__DOT__etrace_TOP(IData/*31:0*/ inst) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root____Vdpiimwrap_rv32__DOT__control_unit_inst__DOT__etrace_TOP\n"); );
+    // Body
+    int inst__Vcvt;
+    for (size_t inst__Vidx = 0; inst__Vidx < 1; ++inst__Vidx) inst__Vcvt = inst;
+    etrace(inst__Vcvt);
 }
 
 #ifdef VL_DEBUG

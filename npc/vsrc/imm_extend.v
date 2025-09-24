@@ -1,17 +1,17 @@
-`include "/home/uae/ysyx/ysyx-workbench/npc/vsrc/defines.v"
+`include "defines.v"
 
 module RISB_type(
     input  wire [4:0]       rs2,
     input  wire [4:0]       rd,
     input  wire [6:0]       funct7,
-    input  wire [`TYPE_BUS] IType,
+    input  wire [`TYPE_BUS] Inst_type,
     output reg  [11:0]      imm_12
 );
 
     import "DPI-C" function void ebreak(input int station, input int inst, input byte unit);
 
     always @(*) begin
-        case (IType)
+        case (Inst_type)
             `INST_R: imm_12 = 12'b0000_0000_0000;
             `INST_I: imm_12 = {funct7, rs2};
             `INST_S: imm_12 = {funct7, rd};
@@ -20,7 +20,7 @@ module RISB_type(
             `INST_J: imm_12 = 12'b0000_0000_0000;
             default: begin
                         imm_12 = 0;
-                        ebreak(`ABORT, 32'hdead0001, `Unit_IE1);
+                        ebreak(`ABORT, 32'hdeafbeaf, `Unit_IE1);
                     end
         endcase
     end
@@ -31,14 +31,14 @@ module UJ_type(
     input  wire [4:0]       rs2,
     input  wire [2:0]       funct3,
     input  wire [6:0]       funct7,
-    input  wire [`TYPE_BUS] IType,
+    input  wire [`TYPE_BUS] Inst_type,
     output reg  [19:0]      imm_20
 );
 
     import "DPI-C" function void ebreak(input int station, input int inst, input byte unit);
 
     always @(*) begin
-        case (IType)
+        case (Inst_type)
             `INST_R,
             `INST_I,
             `INST_S,
@@ -47,7 +47,7 @@ module UJ_type(
             `INST_J: imm_20 = {funct7[6], rs1, funct3, rs2[0], funct7[5:0], rs2[4:1]};
             default: begin
                         imm_20 = 0;
-                        ebreak(`ABORT, 32'hdead0002, `Unit_IE2);
+                        ebreak(`ABORT, 32'hdeafbeaf, `Unit_IE2);
                     end 
         endcase
     end
@@ -76,7 +76,7 @@ module imm_extend(
     input  wire [4:0]       rd,
     input  wire [2:0]       funct3,
     input  wire [6:0]       funct7,
-    input  wire [`TYPE_BUS] IType,
+    input  wire [`TYPE_BUS] Inst_type,
     output reg  [`RegBus]   imm32
 );
 
@@ -91,7 +91,7 @@ module imm_extend(
         .rs2   (rs2),
         .rd    (rd),
         .funct7(funct7),
-        .IType (IType),
+        .Inst_type (Inst_type),
         .imm_12(imm_12)
     );
 
@@ -100,7 +100,7 @@ module imm_extend(
         .rs2   (rs2),
         .funct3(funct3),
         .funct7(funct7),
-        .IType (IType),
+        .Inst_type (Inst_type),
         .imm_20(imm_20)
     );
 
@@ -115,14 +115,14 @@ module imm_extend(
     );
 
     always @(*) begin
-        case (IType)
+        case (Inst_type)
             `INST_R, `INST_I, `INST_S: imm32 = imm_12_to_32;
             `INST_B:                   imm32 = imm_12_to_32 << 1;
             `INST_U:                   imm32 = imm_20_to_32 << 12;
             `INST_J:                   imm32 = imm_20_to_32 << 1;
             default: begin
-                        imm32 = 32'hdead0003;
-                        ebreak(`ABORT, 32'hdead0004, `Unit_IE3);
+                        imm32 = 32'hdeafbeaf;
+                        ebreak(`ABORT, 32'hdeafbeaf, `Unit_IE3);
                     end
         endcase
     end

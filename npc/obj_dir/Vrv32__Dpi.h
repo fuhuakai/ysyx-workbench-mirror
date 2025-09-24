@@ -16,13 +16,13 @@ extern "C" {
 
 
     // DPI IMPORTS
-    // DPI import at /home/fuhuakai/ysyx-workbench/npc/vsrc/idu.v:43:34
-    extern void TRAP(int station, char unit);
-    // DPI import at /home/fuhuakai/ysyx-workbench/npc/vsrc/lsu.v:57:34
-    extern int dmem_read(int raddr);
-    // DPI import at /home/fuhuakai/ysyx-workbench/npc/vsrc/ifu.v:19:34
-    extern int imem_read(int raddr);
-    // DPI import at /home/fuhuakai/ysyx-workbench/npc/vsrc/lsu.v:58:34
+    // DPI import at /home/fuhuakai/ysyx-workbench/npc/vsrc/mem.v:19:34
+    extern void ebreak(int station, int inst, char unit);
+    // DPI import at /home/fuhuakai/ysyx-workbench/npc/vsrc/control_unit.v:27:34
+    extern void etrace(int inst);
+    // DPI import at /home/fuhuakai/ysyx-workbench/npc/vsrc/mem.v:17:34
+    extern int pmem_read(int raddr);
+    // DPI import at /home/fuhuakai/ysyx-workbench/npc/vsrc/mem.v:18:34
     extern void pmem_write(int waddr, int wdata, char wmask);
 
 #ifdef __cplusplus
