@@ -62,7 +62,6 @@ static inline void out_of_bound(paddr_t addr) {
 
 word_t pmem_r(paddr_t addr, int len) 
 {
-   printf("[pmem_r] addr = 0x%08x, len = %d\n", addr, len);
   if(in_pmem(addr))   //check if within the bound
 #ifdef CONFIG_MTRACE
   {

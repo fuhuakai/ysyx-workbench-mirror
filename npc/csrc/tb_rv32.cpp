@@ -90,7 +90,8 @@ extern int imem_read(int raddr)
   // Log("clk1 = %d,  addr = 0x%08x,    %ld",top->clk, raddr, main_time);
 
   if(main_time < start_time)
-    return data;
+  return 0x00000013; // addi x0, x0, 0
+    //return data;
   
   data = pmem_r(raddr, 4);
   return data;    
