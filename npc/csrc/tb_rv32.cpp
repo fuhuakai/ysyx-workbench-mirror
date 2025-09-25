@@ -210,14 +210,14 @@ static void init_verilator(void)
 int main(int argc, char *argv[])
 {
   /* Initialize the monitor. */
-  init_monitor(argc, argv);
+  //init_monitor(argc, argv);
 
   /* Make stdout unbuffered so serial characters are printed immediately. */
   setvbuf(stdout, NULL, _IONBF, 0);
 
   /* Initialize the verilator. */
   init_verilator();
-
+init_monitor(argc, argv);
   /* Initialize differential testing. */
   init_difftest(diff_so_file, img_size, difftest_port);
 
