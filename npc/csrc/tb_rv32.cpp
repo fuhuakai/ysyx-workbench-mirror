@@ -255,9 +255,15 @@ void single_cycle(void)
 
 static void reset(void)
 {
-  top->rst = 0; single_cycle();
-  top->rst = 1; single_cycle();
-  top->rst = 0; 
+  // 进入复位
+  top->rst = 1;
+  for (int i = 0; i < 10; i++) {
+    single_cycle();  // 多跑几个周期，保证复位稳定
+  }
+
+  // 退出复位
+  top->rst = 0;
+  single_cycle();  // 再来一个 cycle，进入正常运行
 }
 
 static void init_verilator(void)
