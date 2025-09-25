@@ -138,11 +138,12 @@ extern void etrace(int inst)
 }
 extern int imem_read(int raddr)
 {
-  static int data = 0xdead0009;
-  // Log("clk1 = %d,  addr = 0x%08x,    %ld",top->clk, raddr, main_time);
+  static int data = 0x00000013;  // 默认 NOP 指令
 
-  if(main_time < start_time)
-    return data;
+  // 复位阶段直接返回 NOP，避免非法指令
+  if (main_time < start_time) {
+    return 0x00000013;  // addi x0, x0, 0
+  }
   
   data = pmem_r(raddr, 4);
   return data;    
