@@ -165,11 +165,11 @@ void single_cycle(void)
   if(!Verilated::gotFinish())
   { 
     top->clk = 0; top->eval(); 
-    //tfp->dump(main_time);  //导出仿真波形
+    tfp->dump(main_time);  //导出仿真波形
     main_time++; //推动仿真时间
 
     top->clk = 1; top->eval(); 
-    //tfp->dump(main_time);  //导出仿真波形
+    tfp->dump(main_time);  //导出仿真波形
     main_time++; 
   }
 }
@@ -183,10 +183,9 @@ static void reset(void)
 
 static void init_verilator(void)
 {
-  // Verilated::traceEverOn(true); //导出vcd波形需要加此句
-
-  // top->trace(tfp, 0);
-  // tfp->open("waveform.vcd"); //打开vcd
+  Verilated::traceEverOn(true); //导出vcd波形需要加此句
+  top->trace(tfp, 0);
+  tfp->open("waveform.vcd"); //打开vcd
 
   reset();  //复位
 }
