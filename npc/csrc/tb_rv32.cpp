@@ -93,10 +93,12 @@ extern void etrace(int inst)
 }
 extern int imem_read(int raddr)
 {
-   // 立即打印每次调用信息
-    printf("imem_read CALL: time=%ld, rst=%d, addr=0x%08x\n", 
-           main_time, (top != nullptr) ? top->rst : -1, raddr);
-    
+    // 在复位稳定前，强制返回NOP，不进行实际内存访问
+    if (main_time < start_time + 2) {  // 延长保护时间
+        printf("imem_read: RESET PROTECTION - time=%ld, rst=%d, addr=0x%08x -> returning NOP\n", 
+               main_time, (top != nullptr) ? top->rst : -1, raddr);
+        return 0x00000013;  // 返回NOP指令
+    }
     // 检查地址是否合法
     if (raddr < 0x80000000 || raddr > 0x87ffffff) {
         printf("ERROR: Address 0x%08x out of bounds\n", raddr);
