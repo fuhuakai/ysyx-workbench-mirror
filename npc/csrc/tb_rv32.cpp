@@ -93,14 +93,26 @@ extern void etrace(int inst)
 }
 extern int imem_read(int raddr)
 {
-  // 检查地址是否在合法范围内
-  if (raddr < 0x80000000 || raddr > 0x87ffffff) {
-    printf("Warning: imem_read address 0x%08x out of bounds at time %ld\n", 
-           raddr, main_time);
-    return 0x00000013;  // 返回NOP指令
-  }
-  
-  return pmem_r(raddr, 4);
+   // 立即打印每次调用信息
+    printf("imem_read CALL: time=%ld, rst=%d, addr=0x%08x\n", 
+           main_time, (top != nullptr) ? top->rst : -1, raddr);
+    
+    // 检查地址是否合法
+    if (raddr < 0x80000000 || raddr > 0x87ffffff) {
+        printf("ERROR: Address 0x%08x out of bounds\n", raddr);
+        
+        // 检查调用栈 - 添加回溯信息
+        if (raddr == 0x00000000) {
+            printf("SPECIFIC ERROR: Reading from zero address!\n");
+            printf("This usually indicates uninitialized pointers or incorrect reset logic.\n");
+        }
+        
+        return 0x00000013;  // 返回NOP
+    }
+    
+    int data = pmem_r(raddr, 4);
+    printf("imem_read RETURN: data=0x%08x\n", data);
+    return data;
 }
 
 extern int dmem_read(int raddr)
