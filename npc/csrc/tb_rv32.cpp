@@ -93,15 +93,14 @@ extern void etrace(int inst)
 }
 extern int imem_read(int raddr)
 {
-  static int data = 0x00000013;  // 默认 NOP 指令
-
-  // 复位阶段直接返回 NOP，避免非法指令
-  if (main_time < start_time) {
-    return 0x00000013;  // addi x0, x0, 0
+  // 检查地址是否在合法范围内
+  if (raddr < 0x80000000 || raddr > 0x87ffffff) {
+    printf("Warning: imem_read address 0x%08x out of bounds at time %ld\n", 
+           raddr, main_time);
+    return 0x00000013;  // 返回NOP指令
   }
   
-  data = pmem_r(raddr, 4);
-  return data;    
+  return pmem_r(raddr, 4);
 }
 
 extern int dmem_read(int raddr)
