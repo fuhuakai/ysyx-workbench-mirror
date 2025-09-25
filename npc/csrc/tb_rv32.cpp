@@ -38,7 +38,7 @@ extern uint64_t get_time();
 /*********************************************/
 
 static uint32_t rtc_port_base[2] = {0, 0};
-#define start_time 3
+#define start_time 10
 static const char *unit_names[14] = {
   "Unit_IDU1", "Unit_IDU2", "Unit_IDU3", "Unit_IDU4",
   "Unit_IDU5", "Unit_IDU6", "Unit_IDU7", "Unit_IDU8", 
