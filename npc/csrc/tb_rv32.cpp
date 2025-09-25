@@ -93,14 +93,15 @@ extern void etrace(int inst)
 }
 extern int imem_read(int raddr)
 {
-  // 检查地址是否在合法范围内
-  if (raddr < 0x80000000 || raddr > 0x87ffffff) {
-    printf("Warning: imem_read address 0x%08x out of bounds at time %ld\n", 
-           raddr, main_time);
-    return 0x00000013;  // 返回NOP指令
+  static int data = 0x00000013;  // 默认 NOP 指令
+
+  // 复位阶段直接返回 NOP，避免非法指令
+  if (main_time < start_time) {
+    return 0x00000013;  // addi x0, x0, 0
   }
   
-  return pmem_r(raddr, 4);
+  data = pmem_r(raddr, 4);
+  return data;    
 }
 
 extern int dmem_read(int raddr)
@@ -210,14 +211,14 @@ static void init_verilator(void)
 int main(int argc, char *argv[])
 {
   /* Initialize the monitor. */
-  //init_monitor(argc, argv);
+  init_monitor(argc, argv);
 
   /* Make stdout unbuffered so serial characters are printed immediately. */
   setvbuf(stdout, NULL, _IONBF, 0);
 
   /* Initialize the verilator. */
   init_verilator();
-init_monitor(argc, argv);
+
   /* Initialize differential testing. */
   init_difftest(diff_so_file, img_size, difftest_port);
 
