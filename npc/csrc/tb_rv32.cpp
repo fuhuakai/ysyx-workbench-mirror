@@ -45,13 +45,6 @@ static const char *unit_names[14] = {
   "Unit_IDU9", "Unit_EXU1", "Unit_LSU1", "Unit_LSU2",
   "Unit_CC1 ", "Unit_CC2"
 };
-// static const char *alu_names[17] = {
-//   "Unit_ALU", "Unit_MEM", "Unit_CU1", "Unit_CU2",
-//   "Unit_CU3", "Unit_CU4", "Unit_CU5", "Unit_CU6",
-//   "Unit_CU7", "Unit_CU8", "Unit_CU9", "Unit_CU10",
-//   "Unit_CU11","Unit_IE1", "Unit_IE2", "Unit_IE3",
-//   "Unit_CSR"
-// };
 
 extern void TRAP(int station, char unit)
 {
@@ -88,44 +81,6 @@ extern void TRAP(int station, char unit)
     Verilated::gotFinish(true);
   }
 }   
-// extern void TRAP(int station, int inst, char unit)
-// {
-//   if(Verilated::gotFinish())
-//     return;
-
-//   if(main_time >= start_time + 1)   // at the begining (main_time < start_time and before reset), all regs are zeros
-//   {
-//     npc_state.halt_ret = top->rootp->rv32__DOT__register_file_inst__DOT__regs[10]; //a0
-//     npc_state.halt_pc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;
-
-//     assert( (unit == Unit_ALU) || (unit == Unit_CU1) || (unit == Unit_CU2) || (unit == Unit_CU3) || 
-//             (unit == Unit_CU4) || (unit == Unit_CU5) || (unit == Unit_CU6) || (unit == Unit_CU7) || 
-//             (unit == Unit_CU8) || (unit == Unit_CU9) || (unit == Unit_CU10)|| (unit == Unit_CU11)||
-//             (unit == Unit_MEM) || (unit == Unit_IE1) || (unit == Unit_IE2) || (unit == Unit_IE3) ||
-//             (unit == Unit_CSR) );
-
-//     Log("Ebreak takes place in the %s", alu_names[unit]);
-//     Log("maintime = %ld, state = %d, pc = 0x%08x, inst = 0x%08x", main_time, npc_state.state, top->rootp->rv32__DOT__bru_inst__DOT__npc_reg, top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst);
-
-//     switch(station)
-//     {
-//       case HIT_TRAP:
-//         npc_state.state = NPC_END;
-//         break;
-
-//       case ABORT:
-//       default:
-//         npc_state.state = NPC_ABORT;
-//         break;
-//     }
-
-//     Verilated::gotFinish(true);
-//   }
-// }
-
-// #define top_mstatus   top->rootp->rv32__DOT__csr_regs_inst__DOT__mstatus
-// #define top_mepc      top->rootp->rv32__DOT__csr_regs_inst__DOT__mepc
-// #define top_mcause    top->rootp->rv32__DOT__csr_regs_inst__DOT__mcause
 
 extern void etrace(int inst)
 {
@@ -172,38 +127,6 @@ extern int dmem_read(int raddr)
     data = pmem_r(raddr, 4);
   return data;   
 }
-
-// extern int pmem_read(int raddr)
-// {
-//   static int data = 0xdeadbeaf;
-//   if(top->clk == 0)
-//     return data;
-
-//   if(main_time >= start_time)
-//   {
-//     // device rtc
-//     if((raddr == CONFIG_RTC_MMIO) || (raddr == CONFIG_RTC_MMIO + 4))
-//     {
-//       if(raddr == CONFIG_RTC_MMIO + 4)
-//       {
-//         uint64_t us = get_time();
-//         rtc_port_base[0] = (uint32_t)us;
-//         rtc_port_base[1] = us >> 32;
-//       }
-//       data = rtc_port_base[(raddr - CONFIG_RTC_MMIO) / 4];
-//     }
-//     else if (raddr == CONFIG_SERIAL_MMIO) {
-//       // 串口读取通常用于读取状态或输入数据，这里简单返回0
-//       data = 0;
-//       return data;
-//     }
-//     else
-//       data = pmem_r(raddr, 4);
-//     return data; 
-//   } 
-//   else
-//     return 0xdeadbeaf;
-// }
 
 
 void pmem_write(int waddr, int wdata, char wmask)
