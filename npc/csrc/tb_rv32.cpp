@@ -340,6 +340,11 @@ extern int imem_read(int raddr)
     return data;
   
   data = pmem_r(raddr, 4);
+   // 添加指令跟踪
+  if (raddr >= 0x80000000 && raddr <= 0x87ffffff) {
+    printf("IMEM_READ: time=%ld, pc=0x%08x, inst=0x%08x\n", 
+           main_time, raddr, data);
+  }
   return data;    
 }
 
