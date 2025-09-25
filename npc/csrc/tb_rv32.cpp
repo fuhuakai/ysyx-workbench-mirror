@@ -93,15 +93,14 @@ extern void etrace(int inst)
 }
 extern int imem_read(int raddr)
 {
-  static int data = 0x00000013;  // 默认 NOP 指令
-
-  // 复位阶段直接返回 NOP，避免非法指令
-  if (main_time < start_time) {
-    return 0x00000013;  // addi x0, x0, 0
+  // 检查地址是否在合法范围内
+  if (raddr < 0x80000000 || raddr > 0x87ffffff) {
+    printf("Warning: imem_read address 0x%08x out of bounds at time %ld\n", 
+           raddr, main_time);
+    return 0x00000013;  // 返回NOP指令
   }
   
-  data = pmem_r(raddr, 4);
-  return data;    
+  return pmem_r(raddr, 4);
 }
 
 extern int dmem_read(int raddr)
@@ -178,15 +177,25 @@ void single_cycle(void)
 
 static void reset(void)
 {
-  // 进入复位
+  // 确保复位前时钟为低
+  top->clk = 0;
+  top->eval();
+  
+  // 拉高复位信号
   top->rst = 1;
-  for (int i = 0; i < 10; i++) {
-    single_cycle();  // 多跑几个周期，保证复位稳定
+  
+  // 运行足够的时钟周期确保复位完成
+  for (int i = 0; i < 5; i++) {
+    top->clk = 1; top->eval(); tfp->dump(main_time++);
+    top->clk = 0; top->eval(); tfp->dump(main_time++);
   }
-
-  // 退出复位
+  
+  // 释放复位信号
   top->rst = 0;
-  single_cycle();  // 再来一个 cycle，进入正常运行
+  
+  // 再运行一个完整周期
+  top->clk = 1; top->eval(); tfp->dump(main_time++);
+  top->clk = 0; top->eval(); tfp->dump(main_time++);
 }
 
 static void init_verilator(void)
