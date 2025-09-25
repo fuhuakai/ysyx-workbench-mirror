@@ -24,20 +24,59 @@ module ifu(
 
 
     // data package
-    wire [`CPU_Bus]             ifu_inst = imem_read(i_ifu_npc);
-    reg  [`IFU_PKG_WDITH-1 : 0] ifu_valid_data_reg;  
-    wire                        ifu_reg_wen  = i_cycle_end;   //数据包寄存器的写使能
+    // wire [`CPU_Bus]             ifu_inst = imem_read(i_ifu_npc);
+    // reg  [`IFU_PKG_WDITH-1 : 0] ifu_valid_data_reg;  
+    // wire                        ifu_reg_wen  = i_cycle_end;   //数据包寄存器的写使能
+    // always @(posedge clk) begin
+    //     if(rst == 1'b1) 
+    //         ifu_valid_data_reg <= 0;
+    //     else if(ifu_reg_wen == 1'b1)
+    //         ifu_valid_data_reg <= {i_ifu_npc, ifu_inst};
+    // end
+
+    // // to IDU
+    // assign {o_ifu_pc, o_ifu_inst} = ifu_valid_data_reg;
+    // // shake hands
+    // assign o_post_valid = ~i_cycle_end;
+// 添加复位保护机制
+    reg rst_delay;
     always @(posedge clk) begin
-        if(rst == 1'b1) 
-            ifu_valid_data_reg <= 0;
+        rst_delay <= rst;
+    end
+    
+    // 只有在复位完全释放后才开始真正的取指
+    wire real_rst = rst | rst_delay;
+    
+    // data package
+    reg [`CPU_Bus] current_pc;
+    wire [`CPU_Bus] ifu_inst;
+    reg [`IFU_PKG_WDITH-1 : 0] ifu_valid_data_reg;  
+    wire                        ifu_reg_wen  = i_cycle_end;
+    
+    // 安全的取指地址选择
+    wire [`CPU_Bus] fetch_addr;
+    assign fetch_addr = (real_rst == 1'b1) ? `RESET_VECTOR : i_ifu_npc;
+    
+    // 取指 - 添加复位保护
+    assign ifu_inst = (real_rst == 1'b1) ? 32'h00000013 : imem_read(fetch_addr);
+    
+    // 更新当前PC
+    always @(posedge clk) begin
+        if(real_rst == 1'b1) 
+            current_pc <= `RESET_VECTOR;
         else if(ifu_reg_wen == 1'b1)
-            ifu_valid_data_reg <= {i_ifu_npc, ifu_inst};
+            current_pc <= i_ifu_npc;
     end
 
-    // to IDU
+    always @(posedge clk) begin
+        if(real_rst == 1'b1) 
+            ifu_valid_data_reg <= {`RESET_VECTOR, 32'h00000013};
+        else if(ifu_reg_wen == 1'b1)
+            ifu_valid_data_reg <= {current_pc, ifu_inst};
+    end
+
     assign {o_ifu_pc, o_ifu_inst} = ifu_valid_data_reg;
-    // shake hands
-    assign o_post_valid = ~i_cycle_end;
+    assign o_post_valid = (real_rst == 1'b1) ? 1'b0 : ~i_cycle_end;
 
 endmodule
 

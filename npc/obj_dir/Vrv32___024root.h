@@ -18,8 +18,11 @@ class Vrv32___024root final : public VerilatedModule {
         VL_IN8(clk,0,0);
         VL_IN8(rst,0,0);
         CData/*2:0*/ rv32__DOT__clk_cnt;
+        CData/*0:0*/ rv32__DOT__w_ifu_valid;
         CData/*0:0*/ rv32__DOT__w_wbu_cycle_end;
         CData/*0:0*/ rv32__DOT__w_wbu_npc_wen;
+        CData/*0:0*/ rv32__DOT__ifu_inst__DOT__rst_delay;
+        CData/*0:0*/ rv32__DOT__ifu_inst__DOT__real_rst;
         CData/*0:0*/ rv32__DOT__idu_inst__DOT__idu_csr_ren;
         CData/*0:0*/ rv32__DOT__idu_inst__DOT__idu_is_mret;
         CData/*0:0*/ rv32__DOT__idu_inst__DOT__idu_is_ecall;
@@ -44,6 +47,7 @@ class Vrv32___024root final : public VerilatedModule {
         IData/*31:0*/ rv32__DOT__w_rf_rs1;
         IData/*31:0*/ rv32__DOT__w_rf_rs2;
         IData/*31:0*/ rv32__DOT__w_cc_csr_src;
+        IData/*31:0*/ rv32__DOT__ifu_inst__DOT__current_pc;
         IData/*31:0*/ rv32__DOT__ifu_inst__DOT__ifu_inst;
         IData/*31:0*/ rv32__DOT__idu_inst__DOT__idu_imm;
         VlWide<4>/*110:0*/ rv32__DOT__idu_inst__DOT__idu_valid_data_reg;
@@ -75,12 +79,13 @@ class Vrv32___024root final : public VerilatedModule {
         IData/*31:0*/ __Vfunc_rv32__DOT__ifu_inst__DOT__imem_read__0__Vfuncout;
         IData/*31:0*/ __Vfunc_rv32__DOT__lsu_inst__DOT__dmem_read__84__Vfuncout;
         IData/*31:0*/ __VstlIterCount;
+    };
+    struct {
+        IData/*31:0*/ __VicoIterCount;
         IData/*31:0*/ __VactIterCount;
         QData/*63:0*/ rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg;
         VlUnpacked<QData/*33:0*/, 4> rv32__DOT__exu_inst__DOT__mux1__DOT__i0__DOT__pair_list;
         VlUnpacked<CData/*1:0*/, 4> rv32__DOT__exu_inst__DOT__mux1__DOT__i0__DOT__key_list;
-    };
-    struct {
         VlUnpacked<IData/*31:0*/, 4> rv32__DOT__exu_inst__DOT__mux1__DOT__i0__DOT__data_list;
         VlUnpacked<QData/*33:0*/, 4> rv32__DOT__exu_inst__DOT__mux2__DOT__i0__DOT__pair_list;
         VlUnpacked<CData/*1:0*/, 4> rv32__DOT__exu_inst__DOT__mux2__DOT__i0__DOT__key_list;
@@ -98,9 +103,10 @@ class Vrv32___024root final : public VerilatedModule {
         VlUnpacked<CData/*0:0*/, 2> rv32__DOT__bru_inst__DOT__mux3__DOT__i0__DOT__key_list;
         VlUnpacked<IData/*31:0*/, 2> rv32__DOT__bru_inst__DOT__mux3__DOT__i0__DOT__data_list;
         VlUnpacked<IData/*31:0*/, 32> rv32__DOT__register_file_inst__DOT__regs;
-        VlUnpacked<CData/*0:0*/, 2> __Vm_traceActivity;
+        VlUnpacked<CData/*0:0*/, 3> __Vm_traceActivity;
     };
     VlTriggerVec<1> __VstlTriggered;
+    VlTriggerVec<1> __VicoTriggered;
     VlTriggerVec<1> __VactTriggered;
     VlTriggerVec<1> __VnbaTriggered;
 
