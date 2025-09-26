@@ -19,7 +19,7 @@ static const word_t img [] = {
   0x00002297,    // auipc t0,0
   0x00003297,    // auipc t0,0
   0x00004297,    // auipc t0,0
-  0x00000513,    //	li	a0,0
+  //0x00000513,    //	li	a0,0
   0x00100073,    // ebreak 
   0xdeadbeef,    // some data
 };
