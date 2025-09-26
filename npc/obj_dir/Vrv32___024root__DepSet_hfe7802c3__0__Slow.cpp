@@ -714,11 +714,12 @@ VL_ATTR_COLD void Vrv32___024root___stl_sequent__TOP__0(Vrv32___024root* vlSelf)
     vlSelf->rv32__DOT__exu_inst__DOT__mux2__DOT__i0__DOT__pair_list[3U] 
         = (QData)((IData)(vlSelf->rv32__DOT__w_rf_rs2));
     vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t 
-        = ((1U & ((~ ((IData)(vlSelf->rst) | (0U == 
-                                              ((vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[7U] 
-                                                << 3U) 
-                                               | (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
-                                                  >> 0x1dU))))) 
+        = ((1U & ((~ ((IData)(vlSelf->rst) | (0x40U 
+                                              == ((
+                                                   vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[7U] 
+                                                   << 3U) 
+                                                  | (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
+                                                     >> 0x1dU))))) 
                   & (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
                      >> 0x1cU))) ? vlSelf->rv32__DOT__lsu_inst__DOT____VdfgExtracted_h0eb2c582__0
             : 1U);

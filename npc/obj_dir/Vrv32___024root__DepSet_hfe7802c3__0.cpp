@@ -15,11 +15,12 @@ VL_INLINE_OPT void Vrv32___024root___ico_sequent__TOP__0(Vrv32___024root* vlSelf
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root___ico_sequent__TOP__0\n"); );
     // Body
     vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t 
-        = ((1U & ((~ ((IData)(vlSelf->rst) | (0U == 
-                                              ((vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[7U] 
-                                                << 3U) 
-                                               | (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
-                                                  >> 0x1dU))))) 
+        = ((1U & ((~ ((IData)(vlSelf->rst) | (0x40U 
+                                              == ((
+                                                   vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[7U] 
+                                                   << 3U) 
+                                                  | (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
+                                                     >> 0x1dU))))) 
                   & (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
                      >> 0x1cU))) ? vlSelf->rv32__DOT__lsu_inst__DOT____VdfgExtracted_h0eb2c582__0
             : 1U);
@@ -968,11 +969,12 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                                                                                 >> 0x18U)), (IData)(vlSelf->rv32__DOT__lsu_inst__DOT__wmask));
     }
     vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t 
-        = ((1U & ((~ ((IData)(vlSelf->rst) | (0U == 
-                                              ((vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[7U] 
-                                                << 3U) 
-                                               | (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
-                                                  >> 0x1dU))))) 
+        = ((1U & ((~ ((IData)(vlSelf->rst) | (0x40U 
+                                              == ((
+                                                   vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[7U] 
+                                                   << 3U) 
+                                                  | (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
+                                                     >> 0x1dU))))) 
                   & (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
                      >> 0x1cU))) ? vlSelf->rv32__DOT__lsu_inst__DOT____VdfgExtracted_h0eb2c582__0
             : 1U);
