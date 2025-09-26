@@ -336,7 +336,7 @@ extern int imem_read(int raddr)
   static int data = 0xdead0009;
   // Log("clk1 = %d,  addr = 0x%08x,    %ld",top->clk, raddr, main_time);
 
-  if(main_time < start_time|| top->rootp->rv32__DOT__clk_cnt != 1)
+  if(main_time < start_time)
     return data;
   
   data = pmem_r(raddr, 4);
