@@ -339,7 +339,7 @@ extern int imem_read(int raddr)
   if(main_time < start_time)
     return data;
 
-  if (raddr <= 0x80000000 ) {
+  if (raddr < 0x80000000 ) {
     printf("IMEM_READ: time=%ld, pc=0x%08x, inst=0x%08x\n", 
            main_time, raddr, data);
   }
