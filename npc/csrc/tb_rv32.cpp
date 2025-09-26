@@ -342,10 +342,7 @@ extern int imem_read(int raddr)
 
   data = pmem_r(raddr, 4);
    // 添加指令跟踪
-     if (raddr < 0x80000000 ) {
-    printf("IMEM_READ: time=%ld, pc=0x%08x, inst=0x%08x\n", 
-           main_time, raddr, data);
-  }
+   
   if (raddr >= 0x80000000 && raddr <= 0x87ffffff) {
     printf("IMEM_READ: time=%ld, pc=0x%08x, inst=0x%08x\n", 
            main_time, raddr, data);
@@ -419,13 +416,15 @@ void single_cycle(void)
   { 
     top->clk = 0; top->eval(); 
 #ifdef CONFIG_WAVES
-    tfp->dump(main_time);  
+    tfp->dump(main_time);
+    tfp->flush();  
 #endif
     main_time++; //推动仿真时间
 
     top->clk = 1; top->eval(); 
 #ifdef CONFIG_WAVES
-    tfp->dump(main_time);  
+    tfp->dump(main_time); 
+    tfp->flush(); 
 #endif
     main_time++; //推动仿真时间
   }
