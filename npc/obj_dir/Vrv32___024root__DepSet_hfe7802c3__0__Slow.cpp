@@ -495,10 +495,6 @@ VL_ATTR_COLD void Vrv32___024root___stl_sequent__TOP__0(Vrv32___024root* vlSelf)
                                       >> 0x1fU))))) 
             << 0xcU) | (0xfffU & (IData)((vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg 
                                           >> 0x14U))));
-    vlSelf->rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__data_list[2U] 
-        = vlSelf->rv32__DOT__register_file_inst__DOT__regs
-        [(0x1fU & (vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[3U] 
-                   >> 0xaU))];
     Vrv32___024root____Vdpiimwrap_rv32__DOT__lsu_inst__DOT__dmem_read_TOP(
                                                                           ((vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[7U] 
                                                                             << 3U) 
@@ -506,6 +502,10 @@ VL_ATTR_COLD void Vrv32___024root___stl_sequent__TOP__0(Vrv32___024root* vlSelf)
                                                                               >> 0x1dU)), vlSelf->__Vfunc_rv32__DOT__lsu_inst__DOT__dmem_read__84__Vfuncout);
     vlSelf->rv32__DOT__lsu_inst__DOT____VdfgExtracted_h0eb2c582__0 
         = vlSelf->__Vfunc_rv32__DOT__lsu_inst__DOT__dmem_read__84__Vfuncout;
+    vlSelf->rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__data_list[2U] 
+        = vlSelf->rv32__DOT__register_file_inst__DOT__regs
+        [(0x1fU & (vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[3U] 
+                   >> 0xaU))];
     vlSelf->rv32__DOT__exu_inst__DOT__mux2__DOT__i0__DOT__data_list[1U] 
         = ((vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[2U] 
             << 0x12U) | (vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[1U] 
@@ -713,19 +713,13 @@ VL_ATTR_COLD void Vrv32___024root___stl_sequent__TOP__0(Vrv32___024root* vlSelf)
     }
     vlSelf->rv32__DOT__exu_inst__DOT__mux2__DOT__i0__DOT__pair_list[3U] 
         = (QData)((IData)(vlSelf->rv32__DOT__w_rf_rs2));
-    vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t 
-        = ((1U & ((~ ((IData)(vlSelf->rst) | (0x40U 
-                                              == ((
-                                                   vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[7U] 
-                                                   << 3U) 
-                                                  | (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
-                                                     >> 0x1dU))))) 
-                  & (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
-                     >> 0x1cU))) ? vlSelf->rv32__DOT__lsu_inst__DOT____VdfgExtracted_h0eb2c582__0
-            : 1U);
     vlSelf->rv32__DOT__idu_inst__DOT__idu_num_sel = 0U;
     vlSelf->rv32__DOT__idu_inst__DOT__idu_gpr_wen = 0U;
     vlSelf->rv32__DOT__idu_inst__DOT__idu_imm = 0U;
+    vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t 
+        = ((0x10000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])
+            ? vlSelf->rv32__DOT__lsu_inst__DOT____VdfgExtracted_h0eb2c582__0
+            : 1U);
     if ((1U & (IData)((vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg 
                        >> 6U)))) {
         if ((1U & (IData)((vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg 
@@ -1184,21 +1178,6 @@ VL_ATTR_COLD void Vrv32___024root___eval_stl(Vrv32___024root* vlSelf) {
         vlSelf->__Vm_traceActivity[0U] = 1U;
     }
 }
-
-#ifdef VL_DEBUG
-VL_ATTR_COLD void Vrv32___024root___dump_triggers__ico(Vrv32___024root* vlSelf) {
-    if (false && vlSelf) {}  // Prevent unused
-    Vrv32__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root___dump_triggers__ico\n"); );
-    // Body
-    if ((1U & (~ (IData)(vlSelf->__VicoTriggered.any())))) {
-        VL_DBG_MSGF("         No triggers active\n");
-    }
-    if (vlSelf->__VicoTriggered.at(0U)) {
-        VL_DBG_MSGF("         'ico' region trigger index 0 is active: Internal 'ico' trigger - first iteration\n");
-    }
-}
-#endif  // VL_DEBUG
 
 #ifdef VL_DEBUG
 VL_ATTR_COLD void Vrv32___024root___dump_triggers__act(Vrv32___024root* vlSelf) {

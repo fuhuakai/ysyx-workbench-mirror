@@ -95,7 +95,7 @@ module lsu(
     reg  [`CPU_Bus] dmem_rdata;
     // 有读请求时
     always @(*) begin
-        if(i_lsu_is_load == `TRUE && rst == 1'b0 && dmem_raddr != 64)  // 有读请求时
+        if(i_lsu_is_load == `TRUE)  // 有读请求时
             dmem_rdata_t = dmem_read(dmem_raddr);
         else
             dmem_rdata_t = 32'h00000001;

@@ -7,70 +7,13 @@
 
 #include "Vrv32___024root.h"
 
-void Vrv32___024root____Vdpiimwrap_rv32__DOT__idu_inst__DOT__TRAP_TOP(IData/*31:0*/ station, CData/*7:0*/ unit);
-
-VL_INLINE_OPT void Vrv32___024root___ico_sequent__TOP__0(Vrv32___024root* vlSelf) {
-    if (false && vlSelf) {}  // Prevent unused
-    Vrv32__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root___ico_sequent__TOP__0\n"); );
-    // Body
-    vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t 
-        = ((1U & ((~ ((IData)(vlSelf->rst) | (0x40U 
-                                              == ((
-                                                   vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[7U] 
-                                                   << 3U) 
-                                                  | (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
-                                                     >> 0x1dU))))) 
-                  & (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
-                     >> 0x1cU))) ? vlSelf->rv32__DOT__lsu_inst__DOT____VdfgExtracted_h0eb2c582__0
-            : 1U);
-    vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata = 0U;
-    if ((0x10000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
-        if ((0x4000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
-            if ((0x2000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
-                Vrv32___024root____Vdpiimwrap_rv32__DOT__idu_inst__DOT__TRAP_TOP(2U, 0xaU);
-            } else {
-                vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata 
-                    = ((0x1000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])
-                        ? (0xffffU & vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t)
-                        : (0xffU & vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t));
-            }
-        } else if ((0x2000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
-            if ((0x1000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
-                Vrv32___024root____Vdpiimwrap_rv32__DOT__idu_inst__DOT__TRAP_TOP(2U, 0xaU);
-            } else {
-                vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata 
-                    = vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t;
-            }
-        } else {
-            vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata 
-                = ((0x1000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])
-                    ? (((- (IData)((1U & (vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t 
-                                          >> 0xfU)))) 
-                        << 0x10U) | (0xffffU & vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t))
-                    : (((- (IData)((1U & (vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t 
-                                          >> 7U)))) 
-                        << 8U) | (0xffU & vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t)));
-        }
-    }
-}
-
-void Vrv32___024root___eval_ico(Vrv32___024root* vlSelf) {
-    if (false && vlSelf) {}  // Prevent unused
-    Vrv32__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root___eval_ico\n"); );
-    // Body
-    if (vlSelf->__VicoTriggered.at(0U)) {
-        Vrv32___024root___ico_sequent__TOP__0(vlSelf);
-    }
-}
-
 void Vrv32___024root___eval_act(Vrv32___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vrv32__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root___eval_act\n"); );
 }
 
+void Vrv32___024root____Vdpiimwrap_rv32__DOT__idu_inst__DOT__TRAP_TOP(IData/*31:0*/ station, CData/*7:0*/ unit);
 void Vrv32___024root____Vdpiimwrap_rv32__DOT__lsu_inst__DOT__dmem_read_TOP(IData/*31:0*/ raddr, IData/*31:0*/ &dmem_read__Vfuncrtn);
 void Vrv32___024root____Vdpiimwrap_rv32__DOT__lsu_inst__DOT__pmem_write_TOP(IData/*31:0*/ waddr, IData/*31:0*/ wdata, CData/*7:0*/ wmask);
 void Vrv32___024root____Vdpiimwrap_rv32__DOT__ifu_inst__DOT__imem_read_TOP(IData/*31:0*/ raddr, IData/*31:0*/ &imem_read__Vfuncrtn);
@@ -968,16 +911,6 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                                                                                 | (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[4U] 
                                                                                 >> 0x18U)), (IData)(vlSelf->rv32__DOT__lsu_inst__DOT__wmask));
     }
-    vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t 
-        = ((1U & ((~ ((IData)(vlSelf->rst) | (0x40U 
-                                              == ((
-                                                   vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[7U] 
-                                                   << 3U) 
-                                                  | (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
-                                                     >> 0x1dU))))) 
-                  & (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
-                     >> 0x1cU))) ? vlSelf->rv32__DOT__lsu_inst__DOT____VdfgExtracted_h0eb2c582__0
-            : 1U);
     vlSelf->rv32__DOT__bru_inst__DOT__mux2__DOT__i0__DOT__hit 
         = ((IData)(vlSelf->rv32__DOT__bru_inst__DOT____Vcellinp__mux2____pinNumber2) 
            == vlSelf->rv32__DOT__bru_inst__DOT__mux2__DOT__i0__DOT__key_list
@@ -1066,6 +999,10 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
     vlSelf->rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__data_list[1U] 
         = (vlSelf->rv32__DOT__w_cc_csr_src | vlSelf->rv32__DOT__w_rf_rs1);
     vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata = 0U;
+    vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t 
+        = ((0x10000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])
+            ? vlSelf->rv32__DOT__lsu_inst__DOT____VdfgExtracted_h0eb2c582__0
+            : 1U);
     if ((0x10000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
         if ((0x4000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
             if ((0x2000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
@@ -1806,10 +1743,6 @@ void Vrv32___024root___eval_nba(Vrv32___024root* vlSelf) {
     }
 }
 
-void Vrv32___024root___eval_triggers__ico(Vrv32___024root* vlSelf);
-#ifdef VL_DEBUG
-VL_ATTR_COLD void Vrv32___024root___dump_triggers__ico(Vrv32___024root* vlSelf);
-#endif  // VL_DEBUG
 void Vrv32___024root___eval_triggers__act(Vrv32___024root* vlSelf);
 #ifdef VL_DEBUG
 VL_ATTR_COLD void Vrv32___024root___dump_triggers__act(Vrv32___024root* vlSelf);
@@ -1823,29 +1756,10 @@ void Vrv32___024root___eval(Vrv32___024root* vlSelf) {
     Vrv32__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root___eval\n"); );
     // Init
-    CData/*0:0*/ __VicoContinue;
     VlTriggerVec<1> __VpreTriggered;
     IData/*31:0*/ __VnbaIterCount;
     CData/*0:0*/ __VnbaContinue;
     // Body
-    vlSelf->__VicoIterCount = 0U;
-    __VicoContinue = 1U;
-    while (__VicoContinue) {
-        __VicoContinue = 0U;
-        Vrv32___024root___eval_triggers__ico(vlSelf);
-        if (vlSelf->__VicoTriggered.any()) {
-            __VicoContinue = 1U;
-            if (VL_UNLIKELY((0x64U < vlSelf->__VicoIterCount))) {
-#ifdef VL_DEBUG
-                Vrv32___024root___dump_triggers__ico(vlSelf);
-#endif
-                VL_FATAL_MT("/home/fuhuakai/ysyx-workbench/npc/vsrc/rv32.v", 3, "", "Input combinational region did not converge.");
-            }
-            vlSelf->__VicoIterCount = ((IData)(1U) 
-                                       + vlSelf->__VicoIterCount);
-            Vrv32___024root___eval_ico(vlSelf);
-        }
-    }
     __VnbaIterCount = 0U;
     __VnbaContinue = 1U;
     while (__VnbaContinue) {
