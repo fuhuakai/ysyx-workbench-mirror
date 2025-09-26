@@ -90,59 +90,32 @@ module lsu(
 
 
     /************ read dmem ************/
-    // wire [`CPU_Bus] dmem_raddr   = i_lsu_exu_res;
-    // reg  [`CPU_Bus] dmem_rdata_t;
-    // reg  [`CPU_Bus] dmem_rdata;
-    // // 有读请求时
-    // always @(*) begin
-    //     if(i_lsu_is_load == `TRUE)  // 有读请求时
-    //         dmem_rdata_t = dmem_read(dmem_raddr);
-    //     else
-    //         dmem_rdata_t = 32'h00000001;
-    // end    
-
-    // // dmem_rdata_t -> rdata
-    // always @(*) begin
-    //     dmem_rdata = `CPU_Width'd0;
-    //     if(i_lsu_is_load == `TRUE)  begin// 有读请求时
-    //         case (i_lsu_func3)
-    //             `INST_LBU:  dmem_rdata = {24'd0, dmem_rdata_t[7:0]};
-    //             `INST_LHU:  dmem_rdata = {16'd0, dmem_rdata_t[15:0]};
-    //             `INST_LB:   dmem_rdata = {{24{dmem_rdata_t[7]}}, dmem_rdata_t[7:0]};
-    //             `INST_LH:   dmem_rdata = {{16{dmem_rdata_t[15]}}, dmem_rdata_t[15:0]};
-    //             `INST_LW:   dmem_rdata = dmem_rdata_t;
-    //             default:    TRAP(`ABORT, `Unit_LSU1);  //uae
-    //         endcase
-    //     end
-    // end            
-        // read
-    reg [`CPU_Bus] dmem_rdata_t_reg;
-    reg [`CPU_Bus] dmem_rdata;
-    reg [2:0]      dmem_func3_reg;
-    reg            dmem_req_reg;
-    always @(posedge clk) begin
-        if (rst) begin
-            dmem_req_reg <= 0;
-            dmem_func3_reg <= 0;
-            dmem_rdata_t_reg <= 0;
-        end else begin
-            dmem_req_reg <= i_lsu_is_load;
-            dmem_func3_reg <= i_lsu_func3;
-            if (i_lsu_is_load) dmem_rdata_t_reg <= dmem_read(i_lsu_exu_res);
-        end
-    end
+    wire [`CPU_Bus] dmem_raddr   = i_lsu_exu_res;
+    reg  [`CPU_Bus] dmem_rdata_t;
+    reg  [`CPU_Bus] dmem_rdata;
+    // 有读请求时
     always @(*) begin
-        case (dmem_func3_reg)
-            `INST_LBU: dmem_rdata = {24'd0, dmem_rdata_t_reg[7:0]};
-            `INST_LHU: dmem_rdata = {16'd0, dmem_rdata_t_reg[15:0]};
-            `INST_LB:  dmem_rdata = {{24{dmem_rdata_t_reg[7]}}, dmem_rdata_t_reg[7:0]};
-            `INST_LH:  dmem_rdata = {{16{dmem_rdata_t_reg[15]}}, dmem_rdata_t_reg[15:0]};
-            `INST_LW:  dmem_rdata = dmem_rdata_t_reg;
-            default:   dmem_rdata = 0;
-        endcase
-    end
-    assign lsu_rd = dmem_req_reg ? dmem_rdata : i_lsu_exu_res;
-    //assign lsu_rd = (i_lsu_is_load == `TRUE) ? dmem_rdata : i_lsu_exu_res;  // Its load inst(1'b1) or not (1'b0)
+        if(i_lsu_is_load == `TRUE)  // 有读请求时
+            dmem_rdata_t = dmem_read(dmem_raddr);
+        else
+            dmem_rdata_t = 32'h00000001;
+    end    
+
+    // dmem_rdata_t -> rdata
+    always @(*) begin
+        dmem_rdata = `CPU_Width'd0;
+        if(i_lsu_is_load == `TRUE)  begin// 有读请求时
+            case (i_lsu_func3)
+                `INST_LBU:  dmem_rdata = {24'd0, dmem_rdata_t[7:0]};
+                `INST_LHU:  dmem_rdata = {16'd0, dmem_rdata_t[15:0]};
+                `INST_LB:   dmem_rdata = {{24{dmem_rdata_t[7]}}, dmem_rdata_t[7:0]};
+                `INST_LH:   dmem_rdata = {{16{dmem_rdata_t[15]}}, dmem_rdata_t[15:0]};
+                `INST_LW:   dmem_rdata = dmem_rdata_t;
+                default:    TRAP(`ABORT, `Unit_LSU1);  //uae
+            endcase
+        end
+    end            
+    assign lsu_rd = (i_lsu_is_load == `TRUE) ? dmem_rdata : i_lsu_exu_res;  // Its load inst(1'b1) or not (1'b0)
 
 
 
