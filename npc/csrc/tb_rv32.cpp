@@ -341,7 +341,15 @@ extern int imem_read(int raddr)
 
 
   data = pmem_r(raddr, 4);
-
+   // 添加指令跟踪
+   if (raddr < 0x80000000) {
+    printf("out of bound: time=%ld, pc=0x%08x, inst=0x%08x\n", 
+           main_time, raddr, data);
+  }
+  if (raddr >= 0x80000000 && raddr <= 0x87ffffff) {
+    printf("IMEM_READ: time=%ld, pc=0x%08x, inst=0x%08x\n", 
+           main_time, raddr, data);
+  }
   return data;    
 }
 
@@ -367,11 +375,6 @@ extern int dmem_read(int raddr)
     difftest_skip_ref();
 #endif
   }
-  else if (raddr == CONFIG_SERIAL_MMIO) {
-      // 串口读取通常用于读取状态或输入数据，这里简单返回0
-      data = 0;
-      return data;
-    }
   else
     data = pmem_r(raddr, 4);
   return data;   
