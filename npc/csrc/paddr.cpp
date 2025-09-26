@@ -15,18 +15,13 @@ static const word_t img [] = {
   // 0x170000ef,     //jal	ra,8000005c <main>
   // 0x00812223,     //sw	a0,0(t1)
   // 0x00050463,     //beqz	a0,80000018 <check+0x8>
+
   0x00000297,    // auipc t0,0
   0x00001397,    // auipc t0,0
   0x00002497,    // auipc t0,0
   0x00003297,    // auipc t0,0
-  0x00004297,    // auipc t0,0
   0x06458613,    //addi	a2,a1,100
   0x0c860693,    //addi	a3,a2,200
-  0x00000297,    // auipc t0,0
-  0x00001397,    // auipc t0,0
-  0x00002497,    // auipc t0,0
-  0x00003297,    // auipc t0,0
-  0x00004297,    // auipc t0,0
   //0x00000513,    //	li	a0,0
   0x00100073,    // ebreak 
   0xdeadbeef,    // some data
