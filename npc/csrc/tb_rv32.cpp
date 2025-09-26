@@ -358,8 +358,8 @@ extern int dmem_read(int raddr)
   static int data = 0xdead000a;
 
   // 因为是是周期CPU，所以理论上来说应该轮到LSU工作的时候才读/写dmem
-  // if(main_time < start_time || top->rootp->rv32__DOT__clk_cnt != 3)
-  //   return data;
+  if(main_time < start_time || top->rootp->rv32__DOT__clk_cnt != 3)
+    return data;
 
   // device rtc
   if((raddr == CONFIG_RTC_MMIO) || (raddr == CONFIG_RTC_MMIO + 4))
@@ -383,7 +383,7 @@ extern int dmem_read(int raddr)
 void pmem_write(int waddr, int wdata, char wmask)
 {
   // 因为是是周期CPU，所以理论上来说应该轮到LSU工作的时候才读/写dmem
-  if(main_time < start_time )
+  if(main_time < start_time || top->rootp->rv32__DOT__clk_cnt != 3)
     return;
 
   // device serial
