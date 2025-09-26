@@ -95,6 +95,11 @@ void pmem_w(paddr_t addr, int len, word_t data)
     return;
   }  
 
+  if((addr == CONFIG_RTC_MMIO) || (addr == CONFIG_RTC_MMIO + 4))
+    {
+      return;
+    }
+
   out_of_bound(addr);
 }
 
