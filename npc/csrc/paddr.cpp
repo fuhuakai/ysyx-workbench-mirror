@@ -80,7 +80,7 @@ word_t pmem_r(paddr_t addr, int len)
     return host_read(guest_to_host(addr), len);
 #endif
 
-  //out_of_bound(addr);
+  out_of_bound(addr);
   return 0;
 }
 
