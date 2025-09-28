@@ -376,9 +376,8 @@ extern int dmem_read(int raddr)
 #endif
   }
   else
-  //   data = pmem_r(raddr, 4);
-  // return data;   
-  return pmem_r(raddr, 4);
+    data = pmem_r(raddr, 4);
+  return data;   
 }
 
 void pmem_write(int waddr, int wdata, char wmask)
@@ -421,14 +420,14 @@ void single_cycle(void)
     top->clk = 0; top->eval(); 
 #ifdef CONFIG_WAVES
     tfp->dump(main_time);
-    //tfp->flush();  
+    tfp->flush();  
 #endif
     main_time++; //推动仿真时间
 
     top->clk = 1; top->eval(); 
 #ifdef CONFIG_WAVES
     tfp->dump(main_time); 
-    //tfp->flush(); 
+    tfp->flush(); 
 #endif
     main_time++; //推动仿真时间
   }
