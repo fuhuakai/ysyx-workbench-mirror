@@ -376,8 +376,9 @@ extern int dmem_read(int raddr)
 #endif
   }
   else
-    data = pmem_r(raddr, 4);
-  return data;   
+  //   data = pmem_r(raddr, 4);
+  // return data;   
+  return pmem_r(raddr, 4);
 }
 
 void pmem_write(int waddr, int wdata, char wmask)
