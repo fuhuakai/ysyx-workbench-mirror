@@ -9,6 +9,7 @@
 extern void single_cycle(void); 
 extern NPCState npc_state;
 extern Vrv32 *top;
+extern uint64_t get_time();
 
 #ifdef CONFIG_ITRACE
 extern void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
@@ -33,6 +34,7 @@ extern void difftest_step(vaddr_t pc, vaddr_t npc);
 
 #define MAX_INST_TO_PRINT 20
 static uint64_t g_nr_guest_inst = 0;
+static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 IFDEF(CONFIG_ITRACE, char logbuf[128]);
 
@@ -46,14 +48,18 @@ static struct {
 
 
 static void statistic() {
+    Log("host time spent = %lu us", g_timer);
+    Log("total guest instructions = %lu" , g_nr_guest_inst);
+    if (g_timer > 0) Log("simulation frequency = %lu inst/s", g_nr_guest_inst * 1000000 / g_timer);
+    else Log("Finish running in less than 1 us and can not calculate the simulation frequency");
     Log("total guest instructions = %lu", g_nr_guest_inst);
 }
 
 static void execute_once() 
 {
-    PCSet.pc = top->rootp->rv32__DOT__pc;  PCSet.inst = top->rootp->rv32__DOT__inst;
-    single_cycle();  
-    PCSet.npc = top->rootp->rv32__DOT__pc;  PCSet.ninst = top->rootp->rv32__DOT__inst;
+    PCSet.pc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;  PCSet.inst = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst;
+    single_cycle();  single_cycle();single_cycle();single_cycle();single_cycle();
+    PCSet.npc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;  PCSet.ninst = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst;
 
 #ifdef CONFIG_ITRACE
     // 将指令拆分为字节
@@ -120,6 +126,7 @@ void cpu_exec(uint64_t n)
             return;
         default: npc_state.state = NPC_RUNNING;
     }   
+    uint64_t timer_start = get_time();
 
     execute(n);
 
@@ -129,6 +136,9 @@ void cpu_exec(uint64_t n)
         display_iringbuf();
      }
     #endif
+
+    uint64_t timer_end = get_time();
+    g_timer += timer_end - timer_start;
 
     switch (npc_state.state) 
     {
