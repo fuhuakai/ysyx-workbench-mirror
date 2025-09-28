@@ -420,14 +420,14 @@ void single_cycle(void)
     top->clk = 0; top->eval(); 
 #ifdef CONFIG_WAVES
     tfp->dump(main_time);
-    tfp->flush();  
+    //tfp->flush();  
 #endif
     main_time++; //推动仿真时间
 
     top->clk = 1; top->eval(); 
 #ifdef CONFIG_WAVES
     tfp->dump(main_time); 
-    tfp->flush(); 
+    //tfp->flush(); 
 #endif
     main_time++; //推动仿真时间
   }
