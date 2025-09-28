@@ -164,10 +164,22 @@ void single_cycle(void)
 {
   if(!Verilated::gotFinish())
   { 
-    top->clk = 0; top->eval(); tfp->dump(main_time);  main_time++; //推动仿真时间
-    top->clk = 1; top->eval(); tfp->dump(main_time);  main_time++; 
+    top->clk = 0; top->eval(); 
+    #ifdef CONFIG_WAVES
+        tfp->dump(main_time);
+        tfp->flush();  
+    #endif
+        main_time++; //推动仿真时间
+
+    top->clk = 1; top->eval(); 
+    #ifdef CONFIG_WAVES
+        tfp->dump(main_time); 
+        tfp->flush(); 
+    #endif
+    main_time++; //推动仿真时间
   }
 }
+
 
 static void reset(void)
 {
@@ -210,4 +222,3 @@ int main(int argc, char *argv[])
 
   return is_exit_status_bad();
 }
-
