@@ -203,7 +203,7 @@ module idu(
 
 
     // data package
-    wire idu_reg_wen  = i_pre_valid & o_pre_ready;   //数据包寄存器的写使能
+    wire idu_reg_wen = i_pre_valid & o_pre_ready;   // data package register write enable
     reg  [`IDU_PKG_WDITH-1 : 0] idu_valid_data_reg;  
     always @(posedge clk) begin
         if(rst == 1'b1) 

@@ -17,26 +17,22 @@ module register_file(
 );
 
     integer i;
-    reg [`RegNum-1 : 0] regs[`RegBus];
+    reg [`RegBus] regs[`RegNum-1:0];
 
-    //write register
+    // write register
     always @(posedge clk) begin
         if(rst == `RST_VAL) begin
-            for(i=0; i<`RegNum; i=i+1) begin
+            for(i = 0; i < `RegNum; i = i + 1) begin
                 regs[i] <= `RegRstVal;  
             end
-        end else if((i_rf_gpr_wen == 1'b1) && (i_rf_rd_id != `Reg_x0))
+        end else if((i_rf_gpr_wen == `Enable) && (i_rf_rd_id != `Reg_x0)) begin
             regs[i_rf_rd_id] <= i_rf_rd; 
-        else
-            regs[i_rf_rd_id] <= regs[i_rf_rd_id]; 
+        end
     end
 
-    //read register
+    // read register
     assign o_rf_rs1 = regs[i_rf_rs_id1];
     assign o_rf_rs2 = regs[i_rf_rs_id2];
-    // wire[`RegBus] src1_temp;
-    // assign src1_temp = (rs1 == `Reg0) ? `Reg0_VAL : regs[rs1];
-    // assign src1 = (is_ecall == 1'b1) ? regs[`Mcause_gpr] : src1_temp;
    
 endmodule
 

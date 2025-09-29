@@ -26,7 +26,7 @@ module ifu(
     // data package
     wire [`CPU_Bus]             ifu_inst = imem_read(i_ifu_npc);
     reg  [`IFU_PKG_WDITH-1 : 0] ifu_valid_data_reg;  
-    wire                        ifu_reg_wen  = i_cycle_end;   //数据包寄存器的写使能
+    wire                        ifu_reg_wen = i_cycle_end;   // data package register write enable
     always @(posedge clk) begin
         if(rst == 1'b1) 
             ifu_valid_data_reg <= 0;

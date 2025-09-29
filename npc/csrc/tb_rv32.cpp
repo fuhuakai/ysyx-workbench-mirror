@@ -309,9 +309,10 @@ extern void TRAP(int station, char unit)
             (unit == Unit_IDU9) || (unit == Unit_EXU1) || (unit == Unit_LSU1) || (unit == Unit_LSU2) ||
             (unit == Unit_CC1)  || (unit == Unit_CC2));
 
+    uint64_t ifu_pack = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg;
     Log("TRAP takes place in the %s", unit_names[unit]);
     Log("maintime = %ld, state = %d, pc = 0x%08x, inst = 0x%08x", main_time, npc_state.state, 
-         top->rootp->rv32__DOT__bru_inst__DOT__npc_reg, top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst);
+         top->rootp->rv32__DOT__bru_inst__DOT__npc_reg, (uint32_t)(ifu_pack & 0xffffffffu));
 
     switch(station)
     {

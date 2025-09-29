@@ -57,9 +57,15 @@ static void statistic() {
 
 static void execute_once() 
 {
-    PCSet.pc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;  PCSet.inst = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst;
+    uint64_t ifu_pack = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg;
+    PCSet.pc    = (uint32_t)(ifu_pack >> 32);
+    PCSet.inst  = (uint32_t)(ifu_pack & 0xffffffffu);
+    //PCSet.pc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;  PCSet.inst = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst;
     single_cycle();  single_cycle();single_cycle();single_cycle();single_cycle();
-    PCSet.npc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;  PCSet.ninst = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst;
+    ifu_pack = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg; 
+    PCSet.pc    = (uint32_t)(ifu_pack >> 32);
+    PCSet.inst  = (uint32_t)(ifu_pack & 0xffffffffu);
+    //PCSet.npc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;  PCSet.ninst = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst;
 
 #ifdef CONFIG_ITRACE
     // 将指令拆分为字节

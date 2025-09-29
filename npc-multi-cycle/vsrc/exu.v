@@ -72,27 +72,27 @@ module exu(
 
     /************ data package ************/
     // to LSU
-    wire [`CPU_Bus] exu_exu_res  = (i_exu_csr_ren == `Enable) ? i_exu_csr_src : exu_alu_res;
-    wire            exu_is_load  = i_exu_is_load;
-    wire            exu_is_store = i_exu_is_store;
-    wire [2:0]      exu_func3    = i_exu_func3;
-    wire [`CPU_Bus] exu_rs1      = i_exu_rs1;
-    wire [`CPU_Bus] exu_rs2      = i_exu_rs2;
-    wire [`CPU_Bus] exu_csr_npc  = i_exu_csr_npc; 
-    wire            exu_is_mret  = i_exu_is_mret;
-    wire            exu_is_ecall = i_exu_is_ecall;
-    // to to BRU
-    wire [`CPU_Bus] exu_imm      = i_exu_imm;
-    wire [`CPU_Bus] exu_pc       = i_exu_pc;
-    wire            exu_is_jal   = i_exu_is_jal;
-    wire            exu_is_jalr  = i_exu_is_jalr;
-    wire            exu_brch     = i_exu_is_brch & exu_alu_res[0];  //check if is branch inst while branch condition is true
-    // to to WEU
-    wire [4:0]      exu_rd_id    = i_exu_rd_id;
-    wire            exu_gpr_wen  = i_exu_gpr_wen;
-    wire [`CSR_Bus] exu_csr_wid   = i_exu_csr_rid;// 读和写同一个id
+    wire [`CPU_Bus] exu_alu_result = (i_exu_csr_ren == `Enable) ? i_exu_csr_src : exu_alu_res;
+    wire            exu_is_load    = i_exu_is_load;
+    wire            exu_is_store   = i_exu_is_store;
+    wire [2:0]      exu_func3      = i_exu_func3;
+    wire [`CPU_Bus] exu_rs1        = i_exu_rs1;
+    wire [`CPU_Bus] exu_rs2        = i_exu_rs2;
+    wire [`CPU_Bus] exu_csr_npc    = i_exu_csr_npc; 
+    wire            exu_is_mret    = i_exu_is_mret;
+    wire            exu_is_ecall   = i_exu_is_ecall;
+    // to BRU
+    wire [`CPU_Bus] exu_imm        = i_exu_imm;
+    wire [`CPU_Bus] exu_pc         = i_exu_pc;
+    wire            exu_is_jal     = i_exu_is_jal;
+    wire            exu_is_jalr    = i_exu_is_jalr;
+    wire            exu_brch       = i_exu_is_brch & exu_alu_res[0];  // check if is branch inst while branch condition is true
+    // to WEU
+    wire [4:0]      exu_rd_id      = i_exu_rd_id;
+    wire            exu_gpr_wen    = i_exu_gpr_wen;
+    wire [`CSR_Bus] exu_csr_wid    = i_exu_csr_rid;  // read and write same id
     wire [`CPU_Bus] exu_csr_rd;
-    wire            exu_csr_wen  = i_exu_csr_ren; // 读和写同一个id
+    wire            exu_csr_wen    = i_exu_csr_ren;  // read and write same id
 
     MuxKey #(4, 2, `CPU_Width) mux1(num1, i_exu_num_sel, {
         `RS1_RS2, i_exu_rs1,
@@ -115,15 +115,15 @@ module exu(
         `CSR_RC,  i_exu_rs1 & ~i_exu_csr_src}       
     );
 
-    // alu
+    // ALU
     reg  [`CPU_Bus] exu_alu_res;
     wire [`CPU_Bus] num1, num2;
-    wire [`CPU_Bus] num2_cplm = ~num2 + `CPU_Width'h1;   // 补码
+    wire [`CPU_Bus] num2_neg = ~num2 + `CPU_Width'h1;   // two's complement
     always @(*) begin
         exu_alu_res = `CPU_Width'd0;
         case (i_exu_alu_type)
             `ALU_ADD:   exu_alu_res = num1 + num2;
-            `ALU_SUB:   exu_alu_res = num1 + num2_cplm;
+            `ALU_SUB:   exu_alu_res = num1 + num2_neg;
             `ALU_SLL:   exu_alu_res = num1 << num2[4:0];
             `ALU_XOR:   exu_alu_res = num1 ^ num2;
             `ALU_SRL:   exu_alu_res = num1 >> num2[4:0];
@@ -136,19 +136,19 @@ module exu(
             `ALU_GE:    exu_alu_res = {{(`CPU_Width - 1){1'b0}}, (($signed(num1)) >= ($signed(num2)))};
             `ALU_LTU:   exu_alu_res = {{(`CPU_Width - 1){1'b0}}, (num1 <  num2)};
             `ALU_GEU:   exu_alu_res = {{(`CPU_Width - 1){1'b0}}, (num1 >= num2)};
-            default:    TRAP(`ABORT, `Unit_EXU1);  //uae
+            default:    TRAP(`ABORT, `Unit_EXU1);  
         endcase
     end
     
 
     // data package
-    wire exu_reg_wen  = i_pre_valid & o_pre_ready;   //数据包寄存器的写使能
+    wire exu_reg_wen = i_pre_valid & o_pre_ready;   // data package register write enable
     reg  [`EXU_PKG_WDITH-1 : 0] exu_valid_data_reg;  
     always @(posedge clk) begin
         if(rst == 1'b1) 
             exu_valid_data_reg <= 0;
         else if(exu_reg_wen == 1'b1)
-            exu_valid_data_reg <= { exu_exu_res, exu_is_load, exu_is_store, exu_func3,
+            exu_valid_data_reg <= { exu_alu_result, exu_is_load, exu_is_store, exu_func3,
                                     exu_rs1, exu_rs2, exu_csr_npc, exu_is_mret, exu_is_ecall, 
                                     exu_imm, exu_pc, exu_is_jal, exu_is_jalr, exu_brch, exu_rd_id, 
                                     exu_gpr_wen, exu_csr_wid, exu_csr_rd, exu_csr_wen };

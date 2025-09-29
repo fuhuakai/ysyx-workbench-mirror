@@ -59,12 +59,12 @@ module lsu(
     import "DPI-C" function void TRAP(input int station, input byte unit);
 
 
-    lsu_reg_wen  = i_pre_valid & o_pre_ready
-    o_post_valid = i_pre_valid 延迟一周期
-    o_pre_ready  = ~o_post_valid
-    i_pre_valid --> ⌈‾‾‾‾‾⌉ --> o_post_valid
-                    | LSU |
-    o_pre_ready <-- ⌊_____⌋ <-- i_post_ready
+    // lsu_reg_wen  = i_pre_valid & o_pre_ready
+    // o_post_valid = i_pre_valid 延迟一周期
+    // o_pre_ready  = ~o_post_valid
+    // i_pre_valid --> ⌈‾‾‾‾‾⌉ --> o_post_valid
+    //                 | LSU |
+    // o_pre_ready <-- ⌊_____⌋ <-- i_post_ready
 
 
 
@@ -93,30 +93,58 @@ module lsu(
     wire [`CPU_Bus] dmem_raddr   = i_lsu_exu_res;
     reg  [`CPU_Bus] dmem_rdata_t;
     reg  [`CPU_Bus] dmem_rdata;
-    // 有读请求时
-    always @(*) begin
-        if(i_lsu_is_load == `TRUE)  // 有读请求时
-            dmem_rdata_t = dmem_read(dmem_raddr);
-        else
-            dmem_rdata_t = 32'h00000001;
-    end    
+    // // 有读请求时
+    // always @(*) begin
+    //     if(i_lsu_is_load == `TRUE)  // 有读请求时
+    //         dmem_rdata_t = dmem_read(dmem_raddr);
+    //     else
+    //         dmem_rdata_t = 32'h00000001;
+    // end    
 
-    // dmem_rdata_t -> rdata
-    always @(*) begin
-        dmem_rdata = `CPU_Width'd0;
-        if(i_lsu_is_load == `TRUE)  begin// 有读请求时
+    // // dmem_rdata_t -> rdata
+    // always @(*) begin
+    //     dmem_rdata = `CPU_Width'd0;
+    //     if(i_lsu_is_load == `TRUE)  begin// 有读请求时
+    //         case (i_lsu_func3)
+    //             `INST_LBU:  dmem_rdata = {24'd0, dmem_rdata_t[7:0]};
+    //             `INST_LHU:  dmem_rdata = {16'd0, dmem_rdata_t[15:0]};
+    //             `INST_LB:   dmem_rdata = {{24{dmem_rdata_t[7]}}, dmem_rdata_t[7:0]};
+    //             `INST_LH:   dmem_rdata = {{16{dmem_rdata_t[15]}}, dmem_rdata_t[15:0]};
+    //             `INST_LW:   dmem_rdata = dmem_rdata_t;
+    //             default:    TRAP(`ABORT, `Unit_LSU1);  //uae
+    //         endcase
+    //     end
+    // end            
+    // assign lsu_rd = (i_lsu_is_load == `TRUE) ? dmem_rdata : i_lsu_exu_res;  // Its load inst(1'b1) or not (1'b0)
+
+// 核心时序块：读取、处理、写入在同一个时钟周期内完成时序控制
+always @(posedge clk) begin
+    if (rst) begin
+        dmem_rdata <= `CPU_Width'd0;
+    end else begin
+        // --- 内存读逻辑 ---
+        if (i_lsu_is_load == `TRUE) begin
+            // 步骤 1: 调用 DPI 获取原始数据
+            // 使用 automatic 关键字确保这是个临时变量，只在本次执行中有效
+            automatic logic [`CPU_Bus] raw_read_data = dmem_read(i_lsu_exu_res);
+
+            // 步骤 2: 立刻处理原始数据，并将最终结果存入寄存器
             case (i_lsu_func3)
-                `INST_LBU:  dmem_rdata = {24'd0, dmem_rdata_t[7:0]};
-                `INST_LHU:  dmem_rdata = {16'd0, dmem_rdata_t[15:0]};
-                `INST_LB:   dmem_rdata = {{24{dmem_rdata_t[7]}}, dmem_rdata_t[7:0]};
-                `INST_LH:   dmem_rdata = {{16{dmem_rdata_t[15]}}, dmem_rdata_t[15:0]};
-                `INST_LW:   dmem_rdata = dmem_rdata_t;
-                default:    TRAP(`ABORT, `Unit_LSU1);  //uae
+                `INST_LBU: dmem_rdata <= {24'd0, raw_read_data[7:0]};
+                `INST_LHU: dmem_rdata <= {16'd0, raw_read_data[15:0]};
+                `INST_LB:  dmem_rdata <= {{24{raw_read_data[7]}}, raw_read_data[7:0]};
+                `INST_LH:  dmem_rdata <= {{16{raw_read_data[15]}}, raw_read_data[15:0]};
+                `INST_LW:  dmem_rdata <= raw_read_data;
+                default:   TRAP(`ABORT, `Unit_LSU1);
             endcase
         end
-    end            
-    assign lsu_rd = (i_lsu_is_load == `TRUE) ? dmem_rdata : i_lsu_exu_res;  // Its load inst(1'b1) or not (1'b0)
 
+
+    end
+end
+
+// 最终输出 MUX: 从寄存器中读取数据
+assign o_lsu_rd = (i_lsu_is_load == `TRUE) ? dmem_rdata : i_lsu_exu_res;
 
 
     /************ write dmem ************/
@@ -255,4 +283,4 @@ module lsu(
 //     assign o_post_valid = post_valid_reg;
 //     assign o_pre_ready  = ~o_post_valid;
 
-// endmodule
+ endmodule
