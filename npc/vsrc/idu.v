@@ -187,7 +187,7 @@ module idu(
         endcase
     end
     // to Register File
-    assign idu_rs_id1 = (idu_is_ecall == `TRUE) ? `MCASUSE_GPR :  // ecall: src1 = value of a17
+    assign idu_rs_id1 = (idu_is_ecall == `TRUE) ? 11 :  // ecall: src1 = value of a17
                         (opcode == `TYPE_U_LUI) ? 5'd0 : rs_id1;  // lui : rd = x0 + imm
     assign idu_rs_id2 = rs_id2;
     // to to LSU

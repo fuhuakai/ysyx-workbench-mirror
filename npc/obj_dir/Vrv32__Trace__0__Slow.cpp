@@ -942,7 +942,7 @@ VL_ATTR_COLD void Vrv32___024root__trace_full_sub_0(Vrv32___024root* vlSelf, Ver
     bufp->fullIData(oldp+189,(vlSelf->rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__lut_out),32);
     bufp->fullBit(oldp+190,(vlSelf->rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__hit));
     bufp->fullCData(oldp+191,(((IData)(vlSelf->rv32__DOT__idu_inst__DOT__idu_is_ecall)
-                                ? 0xfU : ((0x37U == 
+                                ? 0xbU : ((0x37U == 
                                            (0x7fU & (IData)(vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg)))
                                            ? 0U : (0x1fU 
                                                    & (IData)(

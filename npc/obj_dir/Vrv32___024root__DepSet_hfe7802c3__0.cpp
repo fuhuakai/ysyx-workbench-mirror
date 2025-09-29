@@ -663,7 +663,7 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                                                                    >> 0x12U))))))));
         vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[3U] 
             = ((((IData)(vlSelf->rv32__DOT__idu_inst__DOT__idu_is_ecall)
-                  ? 0xfU : ((0x37U == (0x7fU & (IData)(vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg)))
+                  ? 0xbU : ((0x37U == (0x7fU & (IData)(vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg)))
                              ? 0U : (0x1fU & (IData)(
                                                      (vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg 
                                                       >> 0xfU))))) 
