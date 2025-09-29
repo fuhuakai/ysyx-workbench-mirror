@@ -313,52 +313,39 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
     }
     if (vlSelf->rst) {
         vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata = 0U;
-    } else {
-        if ((0x10000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
-            Vrv32___024root____Vdpiimwrap_rv32__DOT__lsu_inst__DOT__dmem_read_TOP(
-                                                                                ((vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[7U] 
+    } else if ((0x10000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
+        Vrv32___024root____Vdpiimwrap_rv32__DOT__lsu_inst__DOT__dmem_read_TOP(
+                                                                              ((vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[7U] 
                                                                                 << 3U) 
-                                                                                | (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
+                                                                               | (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
                                                                                 >> 0x1dU)), __Vfunc_rv32__DOT__lsu_inst__DOT__dmem_read__80__Vfuncout);
-            vlSelf->rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data 
-                = __Vfunc_rv32__DOT__lsu_inst__DOT__dmem_read__80__Vfuncout;
-            if ((0x4000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
-                if ((0x2000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
-                    Vrv32___024root____Vdpiimwrap_rv32__DOT__idu_inst__DOT__TRAP_TOP(2U, 0xaU);
-                } else {
-                    vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata 
-                        = ((0x1000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])
-                            ? (0xffffU & vlSelf->rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data)
-                            : (0xffU & vlSelf->rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data));
-                }
-            } else if ((0x2000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
-                if ((0x1000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
-                    Vrv32___024root____Vdpiimwrap_rv32__DOT__idu_inst__DOT__TRAP_TOP(2U, 0xaU);
-                } else {
-                    vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata 
-                        = vlSelf->rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data;
-                }
+        vlSelf->rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data 
+            = __Vfunc_rv32__DOT__lsu_inst__DOT__dmem_read__80__Vfuncout;
+        if ((0x4000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
+            if ((0x2000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
+                Vrv32___024root____Vdpiimwrap_rv32__DOT__idu_inst__DOT__TRAP_TOP(2U, 0xaU);
             } else {
                 vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata 
                     = ((0x1000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])
-                        ? (((- (IData)((1U & (vlSelf->rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data 
-                                              >> 0xfU)))) 
-                            << 0x10U) | (0xffffU & vlSelf->rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data))
-                        : (((- (IData)((1U & (vlSelf->rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data 
-                                              >> 7U)))) 
-                            << 8U) | (0xffU & vlSelf->rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data)));
+                        ? (0xffffU & vlSelf->rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data)
+                        : (0xffU & vlSelf->rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data));
             }
-        }
-        if ((0x8000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
-            Vrv32___024root____Vdpiimwrap_rv32__DOT__lsu_inst__DOT__pmem_write_TOP(
-                                                                                ((vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[7U] 
-                                                                                << 3U) 
-                                                                                | (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
-                                                                                >> 0x1dU)), 
-                                                                                ((vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[5U] 
-                                                                                << 8U) 
-                                                                                | (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[4U] 
-                                                                                >> 0x18U)), (IData)(vlSelf->rv32__DOT__lsu_inst__DOT__wmask));
+        } else if ((0x2000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
+            if ((0x1000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
+                Vrv32___024root____Vdpiimwrap_rv32__DOT__idu_inst__DOT__TRAP_TOP(2U, 0xaU);
+            } else {
+                vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata 
+                    = vlSelf->rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data;
+            }
+        } else {
+            vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata 
+                = ((0x1000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])
+                    ? (((- (IData)((1U & (vlSelf->rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data 
+                                          >> 0xfU)))) 
+                        << 0x10U) | (0xffffU & vlSelf->rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data))
+                    : (((- (IData)((1U & (vlSelf->rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data 
+                                          >> 7U)))) 
+                        << 8U) | (0xffU & vlSelf->rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data)));
         }
     }
     if (vlSelf->rst) {

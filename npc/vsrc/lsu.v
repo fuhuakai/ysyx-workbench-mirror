@@ -139,11 +139,7 @@ always @(posedge clk) begin
             endcase
         end
 
-        // --- 内存写逻辑 (需要周期判断) ---
-        // 假设 i_cpu_clk_cnt 是从顶层传入的周期计数器
-        if (i_lsu_is_store == `TRUE) begin
-            pmem_write(i_lsu_exu_res, i_lsu_rs2, wmask);
-        end
+
     end
 end
 
