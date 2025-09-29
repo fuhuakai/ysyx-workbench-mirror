@@ -48,9 +48,9 @@ module csr_ctrl(
         end 
     end
 
-    //read register
+    // read register
     always @(*) begin
-        if(i_ccu_csr_ren == `Enable)
+        if(i_ccu_csr_ren == `Enable) begin
             case (i_ccu_csr_rid)
                 12'h300: o_exu_csr_src = mstatus;
                 12'h305: o_exu_csr_src = mtvec;
@@ -58,14 +58,11 @@ module csr_ctrl(
                 12'h342: o_exu_csr_src = mcause;
                 default: begin 
                     o_exu_csr_src = 32'hdead001c;
-                    TRAP(`ABORT, `Unit_CC2);  //uae                
+                    TRAP(`ABORT, `Unit_CC2);                 
                 end
             endcase
-        else begin
-                mstatus = mstatus;
-                mtvec   = mtvec  ;
-                mepc    = mepc   ;
-                mcause  = mcause ;
+        end else begin
+            o_exu_csr_src = 32'h0;  // default value when not reading
         end
     end
 

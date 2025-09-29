@@ -18,7 +18,6 @@ class Vrv32___024root final : public VerilatedModule {
         VL_IN8(clk,0,0);
         VL_IN8(rst,0,0);
         CData/*2:0*/ rv32__DOT__clk_cnt;
-        CData/*0:0*/ rv32__DOT__w_lsu_is_ejump;
         CData/*0:0*/ rv32__DOT__w_wbu_cycle_end;
         CData/*0:0*/ rv32__DOT__w_wbu_npc_wen;
         CData/*0:0*/ rv32__DOT__idu_inst__DOT__idu_csr_ren;
@@ -33,6 +32,7 @@ class Vrv32___024root final : public VerilatedModule {
         CData/*0:0*/ rv32__DOT__exu_inst__DOT__mux1__DOT__i0__DOT__hit;
         CData/*0:0*/ rv32__DOT__exu_inst__DOT__mux2__DOT__i0__DOT__hit;
         CData/*0:0*/ rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__hit;
+        CData/*7:0*/ rv32__DOT__lsu_inst__DOT__write_mask;
         CData/*0:0*/ rv32__DOT__lsu_inst__DOT__post_valid_reg;
         CData/*0:0*/ rv32__DOT__wbu_inst__DOT__pre_valid_reg;
         CData/*0:0*/ rv32__DOT__bru_inst__DOT____Vcellinp__mux2____pinNumber2;
@@ -56,8 +56,9 @@ class Vrv32___024root final : public VerilatedModule {
         IData/*31:0*/ rv32__DOT__exu_inst__DOT__mux1__DOT__i0__DOT__lut_out;
         IData/*31:0*/ rv32__DOT__exu_inst__DOT__mux2__DOT__i0__DOT__lut_out;
         IData/*31:0*/ rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__lut_out;
-        IData/*31:0*/ rv32__DOT__lsu_inst__DOT__lsu_mem_rdata_reg;
-        IData/*31:0*/ rv32__DOT__lsu_inst__DOT__unnamedblk1__DOT__raw_read_data;
+        IData/*31:0*/ rv32__DOT__lsu_inst__DOT__dmem_rdata_t;
+        IData/*31:0*/ rv32__DOT__lsu_inst__DOT__dmem_rdata;
+        VlWide<7>/*216:0*/ rv32__DOT__lsu_inst__DOT__lsu_valid_data_reg;
         IData/*31:0*/ rv32__DOT__bru_inst__DOT__pc_jorb;
         IData/*31:0*/ rv32__DOT__bru_inst__DOT__npc_t1;
         IData/*31:0*/ rv32__DOT__bru_inst__DOT__npc_t2;
@@ -78,9 +79,9 @@ class Vrv32___024root final : public VerilatedModule {
         VlUnpacked<CData/*1:0*/, 4> rv32__DOT__exu_inst__DOT__mux1__DOT__i0__DOT__key_list;
         VlUnpacked<IData/*31:0*/, 4> rv32__DOT__exu_inst__DOT__mux1__DOT__i0__DOT__data_list;
         VlUnpacked<QData/*33:0*/, 4> rv32__DOT__exu_inst__DOT__mux2__DOT__i0__DOT__pair_list;
-        VlUnpacked<CData/*1:0*/, 4> rv32__DOT__exu_inst__DOT__mux2__DOT__i0__DOT__key_list;
     };
     struct {
+        VlUnpacked<CData/*1:0*/, 4> rv32__DOT__exu_inst__DOT__mux2__DOT__i0__DOT__key_list;
         VlUnpacked<IData/*31:0*/, 4> rv32__DOT__exu_inst__DOT__mux2__DOT__i0__DOT__data_list;
         VlUnpacked<QData/*33:0*/, 4> rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__pair_list;
         VlUnpacked<CData/*1:0*/, 4> rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__key_list;

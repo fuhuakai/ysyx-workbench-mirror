@@ -49,7 +49,7 @@ module wbu(
         else
             pre_valid_reg <= i_pre_valid;
     end
-    //复位时为1； 此外则是pre_valid_reg的上升沿检测。
+    // reset to 1; otherwise detect rising edge of pre_valid_reg
     always @(posedge clk) begin
         if(rst == 1'b1) 
             o_cycle_end <= 1'b1;
@@ -60,11 +60,11 @@ module wbu(
     // to IFU
     assign o_pre_ready     = ~o_cycle_end;
     // to BRU
-    assign o_wbu_npc_wen   = i_pre_valid & ~pre_valid_reg;    //只有效一周期，防止反复写入npc_reg
+    assign o_wbu_npc_wen   = i_pre_valid & ~pre_valid_reg;    // valid for one cycle only, prevent repeated writes to npc_reg
     // to Register File
     assign o_wbu_rd        = i_wbu_rd;
     assign o_wbu_rd_id     = i_wbu_rd_id;
-    assign o_wbu_gpr_wen   = i_wbu_gpr_wen & o_wbu_npc_wen;    //只有效一周期，防止反复写入gpr
+    assign o_wbu_gpr_wen   = i_wbu_gpr_wen & o_wbu_npc_wen;    // valid for one cycle only, prevent repeated writes to gpr
     // to CSR Ctrl
     assign o_wbu_mcause_in = i_wbu_rs1;
     assign o_wbu_mepc_in   = i_wbu_pc;

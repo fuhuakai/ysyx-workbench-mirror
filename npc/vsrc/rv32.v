@@ -336,7 +336,7 @@ module rv32(
   wire [`RegBus] w_rf_rs1;
   wire [`RegBus] w_rf_rs2;
   
-  register_file  register_file_inst(
+  register_file register_file_inst(
     // system
     .clk         (clk),
     .rst         (rst),

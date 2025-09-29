@@ -23,16 +23,16 @@ module bru(
     
     wire [`CPU_Bus] pc_jorb;
     wire [`CPU_Bus] npc_t1, npc_t2;
-    wire [`RegBus]  temp = {{(`CPU_Width - 1){1'b1}}, 1'b0};  //for example, CPU_Width = 32，then temp = 0xfffe
+    wire [`RegBus]  jalr_mask = {{(`CPU_Width - 1){1'b1}}, 1'b0};  // for example, CPU_Width = 32, then jalr_mask = 0xfffe
     
     MuxKey #(2, 1, `CPU_Width) mux1(pc_jorb, i_bru_is_jalr, {
         `FALSE, i_bru_pc + i_bru_imm,               // jal or branch instruction
-        `TRUE,  (i_bru_rs1 + i_bru_imm) & temp}     // jalr
+        `TRUE,  (i_bru_rs1 + i_bru_imm) & jalr_mask}     // jalr
     );
 
     MuxKey #(2, 1, `CPU_Width) mux2(npc_t1, (i_bru_is_jalr | i_bru_is_jal | i_bru_brch), {
         `FALSE, i_bru_pc + `CPU_Width'h4,           // pc + 4        
-        `TRUE,  pc_jorb}                            // jalr pr jal or branch instruction
+        `TRUE,  pc_jorb}                            // jalr or jal or branch instruction
     );
 
     MuxKey #(2, 1, `CPU_Width) mux3(npc_t2, (i_bru_ejump), {
