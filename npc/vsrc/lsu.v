@@ -100,7 +100,7 @@ module lsu(
 		end else if(i_lsu_is_load == `TRUE) begin
 			dmem_rdata_t <= dmem_read(dmem_raddr);
 		end else begin
-			dmem_rdata_t <= 32'h00000001;
+			dmem_rdata_t <= dmem_rdata_t;
 		end
 	end    
 
@@ -114,43 +114,43 @@ module lsu(
 				`INST_LB:   dmem_rdata = {{24{dmem_rdata_t[7]}}, dmem_rdata_t[7:0]};
 				`INST_LH:   dmem_rdata = {{16{dmem_rdata_t[15]}}, dmem_rdata_t[15:0]};
 				`INST_LW:   dmem_rdata = dmem_rdata_t;
-				default:    TRAP(`ABORT, `Unit_LSU1); 
+				default:    TRAP(`ABORT, `Unit_LSU1);  //uae
 			endcase
 		end
 	end            
-	assign lsu_rd = (i_lsu_is_load == `TRUE) ? dmem_rdata : i_lsu_exu_res;  // select load data or ALU result
+	assign lsu_rd = (i_lsu_is_load == `TRUE) ? dmem_rdata : i_lsu_exu_res;  // Is load inst(1'b1) or not (1'b0)
 
 
 
 	/************ write dmem ************/
 	wire [`CPU_Bus] dmem_waddr = i_lsu_exu_res;
 	wire [`CPU_Bus] dmem_wdata = i_lsu_rs2;
-	reg  [7:0]    write_mask;
-	// write mask generation
+	reg  [7:0]    wmask;
+	// wmask
 	always @(*) begin
-		if(i_lsu_is_store == `TRUE) begin // when there is write request
+		if(i_lsu_is_store == `TRUE) begin // 有写请求时
 			case (i_lsu_func3)
-				`INST_SB: write_mask = `WByte;
-				`INST_SH: write_mask = `WHalf;
-				`INST_SW: write_mask = `WWord;
-				default:  TRAP(`ABORT, `Unit_LSU2);  
+				`INST_SB: wmask = `WByte;
+				`INST_SH: wmask = `WHalf;
+				`INST_SW: wmask = `WWord;
+				default:  TRAP(`ABORT, `Unit_LSU2);  //uae
 			endcase
 		end else begin
-			write_mask = 8'b0;
+			wmask = 8'b0;
 		end
 	end  
 
 	always @(posedge clk) begin
 		if (rst == 1'b1) begin
 			// no-op
-		end else if(i_lsu_is_store == `TRUE) begin // when there is write request
-			pmem_write(dmem_waddr, dmem_wdata, write_mask);
+		end else if(i_lsu_is_store == `TRUE) begin // 有写请求时
+			pmem_write(dmem_waddr, dmem_wdata, wmask);
 		end
 	end
 
 
 	// data package
-	wire         lsu_reg_wen = i_pre_valid & o_pre_ready;   // data package register write enable
+	wire         lsu_reg_wen  = i_pre_valid & o_pre_ready;   //数据包寄存器的写使能
 	reg  [`LSU_PKG_WDITH-1 : 0] lsu_valid_data_reg;  
 	always @(posedge clk) begin
 		if(rst == 1'b1) 

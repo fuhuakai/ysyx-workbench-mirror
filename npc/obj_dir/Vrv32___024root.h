@@ -32,7 +32,7 @@ class Vrv32___024root final : public VerilatedModule {
         CData/*0:0*/ rv32__DOT__exu_inst__DOT__mux1__DOT__i0__DOT__hit;
         CData/*0:0*/ rv32__DOT__exu_inst__DOT__mux2__DOT__i0__DOT__hit;
         CData/*0:0*/ rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__hit;
-        CData/*7:0*/ rv32__DOT__lsu_inst__DOT__write_mask;
+        CData/*7:0*/ rv32__DOT__lsu_inst__DOT__wmask;
         CData/*0:0*/ rv32__DOT__lsu_inst__DOT__post_valid_reg;
         CData/*0:0*/ rv32__DOT__wbu_inst__DOT__pre_valid_reg;
         CData/*0:0*/ rv32__DOT__bru_inst__DOT____Vcellinp__mux2____pinNumber2;

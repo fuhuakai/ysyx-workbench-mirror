@@ -343,18 +343,18 @@ VL_ATTR_COLD void Vrv32___024root___stl_sequent__TOP__0(Vrv32___024root* vlSelf)
     if ((0x8000000U & vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U])) {
         if ((0U == (7U & (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
                           >> 0x18U)))) {
-            vlSelf->rv32__DOT__lsu_inst__DOT__write_mask = 1U;
+            vlSelf->rv32__DOT__lsu_inst__DOT__wmask = 1U;
         } else if ((1U == (7U & (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
                                  >> 0x18U)))) {
-            vlSelf->rv32__DOT__lsu_inst__DOT__write_mask = 3U;
+            vlSelf->rv32__DOT__lsu_inst__DOT__wmask = 3U;
         } else if ((2U == (7U & (vlSelf->rv32__DOT__exu_inst__DOT__exu_valid_data_reg[6U] 
                                  >> 0x18U)))) {
-            vlSelf->rv32__DOT__lsu_inst__DOT__write_mask = 0xfU;
+            vlSelf->rv32__DOT__lsu_inst__DOT__wmask = 0xfU;
         } else {
             Vrv32___024root____Vdpiimwrap_rv32__DOT__idu_inst__DOT__TRAP_TOP(2U, 0xbU);
         }
     } else {
-        vlSelf->rv32__DOT__lsu_inst__DOT__write_mask = 0U;
+        vlSelf->rv32__DOT__lsu_inst__DOT__wmask = 0U;
     }
     vlSelf->rv32__DOT__exu_inst__DOT__mux1__DOT__i0__DOT__hit 
         = ((3U & (vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[2U] 
@@ -1256,7 +1256,7 @@ VL_ATTR_COLD void Vrv32___024root___ctor_var_reset(Vrv32___024root* vlSelf) {
     vlSelf->rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__hit = VL_RAND_RESET_I(1);
     vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t = VL_RAND_RESET_I(32);
     vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata = VL_RAND_RESET_I(32);
-    vlSelf->rv32__DOT__lsu_inst__DOT__write_mask = VL_RAND_RESET_I(8);
+    vlSelf->rv32__DOT__lsu_inst__DOT__wmask = VL_RAND_RESET_I(8);
     VL_RAND_RESET_W(217, vlSelf->rv32__DOT__lsu_inst__DOT__lsu_valid_data_reg);
     vlSelf->rv32__DOT__lsu_inst__DOT__post_valid_reg = VL_RAND_RESET_I(1);
     vlSelf->rv32__DOT__wbu_inst__DOT__pre_valid_reg = VL_RAND_RESET_I(1);

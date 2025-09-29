@@ -519,7 +519,7 @@ VL_ATTR_COLD void Vrv32___024root__trace_init_sub__TOP__0(Vrv32___024root* vlSel
     tracep->declBus(c+237,"dmem_rdata", false,-1, 31,0);
     tracep->declBus(c+46,"dmem_waddr", false,-1, 31,0);
     tracep->declBus(c+51,"dmem_wdata", false,-1, 31,0);
-    tracep->declBus(c+238,"write_mask", false,-1, 7,0);
+    tracep->declBus(c+238,"wmask", false,-1, 7,0);
     tracep->declBit(c+239,"lsu_reg_wen", false,-1);
     tracep->declArray(c+240,"lsu_valid_data_reg", false,-1, 216,0);
     tracep->declBit(c+66,"post_valid_reg", false,-1);
@@ -1037,7 +1037,7 @@ VL_ATTR_COLD void Vrv32___024root__trace_full_sub_0(Vrv32___024root* vlSelf, Ver
                                               >> 0x1dU)))),32);
     bufp->fullIData(oldp+236,(vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata_t),32);
     bufp->fullIData(oldp+237,(vlSelf->rv32__DOT__lsu_inst__DOT__dmem_rdata),32);
-    bufp->fullCData(oldp+238,(vlSelf->rv32__DOT__lsu_inst__DOT__write_mask),8);
+    bufp->fullCData(oldp+238,(vlSelf->rv32__DOT__lsu_inst__DOT__wmask),8);
     bufp->fullBit(oldp+239,(((~ (IData)(vlSelf->rv32__DOT__lsu_inst__DOT__post_valid_reg)) 
                              & (IData)(vlSelf->rv32__DOT__exu_inst__DOT__post_valid_reg))));
     bufp->fullWData(oldp+240,(vlSelf->rv32__DOT__lsu_inst__DOT__lsu_valid_data_reg),217);
