@@ -100,7 +100,7 @@ module lsu(
 		end else if(i_lsu_is_load == `TRUE) begin
 			dmem_rdata_t <= dmem_read(dmem_raddr);
 		end else begin
-			dmem_rdata_t <= dmem_rdata_t;
+			dmem_rdata_t <= 32'h00000001;
 		end
 	end    
 
