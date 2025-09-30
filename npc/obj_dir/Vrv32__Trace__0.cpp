@@ -417,14 +417,14 @@ void Vrv32___024root__trace_chg_sub_0(Vrv32___024root* vlSelf, VerilatedVcd::Buf
         bufp->chgIData(oldp+202,(vlSelf->rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__lut_out),32);
         bufp->chgBit(oldp+203,(vlSelf->rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__hit));
         bufp->chgCData(oldp+204,(((IData)(vlSelf->rv32__DOT__idu_inst__DOT__idu_is_ecall)
-                                   ? 0xfU : ((0x37U 
-                                              == (0x7fU 
-                                                  & (IData)(vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg)))
-                                              ? 0U : 
-                                             (0x1fU 
-                                              & (IData)(
-                                                        (vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg 
-                                                         >> 0xfU)))))),5);
+                                   ? 0x11U : ((0x37U 
+                                               == (0x7fU 
+                                                   & (IData)(vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg)))
+                                               ? 0U
+                                               : (0x1fU 
+                                                  & (IData)(
+                                                            (vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg 
+                                                             >> 0xfU)))))),5);
         bufp->chgCData(oldp+205,((0x1fU & (IData)((vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg 
                                                    >> 0x14U)))),5);
         bufp->chgSData(oldp+206,((0xfffU & (IData)(
