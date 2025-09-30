@@ -57,7 +57,7 @@ static void statistic() {
 
 static void execute_once() 
 {
-        // 先推进一个完整指令节拍（IFU延迟后整体约6拍/指令）
+    // 先推进一个完整指令节拍（IFU延迟后整体约6拍/指令）
     single_cycle(); single_cycle(); single_cycle(); single_cycle(); single_cycle(); single_cycle();
 
     // 读取 IFU 数据包寄存器，高32位为PC，低32位为inst
