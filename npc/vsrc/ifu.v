@@ -45,7 +45,7 @@ module ifu(
     always @(posedge clk) begin
         if (rst == 1'b1) begin
             s_if_req         <= 1'b0;
-            s_if_addr_reg    <= 32'b0;
+            s_if_addr_reg    <= `RESET_VECTOR;
             ifu_valid_data_reg <= {`IFU_PKG_WDITH{1'b0}};
             ifu_valid_hold   <= 1'b0;
         end else begin

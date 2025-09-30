@@ -1725,7 +1725,7 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
     }
     if (vlSelf->rst) {
         vlSelf->rv32__DOT__ifu_inst__DOT__s_if_req = 0U;
-        vlSelf->rv32__DOT__ifu_inst__DOT__s_if_addr_reg = 0U;
+        vlSelf->rv32__DOT__ifu_inst__DOT__s_if_addr_reg = 0x80000000U;
         __Vdly__rv32__DOT__ifu_inst__DOT__ifu_valid_hold = 0U;
         vlSelf->rv32__DOT__bru_inst__DOT__npc_reg = 0x80000000U;
     } else {

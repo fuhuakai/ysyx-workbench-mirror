@@ -346,7 +346,11 @@ extern int imem_read(int raddr)
     return data;
 
 
+  // 添加调试信息
+  printf("IMEM_READ: time=%ld, addr=0x%08x\n", main_time, raddr);
   data = pmem_r(raddr, 4);
+  printf("IMEM_READ: data=0x%08x\n", data);
+  
   //  // 添加指令跟踪
   //  if (raddr < 0x80000000) {
   //   printf("out of bound: time=%ld, pc=0x%08x, inst=0x%08x\n", 
