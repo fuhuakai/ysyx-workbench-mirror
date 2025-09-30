@@ -10,9 +10,7 @@ module rv32(
   wire[4:0]       rd;
   wire[2:0]       funct3;
   wire[6:0]       funct7;
-/* verilator lint_off UNOPTFLAT */
   wire[`RegBus]   inst;     
-/* verilator lint_off UNOPTFLAT */
   wire[`RegBus]   pc;     
   wire[`TYPE_BUS] Inst_type;      //inst type
   wire            is_ecall;
@@ -30,12 +28,9 @@ module rv32(
   wire[`AlucBus]  aluc;       //alu operation type, like add, sub...
   wire[`RegBus]   PCadd4;     //pc + 4
   wire[`RegBus]   result;     //alu operation result
-  wire[`RegBus]   reg_in;     //regisrer file input value
   wire[`RegBus]   src1;       //rs1 value
   wire[`RegBus]   src2;       //rs2 value
   wire[`RegBus]   imm32;      //extended 32 bit immediate
-  wire[`RegBus]   num1;       //alu operation number1       
-  wire[`RegBus]   num2;       //alu operation number2
   wire[`RegBus]   mem_rdata;  //mem read data
   wire[`RegBus]   csr_npc;    //next pc read from csr 
   wire[`RegBus]   csr_data;   //csr read data
@@ -100,7 +95,11 @@ module rv32(
     .rs1        (rs1),
     .rs2        (rs2),
     .rd         (rd),
-    .reg_in     (reg_in),
+    .wb_sel     (wb_sel),      
+    .PCadd4     (PCadd4),       
+    .mem_rdata  (mem_rdata),  
+    .result     (result),    
+    .csr_data   (csr_data),   
     .src1       (src1),
     .src2       (src2)
   );
@@ -129,32 +128,16 @@ module rv32(
     .Inst_type (Inst_type),
     .imm32  (imm32)
   );
-
-  // MUX3 module
-  MuxKey #(2, 1, `BitWidth) i3(num1, alu_sel_1, {
-      `MUX3_pc,   pc,
-      `MUX3_src1, src1}
-  );
-
-  // MUX4 module
-  MuxKey #(2, 1, `BitWidth) i4(num2, alu_sel_2, {
-      `MUX4_src2,  src2,
-      `MUX4_imm32, imm32}
-  );
-
-  // MUX5 module
-  MuxKey #(4, 2, `BitWidth) i5(reg_in, wb_sel, {
-      `MUX5_PCadd4, PCadd4,
-      `MUX5_memdat, mem_rdata,
-      `MUX5_result, result,
-      `MUX5_Csrdata, csr_data}       
-  );
   
   // ALU module
   alu alu_inst(
-    .aluc   (aluc),
-    .num1   (num1),
-    .num2   (num2),
-    .result (result)
+    .aluc      (aluc),
+    .alu_sel_1 (alu_sel_1), 
+    .alu_sel_2 (alu_sel_2), 
+    .pc        (pc),        
+    .src1      (src1),      
+    .src2      (src2),      
+    .imm32     (imm32),    
+    .result    (result)
   );
 endmodule

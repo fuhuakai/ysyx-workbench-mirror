@@ -35,7 +35,6 @@ extern int    dmem_read(int raddr);
 extern void   pmem_write(int waddr, int wdata, char wmask);    
 // extern void   etrace(int inst);                                     
 extern uint64_t get_time();                               
-extern void difftest_skip_ref();
 /*********************************************/
 
 static uint32_t rtc_port_base[2] = {0, 0};
@@ -93,28 +92,14 @@ extern int imem_read(int raddr)
   if(main_time < start_time)
     return data;
 
-
   data = pmem_r(raddr, 4);
-  //  // 添加指令跟踪
-  //  if (raddr < 0x80000000) {
-  //   printf("out of bound: time=%ld, pc=0x%08x, inst=0x%08x\n", 
-  //          main_time, raddr, data);
-  // }
-  // if (raddr >= 0x80000000 && raddr <= 0x87ffffff) {
-  //   printf("IMEM_READ: time=%ld, pc=0x%08x, inst=0x%08x\n", 
-  //          main_time, raddr, data);
-  // }
+
   return data;    
 }
 
 extern int dmem_read(int raddr)
 {
   static int data;
-  // static int data = 0xdead000a;
-
-  // // 因为是是周期CPU，所以理论上来说应该轮到LSU工作的时候才读/写dmem
-  // if(main_time < start_time || top->rootp->rv32__DOT__clk_cnt != 3 || top->clk == 0)
-  //   return data;
 
   // device rtc
   if((raddr == CONFIG_RTC_MMIO) || (raddr == CONFIG_RTC_MMIO + 4))
@@ -126,9 +111,7 @@ extern int dmem_read(int raddr)
       rtc_port_base[1] = us >> 32;
     }
     data = rtc_port_base[(raddr - CONFIG_RTC_MMIO) / 4];
-#ifdef CONFIG_DIFFTEST
-    difftest_skip_ref();
-#endif
+
   }
   else
     data = pmem_r(raddr, 4);
@@ -147,9 +130,6 @@ void pmem_write(int waddr, int wdata, char wmask)
     assert(wmask == WByte);
     char ch = (char)wdata;
     putchar(ch);
-#ifdef CONFIG_DIFFTEST
-    difftest_skip_ref();
-#endif
     return;
   }
 

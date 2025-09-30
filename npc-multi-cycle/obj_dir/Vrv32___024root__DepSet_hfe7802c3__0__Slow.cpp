@@ -1097,7 +1097,8 @@ VL_ATTR_COLD void Vrv32___024root___stl_sequent__TOP__0(Vrv32___024root* vlSelf)
                                  >> 0x14U)) == vlSelf->rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__key_list
                           [3U]))) & vlSelf->rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__data_list
               [3U]));
-    vlSelf->rv32__DOT__exu_inst__DOT__exu_csr_rd = vlSelf->rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__lut_out;
+    vlSelf->rv32__DOT__exu_inst__DOT__generic_csr_wdata 
+        = vlSelf->rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__lut_out;
     vlSelf->rv32__DOT__bru_inst__DOT__mux2__DOT__i0__DOT__lut_out 
         = ((- (IData)(((IData)(vlSelf->rv32__DOT__bru_inst__DOT____Vcellinp__mux2____pinNumber2) 
                        == vlSelf->rv32__DOT__bru_inst__DOT__mux2__DOT__i0__DOT__key_list
@@ -1196,7 +1197,7 @@ VL_ATTR_COLD void Vrv32___024root___ctor_var_reset(Vrv32___024root* vlSelf) {
     VL_RAND_RESET_W(111, vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg);
     vlSelf->rv32__DOT__idu_inst__DOT__post_valid_reg = VL_RAND_RESET_I(1);
     vlSelf->rv32__DOT__idu_inst__DOT____VdfgExtracted_ha4c8ba42__0 = VL_RAND_RESET_I(32);
-    vlSelf->rv32__DOT__exu_inst__DOT__exu_csr_rd = VL_RAND_RESET_I(32);
+    vlSelf->rv32__DOT__exu_inst__DOT__generic_csr_wdata = VL_RAND_RESET_I(32);
     vlSelf->rv32__DOT__exu_inst__DOT__exu_alu_res = VL_RAND_RESET_I(32);
     vlSelf->rv32__DOT__exu_inst__DOT__num1 = VL_RAND_RESET_I(32);
     vlSelf->rv32__DOT__exu_inst__DOT__num2 = VL_RAND_RESET_I(32);

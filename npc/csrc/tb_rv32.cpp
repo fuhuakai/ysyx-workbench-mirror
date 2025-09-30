@@ -11,60 +11,58 @@
 #include "Vrv32___024root.h"
 
 
-Vrv32         *top = new Vrv32("top");
-VerilatedVcdC *tfp = new VerilatedVcdC(); //导出vcd波形需要加此语句
-vluint64_t    main_time = 0;  //initial 仿真时间
-
-
+VerilatedVcdC* tfp = new VerilatedVcdC(); //创建VCD波形导出对象
+Vrv32 *top = new Vrv32("top");
+vluint64_t main_time = 0;  //仿真时间计数器
 
 /********extern functions or variables********/
-extern char     *diff_so_file;
-extern int      difftest_port;
-extern long     img_size;
+extern char *diff_so_file;
+extern int  difftest_port;
+extern long img_size;
 extern NPCState npc_state;
-
-extern void   sdb_mainloop() ;
 extern void   init_monitor(int, char *[]);
+extern void   sdb_mainloop() ;
 extern int    is_exit_status_bad();
 extern void   init_difftest(char *ref_so_file, long img_size, int port);
 extern word_t pmem_r(paddr_t addr, int len); 
 extern void   pmem_w(paddr_t addr, int len, word_t data);
-extern void   TRAP(int station, char unit);             
-extern int    imem_read(int raddr);                 
-extern int    dmem_read(int raddr);                  
-extern void   pmem_write(int waddr, int wdata, char wmask);    
-// extern void   etrace(int inst);                                     
-extern uint64_t get_time();                               
+extern void   ebreak(int station, int inst);                   // control_unit.v
+extern int    pmem_read(int raddr);                            // mem.v
+extern int    pmem_read_inst(int pc);
+extern void   pmem_write(int waddr, int wdata, char wmask);    // mem.v
+extern void   etrace(int inst);                                // control_unit.v
+extern uint64_t get_time();
 /*********************************************/
 
 static uint32_t rtc_port_base[2] = {0, 0};
-static const char *unit_names[14] = {
-  "Unit_IDU1", "Unit_IDU2", "Unit_IDU3", "Unit_IDU4",
-  "Unit_IDU5", "Unit_IDU6", "Unit_IDU7", "Unit_IDU8", 
-  "Unit_IDU9", "Unit_EXU1", "Unit_LSU1", "Unit_LSU2",
-  "Unit_CC1 ", "Unit_CC2"
+#define start_time 3
+
+static const char *alu_names[17] = {
+  "Unit_ALU", "Unit_MEM", "Unit_CU1", "Unit_CU2",
+  "Unit_CU3", "Unit_CU4", "Unit_CU5", "Unit_CU6",
+  "Unit_CU7", "Unit_CU8", "Unit_CU9", "Unit_CU10",
+  "Unit_CU11","Unit_IE1", "Unit_IE2", "Unit_IE3",
+  "Unit_CSR"
 };
 
-#define start_time 3
-extern void TRAP(int station, char unit)
+extern void ebreak(int station, int inst, char unit)
 {
   if(Verilated::gotFinish())
     return;
 
-  // at the begining (main_time < start_time and before the reset), all gprs are zeros
-  if(main_time >= start_time + 1)   
+  if(main_time >= start_time + 1)   // at the begining (main_time < start_time and before the reset), all regs are zeros
   {
     npc_state.halt_ret = top->rootp->rv32__DOT__register_file_inst__DOT__regs[10]; //a0
-    npc_state.halt_pc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;
+    npc_state.halt_pc = top->rootp->rv32__DOT__pc;
 
-    assert( (unit == Unit_IDU1) || (unit == Unit_IDU2) || (unit == Unit_IDU3) || (unit == Unit_IDU4) || 
-            (unit == Unit_IDU5) || (unit == Unit_IDU6) || (unit == Unit_IDU7) || (unit == Unit_IDU8) ||
-            (unit == Unit_IDU9) || (unit == Unit_EXU1) || (unit == Unit_LSU1) || (unit == Unit_LSU2) ||
-            (unit == Unit_CC1)  || (unit == Unit_CC2));
+    assert( (unit == Unit_ALU) || (unit == Unit_CU1) || (unit == Unit_CU2) || (unit == Unit_CU3) || 
+            (unit == Unit_CU4) || (unit == Unit_CU5) || (unit == Unit_CU6) || (unit == Unit_CU7) || 
+            (unit == Unit_CU8) || (unit == Unit_CU9) || (unit == Unit_CU10)|| (unit == Unit_CU11)||
+            (unit == Unit_MEM) || (unit == Unit_IE1) || (unit == Unit_IE2) || (unit == Unit_IE3) ||
+            (unit == Unit_CSR) );
 
-    Log("TRAP takes place in the %s", unit_names[unit]);
-    Log("maintime = %ld, state = %d, pc = 0x%08x, inst = 0x%08x", main_time, npc_state.state, 
-         top->rootp->rv32__DOT__bru_inst__DOT__npc_reg, top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst);
+    Log("Ebreak takes place in the %s", alu_names[unit]);
+    Log("maintime = %ld, state = %d, pc = 0x%08x, inst = 0x%08x", main_time, npc_state.state, top->rootp->rv32__DOT__pc, top->rootp->rv32__DOT__inst);
 
     switch(station)
     {
@@ -80,48 +78,58 @@ extern void TRAP(int station, char unit)
 
     Verilated::gotFinish(true);
   }
-}   
+}
 
+#define top_mstatus   top->rootp->rv32__DOT__csr_regs_inst__DOT__mstatus
+#define top_mepc      top->rootp->rv32__DOT__csr_regs_inst__DOT__mepc
+#define top_mcause    top->rootp->rv32__DOT__csr_regs_inst__DOT__mcause
 
-
-extern int imem_read(int raddr)
+extern void etrace(int inst)
 {
-  static int data = 0xdead0009;
-  // Log("clk1 = %d,  addr = 0x%08x,    %ld",top->clk, raddr, main_time);
+  #ifdef CONFIG_ETRACE
+  _Log(ANSI_FG_YELLOW "[etrace]" ANSI_NONE ANSI_FG_YELLOW "mstatus:" ANSI_NONE "0x%08x, "
+       ANSI_FG_YELLOW "mepc:"    ANSI_NONE " 0x%08x, " ANSI_FG_YELLOW "mcause:" ANSI_NONE " 0x%08x\n", 
+      top_mstatus, top_mepc, top_mcause);
+  #endif 
+  
+}
 
-  if(main_time < start_time)
+extern int pmem_read(int raddr)
+{
+  static int data = 0xdeadbeaf;
+  if(top->clk == 0)
     return data;
 
-  data = pmem_r(raddr, 4);
-
-  return data;    
-}
-
-extern int dmem_read(int raddr)
-{
-  static int data;
-
-  // device rtc
-  if((raddr == CONFIG_RTC_MMIO) || (raddr == CONFIG_RTC_MMIO + 4))
+  if(main_time >= start_time)
   {
-    if(raddr == CONFIG_RTC_MMIO + 4)
+    // device rtc
+    if((raddr == CONFIG_RTC_MMIO) || (raddr == CONFIG_RTC_MMIO + 4))
     {
-      uint64_t us = get_time();
-      rtc_port_base[0] = (uint32_t)us;
-      rtc_port_base[1] = us >> 32;
+      if(raddr == CONFIG_RTC_MMIO + 4)
+      {
+        uint64_t us = get_time();
+        rtc_port_base[0] = (uint32_t)us;
+        rtc_port_base[1] = us >> 32;
+      }
+      data = rtc_port_base[(raddr - CONFIG_RTC_MMIO) / 4];
     }
-    data = rtc_port_base[(raddr - CONFIG_RTC_MMIO) / 4];
-
-  }
+    else if (raddr == CONFIG_SERIAL_MMIO) {
+      // 串口读取通常用于读取状态或输入数据，这里简单返回0
+      data = 0;
+      return data;
+    }
+    else
+      data = pmem_r(raddr, 4);
+    return data; 
+  } 
   else
-    data = pmem_r(raddr, 4);
-  return data;   
+    return 0xdeadbeaf;
 }
+
 
 void pmem_write(int waddr, int wdata, char wmask)
 {
-  // 因为是是周期CPU，所以理论上来说应该轮到LSU工作的时候才读/写dmem
-  if(main_time < start_time || top->rootp->rv32__DOT__clk_cnt != 3)
+  if(top->clk == 0)
     return;
 
   // device serial
@@ -133,7 +141,11 @@ void pmem_write(int waddr, int wdata, char wmask)
     return;
   }
 
-  // memory
+  if((waddr == CONFIG_RTC_MMIO) || (waddr == CONFIG_RTC_MMIO + 4))
+    {
+      return;
+    }
+
   switch (wmask)
   {
     case WByte: pmem_w(waddr, 1, wdata);
@@ -153,26 +165,27 @@ void single_cycle(void)
   if(!Verilated::gotFinish())
   { 
     top->clk = 0; top->eval(); 
-#ifdef CONFIG_WAVES
-    tfp->dump(main_time);
-    tfp->flush();  
-#endif
-    main_time++; //推动仿真时间
+    #ifdef CONFIG_WAVES
+        tfp->dump(main_time);
+        tfp->flush();  
+    #endif
+        main_time++; //推动仿真时间
 
     top->clk = 1; top->eval(); 
-#ifdef CONFIG_WAVES
-    tfp->dump(main_time); 
-    tfp->flush(); 
-#endif
+    #ifdef CONFIG_WAVES
+        tfp->dump(main_time); 
+        tfp->flush(); 
+    #endif
     main_time++; //推动仿真时间
   }
 }
+
 
 static void reset(void)
 {
   top->rst = 0; single_cycle();
   top->rst = 1; single_cycle();
-  top->rst = 0; single_cycle();
+  top->rst = 0; 
 }
 
 static void init_verilator(void)
@@ -185,15 +198,13 @@ static void init_verilator(void)
   reset();  //复位
 }
 
-void close_tfp(void)
-{
-  tfp->close();
-}
-
 int main(int argc, char *argv[])
 {
   /* Initialize the monitor. */
   init_monitor(argc, argv);
+
+  /* Make stdout unbuffered so serial characters are printed immediately. */
+  setvbuf(stdout, NULL, _IONBF, 0);
 
   /* Initialize the verilator. */
   init_verilator();
@@ -211,5 +222,3 @@ int main(int argc, char *argv[])
 
   return is_exit_status_bad();
 }
-
-

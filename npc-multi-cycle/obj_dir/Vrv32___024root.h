@@ -48,7 +48,7 @@ class Vrv32___024root final : public VerilatedModule {
         IData/*31:0*/ rv32__DOT__idu_inst__DOT__idu_imm;
         VlWide<4>/*110:0*/ rv32__DOT__idu_inst__DOT__idu_valid_data_reg;
         IData/*31:0*/ rv32__DOT__idu_inst__DOT____VdfgExtracted_ha4c8ba42__0;
-        IData/*31:0*/ rv32__DOT__exu_inst__DOT__exu_csr_rd;
+        IData/*31:0*/ rv32__DOT__exu_inst__DOT__generic_csr_wdata;
         IData/*31:0*/ rv32__DOT__exu_inst__DOT__exu_alu_res;
         IData/*31:0*/ rv32__DOT__exu_inst__DOT__num1;
         IData/*31:0*/ rv32__DOT__exu_inst__DOT__num2;

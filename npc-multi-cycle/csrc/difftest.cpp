@@ -27,14 +27,14 @@ const char *ref_regs[] = {
 
 static void init_cpu_state(CPU_state *cpu)
 {
-    cpu->pc = top->rootp->rv32__DOT__pc;
+    cpu->pc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;
     for(int i = 0; i < 32; i++)
         cpu->gpr[i] = top_regs[i];
 
-    cpu->csr[0] = top->rootp->rv32__DOT__csr_regs_inst__DOT__mstatus;
-    cpu->csr[1] = top->rootp->rv32__DOT__csr_regs_inst__DOT__mtvec;
-    cpu->csr[2] = top->rootp->rv32__DOT__csr_regs_inst__DOT__mepc;
-    cpu->csr[3] = top->rootp->rv32__DOT__csr_regs_inst__DOT__mcause;
+    cpu->csr[0] = top->rootp->rv32__DOT__csr_ctrl_inst__DOT__mstatus;
+    cpu->csr[1] = top->rootp->rv32__DOT__csr_ctrl_inst__DOT__mtvec;
+    cpu->csr[2] = top->rootp->rv32__DOT__csr_ctrl_inst__DOT__mepc;
+    cpu->csr[3] = top->rootp->rv32__DOT__csr_ctrl_inst__DOT__mcause;
 }
 
 

@@ -145,7 +145,7 @@
 `define CSR_RW       2'b01
 `define CSR_RS       2'b10
 `define CSR_RC       2'b11
-`define MCASUSE_GPR  5'd15  // riscve : a5 ; others a7
+`define MCASUSE_GPR  5'd17  // riscve : a5 ; others a7
 
 
 

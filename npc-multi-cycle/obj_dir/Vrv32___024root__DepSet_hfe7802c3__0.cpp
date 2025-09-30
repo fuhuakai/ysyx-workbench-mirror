@@ -37,7 +37,7 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
     __Vdlyvval__rv32__DOT__register_file_inst__DOT__regs__v32 = 0;
     CData/*0:0*/ __Vdlyvset__rv32__DOT__register_file_inst__DOT__regs__v32;
     __Vdlyvset__rv32__DOT__register_file_inst__DOT__regs__v32 = 0;
-    VlWide<4>/*127:0*/ __Vtemp_h689c4b74__0;
+    VlWide<4>/*127:0*/ __Vtemp_h1b2af241__0;
     VlWide<3>/*95:0*/ __Vtemp_h6583d650__0;
     VlWide<3>/*95:0*/ __Vtemp_h6d2369e6__0;
     // Body
@@ -137,7 +137,7 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
         __Vdly__rv32__DOT__exu_inst__DOT__exu_valid_data_reg[7U] = 0U;
     } else if (((~ (IData)(vlSelf->rv32__DOT__exu_inst__DOT__post_valid_reg)) 
                 & (IData)(vlSelf->rv32__DOT__idu_inst__DOT__post_valid_reg))) {
-        __Vtemp_h689c4b74__0[0U] = (IData)((((QData)((IData)(
+        __Vtemp_h1b2af241__0[0U] = (IData)((((QData)((IData)(
                                                              (1U 
                                                               & (vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[0U] 
                                                                  >> 8U)))) 
@@ -169,13 +169,17 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                                                                                 | (vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[2U] 
                                                                                 >> 0x19U))))) 
                                                             << 0x21U) 
-                                                           | (((QData)((IData)(vlSelf->rv32__DOT__exu_inst__DOT__exu_csr_rd)) 
+                                                           | (((QData)((IData)(
+                                                                               ((0x400000U 
+                                                                                & vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[2U])
+                                                                                 ? 0xbU
+                                                                                 : vlSelf->rv32__DOT__exu_inst__DOT__generic_csr_wdata))) 
                                                                << 1U) 
                                                               | (QData)((IData)(
                                                                                 (1U 
                                                                                 & (vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[2U] 
                                                                                 >> 0x18U))))))))))));
-        __Vtemp_h689c4b74__0[1U] = (((IData)((((QData)((IData)(
+        __Vtemp_h1b2af241__0[1U] = (((IData)((((QData)((IData)(
                                                                ((vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[2U] 
                                                                  << 0x12U) 
                                                                 | (vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[1U] 
@@ -219,7 +223,11 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                                                                                 | (vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[2U] 
                                                                                 >> 0x19U))))) 
                                                                            << 0x21U) 
-                                                                          | (((QData)((IData)(vlSelf->rv32__DOT__exu_inst__DOT__exu_csr_rd)) 
+                                                                          | (((QData)((IData)(
+                                                                                ((0x400000U 
+                                                                                & vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[2U])
+                                                                                 ? 0xbU
+                                                                                 : vlSelf->rv32__DOT__exu_inst__DOT__generic_csr_wdata))) 
                                                                               << 1U) 
                                                                              | (QData)((IData)(
                                                                                 (1U 
@@ -227,9 +235,9 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                                                                                 >> 0x18U))))))))))) 
                                                           >> 0x20U)));
         __Vdly__rv32__DOT__exu_inst__DOT__exu_valid_data_reg[0U] 
-            = __Vtemp_h689c4b74__0[0U];
+            = __Vtemp_h1b2af241__0[0U];
         __Vdly__rv32__DOT__exu_inst__DOT__exu_valid_data_reg[1U] 
-            = __Vtemp_h689c4b74__0[1U];
+            = __Vtemp_h1b2af241__0[1U];
         __Vdly__rv32__DOT__exu_inst__DOT__exu_valid_data_reg[2U] 
             = (((IData)((((QData)((IData)(((vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[2U] 
                                             << 0x12U) 
@@ -354,10 +362,7 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
         vlSelf->rv32__DOT__csr_ctrl_inst__DOT__mepc = 0U;
         vlSelf->rv32__DOT__csr_ctrl_inst__DOT__mcause = 0U;
     } else if ((0x400000U & vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[2U])) {
-        vlSelf->rv32__DOT__csr_ctrl_inst__DOT__mcause 
-            = ((vlSelf->rv32__DOT__lsu_inst__DOT__lsu_valid_data_reg[4U] 
-                << 7U) | (vlSelf->rv32__DOT__lsu_inst__DOT__lsu_valid_data_reg[3U] 
-                          >> 0x19U));
+        vlSelf->rv32__DOT__csr_ctrl_inst__DOT__mcause = 0xbU;
         vlSelf->rv32__DOT__csr_ctrl_inst__DOT__mepc 
             = ((vlSelf->rv32__DOT__lsu_inst__DOT__lsu_valid_data_reg[5U] 
                 << 7U) | (vlSelf->rv32__DOT__lsu_inst__DOT__lsu_valid_data_reg[4U] 
@@ -673,10 +678,10 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                                                             >> 0x12U))))))));
             vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[3U] 
                 = ((((IData)(vlSelf->rv32__DOT__idu_inst__DOT__idu_is_ecall)
-                      ? 0xfU : ((0x37U == (0x7fU & (IData)(vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg)))
-                                 ? 0U : (0x1fU & (IData)(
-                                                         (vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg 
-                                                          >> 0xfU))))) 
+                      ? 0x11U : ((0x37U == (0x7fU & (IData)(vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg)))
+                                  ? 0U : (0x1fU & (IData)(
+                                                          (vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg 
+                                                           >> 0xfU))))) 
                     << 0xaU) | ((0x3e0U & ((IData)(
                                                    (vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg 
                                                     >> 0x14U)) 
@@ -1099,7 +1104,8 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
                                  >> 0x14U)) == vlSelf->rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__key_list
                           [3U]))) & vlSelf->rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__data_list
               [3U]));
-    vlSelf->rv32__DOT__exu_inst__DOT__exu_csr_rd = vlSelf->rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__lut_out;
+    vlSelf->rv32__DOT__exu_inst__DOT__generic_csr_wdata 
+        = vlSelf->rv32__DOT__exu_inst__DOT__mux3__DOT__i0__DOT__lut_out;
     vlSelf->rv32__DOT__idu_inst__DOT__idu_alu_type = 0U;
     if ((1U & (IData)((vlSelf->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg 
                        >> 6U)))) {

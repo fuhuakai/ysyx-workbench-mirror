@@ -92,6 +92,7 @@ module exu(
     wire            exu_gpr_wen    = i_exu_gpr_wen;
     wire [`CSR_Bus] exu_csr_wid    = i_exu_csr_rid;  // read and write same id
     wire [`CPU_Bus] exu_csr_rd;
+    wire [`RegBus]  generic_csr_wdata; // 用于存放通用CSR指令的写入数据
     wire            exu_csr_wen    = i_exu_csr_ren;  // read and write same id
 
     MuxKey #(4, 2, `CPU_Width) mux1(num1, i_exu_num_sel, {
@@ -108,12 +109,13 @@ module exu(
         `PC_4,    `CPU_Width'd4}       
     );
 
-    MuxKey #(4, 2, `CPU_Width) mux3(exu_csr_rd, i_exu_csr_type, {
+    MuxKey #(4, 2, `CPU_Width) mux3(generic_csr_wdata, i_exu_csr_type, {
         `CSR_Nop, `CPU_Width'd0,
         `CSR_RW,  i_exu_rs1,
         `CSR_RS,  i_exu_rs1 | i_exu_csr_src,
         `CSR_RC,  i_exu_rs1 & ~i_exu_csr_src}       
     );
+   assign exu_csr_rd = (i_exu_is_ecall == `TRUE) ? 32'd11 : generic_csr_wdata;//用11覆盖掉之前的寄存器取值
 
     // ALU
     reg  [`CPU_Bus] exu_alu_res;

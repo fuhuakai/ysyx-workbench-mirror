@@ -57,9 +57,9 @@ static void statistic() {
 
 static void execute_once() 
 {
-    PCSet.pc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;  PCSet.inst = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst;
-    single_cycle();  single_cycle();single_cycle();single_cycle();single_cycle();
-    PCSet.npc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;  PCSet.ninst = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst;
+    PCSet.pc = top->rootp->rv32__DOT__pc;  PCSet.inst = top->rootp->rv32__DOT__inst;
+    single_cycle();  
+    PCSet.npc = top->rootp->rv32__DOT__pc;  PCSet.ninst = top->rootp->rv32__DOT__inst;
 
 #ifdef CONFIG_ITRACE
     // 将指令拆分为字节
@@ -126,6 +126,7 @@ void cpu_exec(uint64_t n)
             return;
         default: npc_state.state = NPC_RUNNING;
     }   
+
     uint64_t timer_start = get_time();
 
     execute(n);
