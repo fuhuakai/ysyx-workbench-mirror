@@ -362,10 +362,7 @@ VL_INLINE_OPT void Vrv32___024root___nba_sequent__TOP__0(Vrv32___024root* vlSelf
         vlSelf->rv32__DOT__csr_ctrl_inst__DOT__mepc = 0U;
         vlSelf->rv32__DOT__csr_ctrl_inst__DOT__mcause = 0U;
     } else if ((0x400000U & vlSelf->rv32__DOT__idu_inst__DOT__idu_valid_data_reg[2U])) {
-        vlSelf->rv32__DOT__csr_ctrl_inst__DOT__mcause 
-            = ((vlSelf->rv32__DOT__lsu_inst__DOT__lsu_valid_data_reg[4U] 
-                << 7U) | (vlSelf->rv32__DOT__lsu_inst__DOT__lsu_valid_data_reg[3U] 
-                          >> 0x19U));
+        vlSelf->rv32__DOT__csr_ctrl_inst__DOT__mcause = 0xbU;
         vlSelf->rv32__DOT__csr_ctrl_inst__DOT__mepc 
             = ((vlSelf->rv32__DOT__lsu_inst__DOT__lsu_valid_data_reg[5U] 
                 << 7U) | (vlSelf->rv32__DOT__lsu_inst__DOT__lsu_valid_data_reg[4U] 

@@ -35,7 +35,7 @@ module csr_ctrl(
             mepc    <= `RegRstVal;  
             mcause  <= `RegRstVal;  
         end else if(i_ccu_is_ecall == `TRUE) begin
-            mcause  <= i_ccu_macuse_in;
+            mcause  <= 32'd11;
             mepc    <= i_ccu_mepc_in;
         end else if(i_ccu_csr_wen == `Enable) begin
             case (i_ccu_csr_wid)
