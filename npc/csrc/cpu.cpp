@@ -57,29 +57,9 @@ static void statistic() {
 
 static void execute_once() 
 {
-    // 先推进一个完整指令节拍（IFU延迟后整体约6拍/指令）
-    single_cycle(); single_cycle(); single_cycle(); single_cycle(); single_cycle(); single_cycle();
-
-    // 读取 IFU 数据包寄存器，高32位为PC，低32位为inst
-    uint64_t ifu_pack = (uint64_t)top->rootp->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg;
-    uint32_t cur_pc   = (uint32_t)(ifu_pack >> 32);
-    uint32_t cur_inst = (uint32_t)(ifu_pack & 0xffffffffu);
-
-    // 兜底：若仍为0（极早期/复位后），多推进几拍再试一次
-    if (cur_inst == 0) {
-        single_cycle(); single_cycle(); single_cycle(); single_cycle();  // 再给4拍缓冲
-        ifu_pack = (uint64_t)top->rootp->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg;
-        cur_pc   = (uint32_t)(ifu_pack >> 32);
-        cur_inst = (uint32_t)(ifu_pack & 0xffffffffu);
-    }
-
-    PCSet.pc   = cur_pc;
-    PCSet.inst = cur_inst;
-
-    // 下一个PC从 BRU 的 npc_reg 取（与你原始逻辑一致）
-    PCSet.npc   = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;
-    // ninst 复用当前指令（或可再推进6拍取真正的下一条）
-    PCSet.ninst = cur_inst;
+    PCSet.pc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;  PCSet.inst = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst;
+    single_cycle();  single_cycle();single_cycle();single_cycle();single_cycle();
+    PCSet.npc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;  PCSet.ninst = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst;
 
 #ifdef CONFIG_ITRACE
     // 将指令拆分为字节

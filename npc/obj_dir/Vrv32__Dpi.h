@@ -20,7 +20,7 @@ extern "C" {
     extern void TRAP(int station, char unit);
     // DPI import at /home/fuhuakai/ysyx-workbench/npc/vsrc/lsu.v:57:34
     extern int dmem_read(int raddr);
-    // DPI import at /home/fuhuakai/ysyx-workbench/npc/vsrc/sram_ifu.v:12:33
+    // DPI import at /home/fuhuakai/ysyx-workbench/npc/vsrc/ifu.v:19:34
     extern int imem_read(int raddr);
     // DPI import at /home/fuhuakai/ysyx-workbench/npc/vsrc/lsu.v:58:34
     extern void pmem_write(int waddr, int wdata, char wmask);
