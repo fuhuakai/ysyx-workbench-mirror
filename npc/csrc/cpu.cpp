@@ -57,19 +57,15 @@ static void statistic() {
 
 static void execute_once() 
 {
-    uint64_t ifu_pack = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg;
-    //PCSet.pc    = (uint32_t)(ifu_pack >> 32);
-    PCSet.inst  = (uint32_t)(ifu_pack & 0xffffffffu);
-    
-    PCSet.pc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;  
-    //PCSet.inst = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst;
-    single_cycle();  single_cycle();single_cycle();single_cycle();single_cycle();single_cycle();
-    ifu_pack = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg; 
-    //PCSet.npc    = (uint32_t)(ifu_pack >> 32);
-    PCSet.inst  = (uint32_t)(ifu_pack & 0xffffffffu);
-
-    PCSet.npc = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg; 
-    //PCSet.ninst = top->rootp->rv32__DOT__ifu_inst__DOT__ifu_inst;
+        // 读取 IFU 数据包寄存器，高32位为PC，低32位为inst
+    uint64_t ifu_pack0 = (uint64_t)top->rootp->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg;
+    PCSet.pc   = (uint32_t)(ifu_pack0 >> 32);
+    PCSet.inst = (uint32_t)(ifu_pack0 & 0xffffffffu);
+    // 分阶段顺序推进：IFU 引入1拍返回延迟后，整体6拍/指令
+    single_cycle(); single_cycle(); single_cycle(); single_cycle(); single_cycle(); single_cycle();
+    uint64_t ifu_pack1 = (uint64_t)top->rootp->rv32__DOT__ifu_inst__DOT__ifu_valid_data_reg;
+    PCSet.npc   = top->rootp->rv32__DOT__bru_inst__DOT__npc_reg;
+    PCSet.ninst = (uint32_t)(ifu_pack1 & 0xffffffffu);
 
 #ifdef CONFIG_ITRACE
     // 将指令拆分为字节
