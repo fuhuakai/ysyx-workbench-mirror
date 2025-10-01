@@ -129,8 +129,8 @@ module rv32(
     .imm32  (imm32)
   );
   
-  // ALU module
-  alu alu_inst(
+  // EXU module
+  EXU EXU_inst(
     .aluc      (aluc),
     .alu_sel_1 (alu_sel_1), 
     .alu_sel_2 (alu_sel_2), 
