@@ -63,8 +63,8 @@ module rv32(
     .inst_data  (inst)
   );
 
-  // Control Unit module
-  control_unit control_unit_inst(
+  // IDU module
+  IDU IDU_inst(
     .inst       (inst),
     .rd_11_7    (rd),
     .rs1_19_15  (rs1),

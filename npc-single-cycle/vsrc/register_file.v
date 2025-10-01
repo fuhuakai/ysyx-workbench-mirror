@@ -7,6 +7,7 @@ module register_file(
     input  wire [4:0]     rs1,
     input  wire [4:0]     rs2,
     input  wire [4:0]     rd,
+    input  wire [1:0]     wb_sel,     // MUX5 select
     input  wire [`RegBus] PCadd4,     // MUX5 input
     input  wire [`RegBus] mem_rdata,  // MUX5 input
     input  wire [`RegBus] result,     // MUX5 input

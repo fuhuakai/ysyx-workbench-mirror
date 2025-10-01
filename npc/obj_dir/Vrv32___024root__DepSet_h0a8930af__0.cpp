@@ -50,8 +50,8 @@ VL_INLINE_OPT void Vrv32___024root____Vdpiimwrap_rv32__DOT__mem_inst__DOT__ebrea
 
 extern "C" void etrace(int inst);
 
-VL_INLINE_OPT void Vrv32___024root____Vdpiimwrap_rv32__DOT__control_unit_inst__DOT__etrace_TOP(IData/*31:0*/ inst) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root____Vdpiimwrap_rv32__DOT__control_unit_inst__DOT__etrace_TOP\n"); );
+VL_INLINE_OPT void Vrv32___024root____Vdpiimwrap_rv32__DOT__IDU_inst__DOT__etrace_TOP(IData/*31:0*/ inst) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vrv32___024root____Vdpiimwrap_rv32__DOT__IDU_inst__DOT__etrace_TOP\n"); );
     // Body
     int inst__Vcvt;
     for (size_t inst__Vidx = 0; inst__Vidx < 1; ++inst__Vidx) inst__Vcvt = inst;

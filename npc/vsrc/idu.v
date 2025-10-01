@@ -1,6 +1,6 @@
 `include "defines.v"
 
-module control_unit(
+module IDU(
     input  wire [`RegBus]   inst,
     output wire [4:0]       rd_11_7,
     output wire [4:0]       rs1_19_15,
