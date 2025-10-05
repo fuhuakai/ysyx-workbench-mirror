@@ -26,11 +26,11 @@ extern int    is_exit_status_bad();
 extern void   init_difftest(char *ref_so_file, long img_size, int port);
 extern word_t pmem_r(paddr_t addr, int len); 
 extern void   pmem_w(paddr_t addr, int len, word_t data);
-extern void   ebreak(int station, int inst);                   // control_unit.v
+extern void   ebreak(int station, int inst);                   // idu.v
 extern int    pmem_read(int raddr);                            // mem.v
 extern int    pmem_read_inst(int pc);
 extern void   pmem_write(int waddr, int wdata, char wmask);    // mem.v
-extern void   etrace(int inst);                                // control_unit.v
+extern void   etrace(int inst);                                // idu.v
 extern uint64_t get_time();
 /*********************************************/
 
