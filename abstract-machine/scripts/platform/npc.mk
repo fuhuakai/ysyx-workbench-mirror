@@ -12,7 +12,8 @@ CFLAGS    += -fdata-sections -ffunction-sections
 LDSCRIPTS += $(AM_HOME)/scripts/linker.ld
 LDFLAGS   += --defsym=_pmem_start=0x80000000 --defsym=_entry_offset=0x0
 LDFLAGS   += --gc-sections -e _start
-NPCFLAGS += -l $(shell dirname $(IMAGE).elf)/npc-log.txt -b #批处理
+NPCFLAGS += -l $(shell dirname $(IMAGE).elf)/npc-log.txt 
+NPCFLAGS += -b #批处理
 NPCFLAGS += -e $(IMAGE).elf #ftrace
 
 MAINARGS_MAX_LEN = 64
