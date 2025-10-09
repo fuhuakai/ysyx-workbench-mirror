@@ -47,7 +47,7 @@ static void mstatus_mret() {
 }
 
 #define CSR(i) *csr_reg(i)
-#define ECALL(dnpc) { dnpc = isa_raise_intr(12, s->pc); }
+#define ECALL(dnpc) { dnpc = isa_raise_intr(11, s->pc); }
 
 #define src1R() do { *src1 = R(rs1); } while (0)
 #define src2R() do { *src2 = R(rs2); } while (0)

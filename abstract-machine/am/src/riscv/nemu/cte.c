@@ -8,7 +8,7 @@ Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
-      case 12: ev.event = EVENT_YIELD; c->mepc += 4; break;
+      case 11: ev.event = EVENT_YIELD;  break;
       default: ev.event = EVENT_ERROR; break;
     }
 
@@ -36,7 +36,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   
   //入口为f()
   c->mepc = (uint32_t)entry;
-  c->mcause = 0xc;
+  c->mcause = 0xb;
   c->mstatus = 0x1800;
   
   //a0为传参寄存器
