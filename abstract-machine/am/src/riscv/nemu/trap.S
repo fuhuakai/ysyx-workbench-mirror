@@ -63,7 +63,7 @@ __am_asm_trap:
   mv a0, sp                 #将当前上下文指针作为参数传给__am_irq_handle
   call __am_irq_handle
   
-  # mv sp, a0                 #将栈指针切换到返回的上下文指针
+  mv sp, a0                 #将栈指针切换到返回的上下文指针
   
   # 恢复csr（先从栈上加载到临时寄存器再写入csr）
   LOAD t1, OFFSET_STATUS(sp)
