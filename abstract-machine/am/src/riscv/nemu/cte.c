@@ -40,7 +40,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   c->mstatus = 0x1800;
   
   //a0为传参寄存器
-  c->gpr[11] = (uint32_t)arg;
+  c->gpr[12] = (uint32_t)arg;
   return c;
 }
 
