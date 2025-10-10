@@ -11,11 +11,9 @@ Context* __am_irq_handle(Context *c) {
       case 11: ev.event = EVENT_YIELD; c->mepc += 4; break;
       default: ev.event = EVENT_ERROR; break;
     }
-
     c = user_handler(ev, c);
     assert(c != NULL);
   }
-
   return c;
 }
 
