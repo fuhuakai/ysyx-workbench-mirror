@@ -1,6 +1,6 @@
 `include "defines.v"
 
-module alu(
+module EXU(
     input  wire [`AlucBus] aluc,
     input  wire            alu_sel_1,  // MUX3 select
     input  wire            alu_sel_2,  // MUX4 select

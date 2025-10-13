@@ -6,8 +6,6 @@ INC_PATH = $(NPC_HOME)/include/
 LIBS = -lreadline   # link the <readline> lib
 LIBS += -ldl        # link the <dlfcn> lib
 
-
-# ifdef CONFIG_DIFFTEST
 DIFF_REF_PATH = $(NEMU_HOME)
 DIFF_REF_SO = $(DIFF_REF_PATH)/build/riscv32-nemu-interpreter-so
 ARGS_DIFF = --diff=$(DIFF_REF_SO) #这里使用-d也可，目的就是通过monitor.cpp传入so文件内容
@@ -15,8 +13,6 @@ ARGS_DIFF = --diff=$(DIFF_REF_SO) #这里使用-d也可，目的就是通过moni
 .PHONY: $(DIFF_REF_SO)
 $(DIFF_REF_SO):
 	$(MAKE) -s -C $(DIFF_REF_PATH) 
-
-# endif
 
 
 .PHONY:gtkw
