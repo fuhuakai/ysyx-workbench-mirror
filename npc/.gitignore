@@ -1,12 +1,4 @@
-*.*
-*
-!*/
-!Makefile
-!*.mk
-!*.[cSh]
-!*.v
-!*.cc
-!*.cpp
-!.gitignore
-!README.md
-build/
+/target
+/project
+/generated
+/obj_dir

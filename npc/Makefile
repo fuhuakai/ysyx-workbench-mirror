@@ -1,113 +1,64 @@
-MODULE=rv32
-CSRCS = $(shell find $(abspath ./csrc) -name "*.cpp")
-VSRCS = $(shell find $(abspath ./vsrc) -name "*.v")
-HDIRS = $(shell find $(abspath ./include) -name "*.h")
-INC_PATH = $(NPC_HOME)/include/
-LIBS = -lreadline   # link the <readline> lib
-LIBS += -ldl        # link the <dlfcn> lib
+#***************************************************************************************
+# Copyright (c) 2023 Yusong Yan, Beijing No.101 High School
+# Copyright (c) 2023 Yusong Yan, University of Washington - Seattle
+#
+# YSYX-NPCA is licensed under Mulan PSL v2.
+# You can use this software according to the terms and conditions of the Mulan PSL v2.
+# You may obtain a copy of Mulan PSL v2 at:
+#          http://license.coscl.org.cn/MulanPSL2
+#
+# THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+# EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+# MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+#
+# See the Mulan PSL v2 for more details.
+#**************************************************************************************/
 
-DIFF_REF_PATH = $(NEMU_HOME)
-DIFF_REF_SO = $(DIFF_REF_PATH)/build/riscv32-nemu-interpreter-so
-ARGS_DIFF = --diff=$(DIFF_REF_SO) #这里使用-d也可，目的就是通过monitor.cpp传入so文件内容
+CSRC += $(shell find $(abspath ./sim) -name "*.cpp")
+VSRC += $(shell find $(abspath ./generated/npc) -name "*.v")
+HSRC += $(shell find $(abspath ./sim) -name "*.h")
+TOP_NAME := NPC
+SEARCHPATH := $(NPC_HOME)/generated/npc
 
-.PHONY: $(DIFF_REF_SO)
-$(DIFF_REF_SO):
-	$(MAKE) -s -C $(DIFF_REF_PATH) 
+VERILATOR_FLAGS += -I$(SEARCHPATH)
+VERILATOR_FLAGS += --top $(TOP_NAME)
+#Usage: Debug -> GDB, Trace -> wave
+#VERILATOR_FLAGS += --trace --cc --exe --debug --build
+VERILATOR_FLAGS += --trace --debug --cc --exe --build
+VERILATOR_FLAGS += -Wno-lint
+VERILATOR_FLAGS += -Wno-style
+VERILATOR_FLAGS += -Wno-UNUSED
 
+INC_PATH		?= $(NPC_HOME)/sim/include
+CFLAGS			+= -g -I$(INC_PATH)
+CFLAGS			+= -I$(INC_PATH)
+LDFLAGS			+= -lreadline -lSDL2 -ldl
 
-.PHONY:gtkw
-gtkw: fhk.gtkw
-	@echo
-	@echo "### WAVES ###"
-	gtkwave fhk.gtkw
+DIFFTEST		:= $(NEMU_HOME)/build/riscv32-nemu-interpreter-so
+OBJ_DIR			:= ./obj_dir
+BIN				:= $(OBJ_DIR)/V$(TOP_NAME)
 
+IMG				?= ../am-kernels/tests/cpu-tests/build/dummy-riscv32e-npc.bin
 
-.PHONY:sim
-sim: waveform.vcd
+#RUN_FLAGS		:= --diff=${DIFFTEST}
+RUN_FLAGS		:= --img=${IMG} --diff=${DIFFTEST}
+NPC_EXEC		:= ${BIN} ${RUN_FLAGS}
 
+.PHONY:run gdb wave clean
 
-.PHONY:waves
-waves: waveform.vcd
-	@echo
-	@echo "### WAVES ###"
-	gtkwave waveform.vcd
+com:${CSRC} ${VSRC}
+	@verilator ${VERILATOR_FLAGS} ${CSRC} ${VSRC} $(addprefix -CFLAGS , $(CFLAGS)) -LDFLAGS -lSDL2 -LDFLAGS -lreadline
 
+run:com
+	$(call git_commit, "sim NPC")
+	@${NPC_EXEC}
 
-.PHONY:waveform.vcd
-waveform.vcd: ./obj_dir/V$(MODULE)
-	@echo
-	@echo "### SIMULATING ###"
-	@./obj_dir/V$(MODULE) #+verilator+rand+reset+2
+gdb:com ${DIFFTEST}
+	$(call git_commit, "gdb NPC")
+	@gdb --silent -s ${BIN} --args ${NPC_EXEC}
 
+wave:
+	@gtkwave $(OBJ_DIR)/dump.vcd
 
-
-IMG ?=      #loaded by AM Makefile (npc.mk)
-override ARGS ?= --log=./log/npc-log.txt
-override ARGS += $(ARGS_DIFF)
-BINARY := ./obj_dir/V$(MODULE)
-NPC_EXEC := $(BINARY) $(ARGS) $(IMG)
-
-
-.PHONY:run-env
-run-env: $(BINARY) $(DIFF_REF_SO)
-
-
-.PHONY:run
-run: run-env
-		mkdir -p ./log
-		$(NPC_EXEC)
-
-
-.PHONY:build
-build: $(BINARY)
-
-#This builds our simulation executable from the testbench and the converted sources.
-#We tell Make to change the working directory to obj_dir, 
-#use the build file named Valu.mk and build the target named Valu
-#----------------------------------------------------------------------------------
-./obj_dir/V$(MODULE): .stamp.verilate
-	@echo
-	@echo "### BUILDING SIM ###"
-	make -C obj_dir -f V$(MODULE).mk V$(MODULE)
-
-
-.PHONY:verilate
-verilate: .stamp.verilate
-
-
-#This converts our .v source to C++ and generates build files 
-#for building the simulation executable. 
-#We use -Wall to enable all C++ errors, 
-#--trace to enable waveform tracing, 
-#-cc .v to convert our .v module to C++, 
-#and --exe tb_alu.cpp to tell Verilator which file is our C++ testbench.
-# -Wno-STMTDLY 避免弹出所有warning
-# --top-module $(MODULE) 确定顶层模块，否则会将$(VSRCS)中的第一个文件前缀当成顶层模块
-#----------------------------------------------------------------------------------
-.stamp.verilate: $(VSRCS) $(CSRCS) $(HDIRS)
-	@echo
-	@echo "### VERILATING ###"
-	verilator -Wno-STMTDLY --trace --top-module $(MODULE) -cc $(VSRCS) --exe $(CSRCS) -I$(INC_PATH) -I$(NPC_HOME)/vsrc
-	@echo "LIBS +=$(LIBS)" >> ./obj_dir/V$(MODULE).mk    # to link readline and dlfcn library
-	@touch .stamp.verilate
-
-
-#Note that there is an additional make lint target, 
-#which calls Verilator with --lint-only. 
-#This is useful to quickly parse your Verilog/SystemVerilog source files 
-#and check for problems. 
-#This can be used to check over your sources even if you’re not using Verilator for simulating.
-#----------------------------------------------------------------------------------
-.PHONY:lint
-lint: $(VSRCS)
-		verilator --lint-only -Wall $(VSRCS) -I$(INC_PATH)
-#-lint-only- 告诉 Verilator 进行 lint 但不生成任何仿真输出
-	
-
-.PHONY: clean
 clean:
-	rm -rf .stamp.*;
-	rm -rf ./obj_dir
-	rm -rf waveform.vcd
-	rm ./log/*
-
+	rm -rf ${OBJ_DIR}
