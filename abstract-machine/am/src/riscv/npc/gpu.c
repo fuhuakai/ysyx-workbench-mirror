@@ -16,8 +16,7 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   uint32_t height = width_height & 0xffff;
   uint32_t width = width_height >> 16;
 
-  
-   printf("[AM_GPU_CONFIG] width_height=0x%d, width=%d, height=%d\n", 
+   printf("[AM_GPUU_CONFIG] width_height=0x%d, width=%d, height=%d\n", 
          width_height, width, height);
 
   *cfg = (AM_GPU_CONFIG_T) {
