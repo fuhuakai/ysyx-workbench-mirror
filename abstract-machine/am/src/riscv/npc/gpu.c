@@ -1,5 +1,6 @@
 #include <am.h>
 #include "riscv/riscv.h"
+#include <stdio.h>
 
 #define VGACTL_ADDR 0xa0000100
 #define FB_ADDR     0xa1000000
@@ -22,7 +23,7 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-    uint32_t width_height = inl(VGACTL_ADDR);
+  uint32_t width_height = inl(VGACTL_ADDR);
   int vga_w = width_height >> 16;
   int vga_h = width_height & 0xffff;
 
@@ -48,6 +49,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
   }
+  //printf("[__am_gpu_fbdraw] x=%d, y=%d, w=%d, h=%d, sync=%d\n", ctl->x, ctl->y, ctl->w, ctl->h, ctl->sync);
 }
 
 void __am_gpu_status(AM_GPU_STATUS_T *status) {
