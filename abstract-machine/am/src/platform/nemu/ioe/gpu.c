@@ -47,7 +47,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
   }
-  printf("[__am_gpu_fbdraw] x=%d, y=%d, w=%d, h=%d, sync=%d\n", ctl->x, ctl->y, ctl->w, ctl->h, ctl->sync);
+  //printf("[__am_gpu_fbdraw] x=%d, y=%d, w=%d, h=%d, sync=%d\n", ctl->x, ctl->y, ctl->w, ctl->h, ctl->sync);
 }
 
 void __am_gpu_status(AM_GPU_STATUS_T *status) {

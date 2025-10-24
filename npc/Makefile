@@ -1,65 +1,63 @@
-#***************************************************************************************
-# Copyright (c) 2023 Yusong Yan, Beijing No.101 High School
-# Copyright (c) 2023 Yusong Yan, University of Washington - Seattle
-#
-# YSYX-NPCA is licensed under Mulan PSL v2.
-# You can use this software according to the terms and conditions of the Mulan PSL v2.
-# You may obtain a copy of Mulan PSL v2 at:
-#          http://license.coscl.org.cn/MulanPSL2
-#
-# THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
-# EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
-# MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
-#
-# See the Mulan PSL v2 for more details.
-#**************************************************************************************/
+TOPNAME ?= ysyxSoCFull
 
-CSRC += $(shell find $(abspath ./sim) -name "*.cpp")
-VSRC += $(shell find $(abspath ./generated/npc) -name "*.v")
-HSRC += $(shell find $(abspath ./sim) -name "*.h")
-TOP_NAME := NPC
-SEARCHPATH := $(NPC_HOME)/generated/npc
+BUILD_DIR = $(NPC_HOME)/builds
+OBJ_DIR = $(BUILD_DIR)/obj_dir #generated c++ and mk files
+SV_GEN_DIR = $(BUILD_DIR)/sv-gen #generated systemVerilog files
+BIN = $(BUILD_DIR)/$(TOPNAME)
 
-VERILATOR_FLAGS += -I$(SEARCHPATH)
-VERILATOR_FLAGS += --top $(TOP_NAME)
-#Usage: Debug -> GDB, Trace -> wave
-#VERILATOR_FLAGS += --trace --cc --exe --debug --build
-VERILATOR_FLAGS += --trace --debug --cc --exe --build
-VERILATOR_FLAGS += -Wno-lint
-VERILATOR_FLAGS += -Wno-style
-VERILATOR_FLAGS += -Wno-UNUSED
+REWRITE = $(NPC_HOME)/scripts/rewrite.mk
 
-INC_PATH		?= $(NPC_HOME)/sim/include
-CFLAGS			+= -g -I$(INC_PATH)
-CFLAGS			+= -I$(INC_PATH)
-LDFLAGS			+= -lreadline -lSDL2 -ldl
+VERILATOR = verilator
 
-DIFFTEST		:= $(NEMU_HOME)/build/riscv32-nemu-interpreter-so
-OBJ_DIR			:= ./obj_dir
-BIN				:= $(OBJ_DIR)/V$(TOP_NAME)
+# ARCH logic
+ARCH ?= riscv32e-ysyxsoc
+# Check: environment variable `$ARCH` must be in the supported list
+ARCHS = $(basename $(notdir $(shell ls $(AM_HOME)/scripts/*.mk)))
+ifeq ($(filter $(ARCHS), $(ARCH)), )
+  $(error Expected $$ARCH in {$(ARCHS)}, Got "$(ARCH)")
+endif
+# Print build info message
+-include $(NPC_HOME)/scripts/arch/$(ARCH).mk
 
-IMG				?= ../am-kernels/tests/cpu-tests/build/dummy-riscv32e-npc.bin
+# rules for NVBoard
+include $(NVBOARD_HOME)/scripts/nvboard.mk
 
-ARGS ?=
-RUN_FLAGS = --img=$(IMG) --diff=$(DIFFTEST) $(ARGS)
+# rules for mill
+include $(NPC_HOME)/scripts/chisel_build.mk
 
-NPC_EXEC		:= ${BIN} ${RUN_FLAGS}
+# rules for trace
+include $(NPC_HOME)/scripts/trace.mk
 
-.PHONY:run gdb wave clean
+# constraint file
+SRC_AUTO_BIND = $(abspath $(BUILD_DIR)/auto_bind.cpp)
+$(SRC_AUTO_BIND): $(NXDC_FILES)
+	python3 $(NVBOARD_HOME)/scripts/auto_pin_bind.py $^ $@
 
-com:${CSRC} ${VSRC}
-	@verilator ${VERILATOR_FLAGS} ${CSRC} ${VSRC} $(addprefix -CFLAGS , $(CFLAGS)) -LDFLAGS -lSDL2 -LDFLAGS -lreadline
+#verilator
+$(BIN): $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
+	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
+	$(info # NPC Type is [$(ARCH)])
+	@echo "$(COLOR_YELLOW)[VERILATE]$(COLOR_NONE) $(notdir $(BUILD_DIR))/$(notdir $(BIN))"
+	@rm -rf $(OBJ_DIR)
+	@mkdir -p $(BUILD_DIR)
+	$(VERILATOR) $(VERILATOR_FLAGS) \
+		--top-module $(TOPNAME) $^ \
+		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
+	@make -s -C $(OBJ_DIR) -f $(REWRITE) TOPNAME=$(TOPNAME) ARCH=$(ARCH)
 
-run:com
-	$(call git_commit, "sim NPC")
-	@${NPC_EXEC}
-
-gdb:com ${DIFFTEST}
-	$(call git_commit, "gdb NPC")
-	@gdb --silent -s ${BIN} --args ${NPC_EXEC}
-
-wave:
-	@gtkwave $(OBJ_DIR)/dump.vcd
-
-clean:
-	rm -rf ${OBJ_DIR}
+# run npc
+override ARGS ?= --log=$(BUILD_DIR)/npc-log.txt --diff=$(NPC_HOME)/tools/nemu-diff/riscv32-nemu-interpreter-so
+NPC_EXEC := $(BIN) $(ARGS) $(IMG)
+run: $(BIN)	
+	@echo "$(COLOR_YELLOW)[Run CPU]$(COLOR_NONE)"
+	$(info # NPC Type is [$(ARCH)])
+	@rm -f $(PF_TRACE1)
+	@rm -f $(PF_TRACE2)
+	@if [ "$(RUN_PYTHON_SCRIPT)" -eq "1" ]; then \
+		echo "Running Python script..."; \
+		python3 $(PF_TRACE_TOOL2) $(PF_TRACE1) $(PF_TRACE2) & \
+	else \
+		echo "Skipping Python script."; \
+	fi
+	$(NPC_EXEC)
+-include ../Makefile
