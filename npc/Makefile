@@ -1,4 +1,4 @@
-TOPNAME ?= NPC
+TOPNAME ?= ysyxSoCFull
 
 BUILD_DIR = $(NPC_HOME)/builds
 OBJ_DIR = $(BUILD_DIR)/obj_dir #generated c++ and mk files
@@ -10,7 +10,7 @@ REWRITE = $(NPC_HOME)/scripts/rewrite.mk
 VERILATOR = verilator
 
 # ARCH logic
-ARCH ?= riscv32e-npc
+ARCH ?= riscv32e-ysyxsoc
 # Check: environment variable `$ARCH` must be in the supported list
 ARCHS = $(basename $(notdir $(shell ls $(AM_HOME)/scripts/*.mk)))
 ifeq ($(filter $(ARCHS), $(ARCH)), )
