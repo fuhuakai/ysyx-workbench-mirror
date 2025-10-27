@@ -12,6 +12,15 @@ object playground extends SbtModule with ScalafmtModule { m =>
   val useChisel3 = false
   override def millSourcePath = os.pwd / "src"
   override def scalaVersion = "2.13.12"
+  
+  def forkArgs = T {
+    super.forkArgs() ++ Seq(
+      "--warn-as-info",
+      "--no-check-comb-loops"
+    )
+  }
+}
+
   override def scalacOptions = Seq(
     "-language:reflectiveCalls",
     "-deprecation",
