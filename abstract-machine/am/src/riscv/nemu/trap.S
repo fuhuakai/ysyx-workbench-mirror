@@ -31,7 +31,7 @@ f(30) f(31)
 #define PUSH(n) STORE concat(x, n), (n * XLEN)(sp);
 #define POP(n)  LOAD  concat(x, n), (n * XLEN)(sp);
 
-#define CONTEXT_SIZE  ((NR_REGS + 3) * XLEN)
+#define CONTEXT_SIZE  ((NR_REGS + 3 + 1) * XLEN)
 #define OFFSET_SP     ( 2 * XLEN)
 #define OFFSET_CAUSE  ((NR_REGS + 0) * XLEN)
 #define OFFSET_STATUS ((NR_REGS + 1) * XLEN)
@@ -42,15 +42,12 @@ f(30) f(31)
 __am_asm_trap:
   addi sp, sp, -CONTEXT_SIZE
 
-  # 将通用寄存器保存到栈上
   MAP(REGS, PUSH)
 
-  # 将csr读入到临时寄存器
   csrr t0, mcause
   csrr t1, mstatus
   csrr t2, mepc
 
-  # 将csr的值保存到栈帧的特定位置
   STORE t0, OFFSET_CAUSE(sp)
   STORE t1, OFFSET_STATUS(sp)
   STORE t2, OFFSET_EPC(sp)
@@ -60,12 +57,11 @@ __am_asm_trap:
   or t1, t1, a0
   csrw mstatus, t1
 
-  mv a0, sp                 #将当前上下文指针作为参数传给__am_irq_handle
-  call __am_irq_handle
-  
-  mv sp, a0                 #将栈指针切换到返回的上下文指针
-  
-  # 恢复csr（先从栈上加载到临时寄存器再写入csr）
+  mv a0, sp
+  jal __am_irq_handle
+
+  mv sp, a0
+
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
   csrw mstatus, t1

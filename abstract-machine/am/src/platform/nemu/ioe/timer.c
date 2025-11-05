@@ -2,14 +2,12 @@
 #include <nemu.h>
 
 void __am_timer_init() {
-  outl(RTC_ADDR , 0);//inl和outl是读写端口的函数，位于am/src/$ISA/$ISA.h
-  outl(RTC_ADDR + 4 , 0);
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
-  uptime->us = inl(RTC_ADDR + 4);
-  uptime->us <<= 32;
-  uptime->us += inl(RTC_ADDR);
+  uint32_t high_part = inl(RTC_ADDR + 4);
+  uint32_t low_part = inl(RTC_ADDR);
+  uptime->us = ((uint64_t)high_part << 32) | low_part;
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {

@@ -1,0 +1,6 @@
+build/
+out/
+.idea/
+!/rocket-chip
+!src/*/*
+!src/*

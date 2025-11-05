@@ -4,6 +4,7 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 static unsigned long int next = 1;
+static char * hbrk = NULL;
 
 int rand(void) {
   // RAND_MAX assumed to be 32767
@@ -29,18 +30,19 @@ int atoi(const char* nptr) {
   return x;
 }
 
-static char *start_addr;
-static bool init_flag = 0;
-
 void *malloc(size_t size) {
-  if(!init_flag){
-    start_addr = (void*)ROUNDUP(heap.start,8);
-    init_flag = 1;
+  // On native, malloc() will be called during initializaion of C runtime.
+  // Therefore do not call panic() here, else it will yield a dead recursion:
+  //   panic() -> putchar() -> (glibc) -> malloc() -> panic() 
+  if(hbrk == NULL) hbrk = (void *)ROUNDUP(heap.start, 8);
+  size  = (size_t)ROUNDUP(size, 8);
+  char *old = hbrk;
+  hbrk += size;
+  assert((uintptr_t)heap.start <= (uintptr_t)hbrk && (uintptr_t)hbrk < (uintptr_t)heap.end);
+  for (uint64_t *p = (uint64_t *)old; p != (uint64_t *)hbrk; p ++) {
+    *p = 0;
   }
-  size = (size_t)ROUNDUP(size,8);
-  char *old = start_addr;
-  start_addr +=size;
-  return old; //[start_addr, start_addr + size]
+  return old;
 }
 
 void free(void *ptr) {

@@ -2,157 +2,128 @@
 #include <klib.h>
 #include <klib-macros.h>
 #include <stdarg.h>
+#include <stdint.h>
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
-// 反转字符串
-static void reverse(char *s, size_t len) {
-  if (len <= 1) return;
-  
-  char *start = s;
-  char *end = s + len - 1;
-  
-  while (start < end) {
-    char temp = *start;
-    *start++ = *end;
-    *end-- = temp;
-  }
-}
+#define MAXDEC 64
+static char *__out;
+void sputch(char ch){*__out++ = ch;}
 
-// 整数转字符串（支持2-16进制）
-static size_t itoa(int n, char *buf, int base) {
-  assert(base >= 2 && base <= 16);
-  
-  size_t index = 0;
-  unsigned num = (n < 0) ? (unsigned)-n : (unsigned)n;
-  
-  if (num == 0) {
-    buf[index++] = '0';
-  } else {
-    while (num > 0) {
-      unsigned digit = num % base;
-      buf[index++] = (digit < 10) 
-        ? ('0' + digit) 
-        : ('a' + digit - 10);
-      num /= base;
-    }
-  }
-  
-  if (n < 0) {
-    buf[index++] = '-';
-  }
-  
-  // 终止字符串
-  buf[index] = '\0';
-  
-  // 反转得到正确顺序(1234->4321->1234)
-  reverse(buf, index);
-  
-  return index;
+int vprintf( void(*gputch)(char) , const char *fmt, va_list ap){
+	int i;
+	bool in_format = false;
+	int long_flags = 0;
+	int pos = 0;
+	for( ;*fmt != '\0';fmt++){
+		if(*fmt != '%' && in_format == false){
+			gputch(*fmt);pos++;
+		}
+		else{
+			if(in_format == false && (*fmt == '%')){
+				fmt++;
+				in_format = true;
+			}
+			switch(*fmt){
+				case 'l':  //para
+					long_flags += 1;
+					break;
+				case 's':  //%s
+					char *s;
+					assert(long_flags == 0);
+					s = va_arg(ap , char *);
+					for(i = 0; s[i] != '\0'; i++){
+						gputch(s[i]);pos++;
+					}
+					in_format = false;
+					break;
+				case 'c':  //%c
+					int c;
+					assert(long_flags == 0);
+					c = va_arg(ap , int);
+					gputch((char)c);pos++;
+					in_format = false;
+					break;
+				case 'd':{//%d
+					assert(long_flags <= 2);
+					int64_t d = 0;
+					if(long_flags == 2)    //get d
+						d = va_arg(ap , int64_t);
+					else
+						d = va_arg(ap , int32_t);
+
+					if(d < 0){
+						d = -d;
+						gputch('-');pos++;
+					}
+					if(d == 0){
+						gputch('0');pos++;
+					};
+					char invert[MAXDEC];
+					i = 0;
+					for( ; d != 0 ; i++ , d/=10){
+						invert[i] = d%10 + '0';
+					}
+					for(i-=1 ;i >= 0 ; i--){
+						gputch(invert[i]);pos++;
+					}
+					long_flags = 0;
+					in_format = false;
+					break;
+					}
+				case 'u':{  //%u
+					uint64_t u = 0;
+					assert(long_flags <= 2);
+					if(long_flags == 2)    //get d
+						u = va_arg(ap , uint64_t);
+					else
+						u = va_arg(ap , uint32_t);
+
+					if(u == 0){
+						gputch('0');pos++;
+					};
+					char invert[MAXDEC];
+					i = 0;
+					for( ; u != 0 ; i++ , u/=10){
+						invert[i] = u%10 + '0';
+					}
+					for(i-=1 ;i >= 0 ; i--){
+						gputch(invert[i]);pos++;
+					}
+					long_flags = 0;
+					in_format = false;
+					break;
+					}
+				case '%':
+					gputch('%');
+					in_format = false;
+					break;
+			}
+		}
+	}
+	return pos;
 }
 
 int printf(const char *fmt, ...) {
-  char buf[256]; 
-  va_list args;
-  va_start(args, fmt);
-  
-  // 使用 vsprintf 格式化字符串到缓冲区
-  int len = vsprintf(buf, fmt, args);
-  va_end(args);
-  
-  // 逐个字符输出
-  for (int i = 0; i < len; i++) {
-    putch(buf[i]);
-  }
-  
-  return len;
+	va_list ap;
+	va_start(ap, fmt);
+	int res = vprintf(putch , fmt , ap);
+	va_end(ap);
+	return res;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  char *start = out;
-  
-  while (*fmt) {
-    if (*fmt != '%') {
-      *out++ = *fmt++;
-      continue;
-    }
-    
-    fmt++;
-    if (!*fmt) break;
-    
-    switch (*fmt++) {
-      case '%':
-        *out++ = '%';
-        break;
-        
-      case 'd': {
-        int n = va_arg(ap, int);
-        out += itoa(n, out, 10);
-        break;
-      }
-        
-      case 's': {
-        const char *str = va_arg(ap, const char *);
-        while (*str) *out++ = *str++;
-        break;
-      }
-      
-      case 'c': {
-        int ch = va_arg(ap, int);
-        *out++ = ch;
-        break;
-      }
-
-      default:
-        *out++ = '%';
-        *out++ = *(fmt - 1);
-    }
-  }
-  
-  *out = '\0';
-  return out - start;
+  panic("Not implemented");
 }
 
 int sprintf(char *out, const char *fmt, ...) {
-  va_list args;
-  va_start(args, fmt);
-  char *start = out;
-  
-  while (*fmt) {
-    if (*fmt != '%') {
-      *out++ = *fmt++;// 普通字符直接复制
-      continue;
-    }
-    
-    fmt++; 
-    if (!*fmt) break; // 如果%后面没有字符，直接退出
-    
-    switch (*fmt++) {
-      case '%': // 转义%
-        *out++ = '%';
-        break;
-        
-      case 'd': // 整数
-        out += itoa(va_arg(args, int), out, 10);
-        break;
-        
-      case 's': { // 字符串
-        const char *str = va_arg(args, const char *);
-        while (*str) *out++ = *str++;
-        break;
-      }
-        
-      default: 
-        *out++ = '%';
-        *out++ = *(fmt - 1); // 未知格式符，保留原样
-    }
-  }
-  
-  // 终止字符串
-  *out = '\0';
-  
-  va_end(args);
-  return out - start; // 返回写入字符数
+	va_list ap;
+	va_start(ap, fmt);
+	__out = out;
+	int res = vprintf(sputch , fmt , ap);
+	sputch('\0');
+	va_end(ap);
+	return res++;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
