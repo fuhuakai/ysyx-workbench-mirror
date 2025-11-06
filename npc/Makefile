@@ -42,8 +42,7 @@ $(BIN): $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
 	@mkdir -p $(BUILD_DIR)
 	$(VERILATOR) $(VERILATOR_FLAGS) \
 		--top-module $(TOPNAME) $^ \
-		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN)) \
-		--ldflags "-lSDL2 -lSDL2_image -lSDL2_ttf -lpthread"  # 添加这行
+		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
 	@make -s -C $(OBJ_DIR) -f $(REWRITE) TOPNAME=$(TOPNAME) ARCH=$(ARCH)
 
 # run npc
