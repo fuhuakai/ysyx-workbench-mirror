@@ -1,2 +1,1639 @@
 # NPC Type is [riscv32e-ysyxsoc]
 make[1]: 进入目录“/home/fuhuakai/ysyx-workbench”
+warning: 正在添加嵌入式 git 仓库：nvboard -预学习
+提示：You've added another git repository inside your current repository.
+提示：Clones of the outer repository will not contain the contents of
+提示：the embedded repository and will not know how to obtain it.
+提示：If you meant to add a submodule, use:
+提示：
+提示：	git submodule add <url> nvboard -预学习
+提示：
+提示：If you added this path by mistake, you can remove it from the
+提示：index with:
+提示：
+提示：	git rm --cached nvboard -预学习
+提示：
+提示：See "git help submodule" for more information.
+warning: 正在添加嵌入式 git 仓库：ysyxSoC-initial
+make[1]: 离开目录“/home/fuhuakai/ysyx-workbench”
+[33m[VERILATE][0m builds/ysyxSoCFull
+verilator -MMD -cc -O3 --x-assign fast --x-initial fast --noassert -j 5 -autoflush --trace --timescale "1ns/1ns" --no-timing -I../ysyxSoC/perip/uart16550/rtl -I../ysyxSoC/perip/spi/rtl \
+	--top-module ysyxSoCFull /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/JumpPc.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/Xbar3.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/extern_modules.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/Controller.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/gpr.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/IduPC.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/icache_4x92.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/WBU.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/Core.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/EXU.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/PerformanceProbe.v /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/csr.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/Clint.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/Ebreak.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/NPC.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/IFU.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/Imm.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/LSU.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/Alu.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/IDU.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/ICache.sv /home/fuhuakai/ysyx-workbench/npc/builds/sv-gen/rf_16x32.sv /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/amba/apb_delayer.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/amba/axi4_delayer.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_transmitter.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/raminfr.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_top_apb.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_regs.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_tfifo.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_receiver.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_defines.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_rfifo.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_sync_flops.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi_pmem.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi_core.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/sdram/sdram_top_axi.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/sdram/sdram.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/sdram/sdram_top_apb.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/psram/psram.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/psram/efabless/EF_PSRAM_CTRL.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/psram/efabless/EF_PSRAM_CTRL_wb.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/psram/psram_top_apb.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/gpio/gpio_top_apb.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/spi/rtl/spi_defines.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/spi/rtl/spi_top.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/spi/rtl/spi_clgen.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/spi/rtl/spi_shift.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/spi/rtl/spi_top_apb.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/vga/vga_top_apb.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/ps2/ps2_top_apb.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/bitrev/bitrev.v /home/fuhuakai/ysyx-workbench/ysyxSoC/perip/flash/flash.v /home/fuhuakai/ysyx-workbench/ysyxSoC/build/ysyxSoCFull.v /home/fuhuakai/ysyx-workbench/npc/csrc/main.cpp /home/fuhuakai/ysyx-workbench/npc/csrc/memory/reg.cpp /home/fuhuakai/ysyx-workbench/npc/csrc/memory/memory.cpp /home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp /home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/difftest/dut.cpp /home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/ftrace.cpp /home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/wave.cpp /home/fuhuakai/ysyx-workbench/npc/csrc/monitor/sdb/watchpoint.cpp /home/fuhuakai/ysyx-workbench/npc/csrc/monitor/sdb/sdb.cpp /home/fuhuakai/ysyx-workbench/npc/csrc/monitor/sdb/expr.cpp /home/fuhuakai/ysyx-workbench/npc/csrc/monitor/monitor.cpp /home/fuhuakai/ysyx-workbench/npc/csrc/utils/disasm.cc /home/fuhuakai/ysyx-workbench/npc/csrc/utils/timer.c /home/fuhuakai/ysyx-workbench/npc/csrc/utils/log.cpp /home/fuhuakai/ysyx-workbench/npc/csrc/utils/pevent.cpp /home/fuhuakai/ysyx-workbench/npc/builds/auto_bind.cpp /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a \
+	--Mdir /home/fuhuakai/ysyx-workbench/npc/builds/obj_dir  --exe -o /home/fuhuakai/ysyx-workbench/npc/builds/ysyxSoCFull
+LDFLAGS:    -L/usr/lib/llvm-18/lib  -lSDL2 -lSDL2_image -lSDL2_ttf
+LIBS: -lLLVM-18  -lreadline
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp: In function ‘void cpu_exec(uint64_t)’:
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:161:35: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 2 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+  161 |         printf("Finish running %llu instructions at PC = " FMT_WORD "\n", instCnt, pc);
+      |                                ~~~^                                       ~~~~~~~
+      |                                   |                                       |
+      |                                   long long unsigned int                  uint64_t {aka long unsigned int}
+      |                                %lu
+In file included from /home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:6,
+                 from /home/fuhuakai/ysyx-workbench/npc/csrc/include/common.h:19,
+                 from /home/fuhuakai/ysyx-workbench/npc/csrc/include/circuit.h:31,
+                 from /home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:1:
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp: In function ‘void statistic()’:
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:175:9: note: in expansion of macro ‘Log’
+  175 |         Log("total cycle      = %llu", cycle);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:175:36: note: format string is defined here
+  175 |         Log("total cycle      = %llu", cycle);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:175:9: note: in expansion of macro ‘Log’
+  175 |         Log("total cycle      = %llu", cycle);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:175:36: note: format string is defined here
+  175 |         Log("total cycle      = %llu", cycle);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:176:9: note: in expansion of macro ‘Log’
+  176 |         Log("total inst       = %llu", instCnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:176:36: note: format string is defined here
+  176 |         Log("total inst       = %llu", instCnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:176:9: note: in expansion of macro ‘Log’
+  176 |         Log("total inst       = %llu", instCnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:176:36: note: format string is defined here
+  176 |         Log("total inst       = %llu", instCnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:179:9: note: in expansion of macro ‘Log’
+  179 |         Log("IFUGetInst Event = %llu", IFUGetInst.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:179:36: note: format string is defined here
+  179 |         Log("IFUGetInst Event = %llu", IFUGetInst.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:179:9: note: in expansion of macro ‘Log’
+  179 |         Log("IFUGetInst Event = %llu", IFUGetInst.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:179:36: note: format string is defined here
+  179 |         Log("IFUGetInst Event = %llu", IFUGetInst.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:181:9: note: in expansion of macro ‘Log’
+  181 |         Log("IFUGetInst total time = %llu", IFUGetInst.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:181:41: note: format string is defined here
+  181 |         Log("IFUGetInst total time = %llu", IFUGetInst.time);
+      |                                      ~~~^
+      |                                         |
+      |                                         long long unsigned int
+      |                                      %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:181:9: note: in expansion of macro ‘Log’
+  181 |         Log("IFUGetInst total time = %llu", IFUGetInst.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:181:41: note: format string is defined here
+  181 |         Log("IFUGetInst total time = %llu", IFUGetInst.time);
+      |                                      ~~~^
+      |                                         |
+      |                                         long long unsigned int
+      |                                      %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:182:9: note: in expansion of macro ‘Log’
+  182 |         Log("IFUNGetInst Event = %llu", IFUNGetInst.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:182:37: note: format string is defined here
+  182 |         Log("IFUNGetInst Event = %llu", IFUNGetInst.cnt);
+      |                                  ~~~^
+      |                                     |
+      |                                     long long unsigned int
+      |                                  %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:182:9: note: in expansion of macro ‘Log’
+  182 |         Log("IFUNGetInst Event = %llu", IFUNGetInst.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:182:37: note: format string is defined here
+  182 |         Log("IFUNGetInst Event = %llu", IFUNGetInst.cnt);
+      |                                  ~~~^
+      |                                     |
+      |                                     long long unsigned int
+      |                                  %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:184:9: note: in expansion of macro ‘Log’
+  184 |         Log("IFUNGetInst total time = %llu", IFUNGetInst.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:184:42: note: format string is defined here
+  184 |         Log("IFUNGetInst total time = %llu", IFUNGetInst.time);
+      |                                       ~~~^
+      |                                          |
+      |                                          long long unsigned int
+      |                                       %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:184:9: note: in expansion of macro ‘Log’
+  184 |         Log("IFUNGetInst total time = %llu", IFUNGetInst.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:184:42: note: format string is defined here
+  184 |         Log("IFUNGetInst total time = %llu", IFUNGetInst.time);
+      |                                       ~~~^
+      |                                          |
+      |                                          long long unsigned int
+      |                                       %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:185:9: note: in expansion of macro ‘Log’
+  185 |         Log("LSUGetData Event = %llu", LSUGetData.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:185:36: note: format string is defined here
+  185 |         Log("LSUGetData Event = %llu", LSUGetData.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:185:9: note: in expansion of macro ‘Log’
+  185 |         Log("LSUGetData Event = %llu", LSUGetData.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:185:36: note: format string is defined here
+  185 |         Log("LSUGetData Event = %llu", LSUGetData.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:187:9: note: in expansion of macro ‘Log’
+  187 |         Log("LSUGetData total time = %llu", LSUGetData.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:187:41: note: format string is defined here
+  187 |         Log("LSUGetData total time = %llu", LSUGetData.time);
+      |                                      ~~~^
+      |                                         |
+      |                                         long long unsigned int
+      |                                      %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:187:9: note: in expansion of macro ‘Log’
+  187 |         Log("LSUGetData total time = %llu", LSUGetData.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:187:41: note: format string is defined here
+  187 |         Log("LSUGetData total time = %llu", LSUGetData.time);
+      |                                      ~~~^
+      |                                         |
+      |                                         long long unsigned int
+      |                                      %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:188:9: note: in expansion of macro ‘Log’
+  188 |         Log("LSUNGetData Event = %llu", LSUNGetData.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:188:37: note: format string is defined here
+  188 |         Log("LSUNGetData Event = %llu", LSUNGetData.cnt);
+      |                                  ~~~^
+      |                                     |
+      |                                     long long unsigned int
+      |                                  %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:188:9: note: in expansion of macro ‘Log’
+  188 |         Log("LSUNGetData Event = %llu", LSUNGetData.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:188:37: note: format string is defined here
+  188 |         Log("LSUNGetData Event = %llu", LSUNGetData.cnt);
+      |                                  ~~~^
+      |                                     |
+      |                                     long long unsigned int
+      |                                  %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:190:9: note: in expansion of macro ‘Log’
+  190 |         Log("LSUNGetData total time = %llu", LSUNGetData.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:190:42: note: format string is defined here
+  190 |         Log("LSUNGetData total time = %llu", LSUNGetData.time);
+      |                                       ~~~^
+      |                                          |
+      |                                          long long unsigned int
+      |                                       %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:190:9: note: in expansion of macro ‘Log’
+  190 |         Log("LSUNGetData total time = %llu", LSUNGetData.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:190:42: note: format string is defined here
+  190 |         Log("LSUNGetData total time = %llu", LSUNGetData.time);
+      |                                       ~~~^
+      |                                          |
+      |                                          long long unsigned int
+      |                                       %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:191:9: note: in expansion of macro ‘Log’
+  191 |         Log("EXUFinCal  Event = %llu", EXUFinCal.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:191:36: note: format string is defined here
+  191 |         Log("EXUFinCal  Event = %llu", EXUFinCal.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:191:9: note: in expansion of macro ‘Log’
+  191 |         Log("EXUFinCal  Event = %llu", EXUFinCal.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:191:36: note: format string is defined here
+  191 |         Log("EXUFinCal  Event = %llu", EXUFinCal.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:193:9: note: in expansion of macro ‘Log’
+  193 |         Log("EXUFinCal total time = %llu", EXUFinCal.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:193:40: note: format string is defined here
+  193 |         Log("EXUFinCal total time = %llu", EXUFinCal.time);
+      |                                     ~~~^
+      |                                        |
+      |                                        long long unsigned int
+      |                                     %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:193:9: note: in expansion of macro ‘Log’
+  193 |         Log("EXUFinCal total time = %llu", EXUFinCal.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:193:40: note: format string is defined here
+  193 |         Log("EXUFinCal total time = %llu", EXUFinCal.time);
+      |                                     ~~~^
+      |                                        |
+      |                                        long long unsigned int
+      |                                     %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:194:9: note: in expansion of macro ‘Log’
+  194 |         Log("Jump             = %llu", DECisJump.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:194:36: note: format string is defined here
+  194 |         Log("Jump             = %llu", DECisJump.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:194:9: note: in expansion of macro ‘Log’
+  194 |         Log("Jump             = %llu", DECisJump.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:194:36: note: format string is defined here
+  194 |         Log("Jump             = %llu", DECisJump.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:196:9: note: in expansion of macro ‘Log’
+  196 |         Log("Jump total time  = %llu", DECisJump.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:196:36: note: format string is defined here
+  196 |         Log("Jump total time  = %llu", DECisJump.time);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:196:9: note: in expansion of macro ‘Log’
+  196 |         Log("Jump total time  = %llu", DECisJump.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:196:36: note: format string is defined here
+  196 |         Log("Jump total time  = %llu", DECisJump.time);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:197:9: note: in expansion of macro ‘Log’
+  197 |         Log("Store            = %llu", DECisStore.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:197:36: note: format string is defined here
+  197 |         Log("Store            = %llu", DECisStore.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:197:9: note: in expansion of macro ‘Log’
+  197 |         Log("Store            = %llu", DECisStore.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:197:36: note: format string is defined here
+  197 |         Log("Store            = %llu", DECisStore.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:199:9: note: in expansion of macro ‘Log’
+  199 |         Log("Store total time = %llu", DECisStore.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:199:36: note: format string is defined here
+  199 |         Log("Store total time = %llu", DECisStore.time);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:199:9: note: in expansion of macro ‘Log’
+  199 |         Log("Store total time = %llu", DECisStore.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:199:36: note: format string is defined here
+  199 |         Log("Store total time = %llu", DECisStore.time);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:200:9: note: in expansion of macro ‘Log’
+  200 |         Log("Load             = %llu", DECisLoad.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:200:36: note: format string is defined here
+  200 |         Log("Load             = %llu", DECisLoad.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:200:9: note: in expansion of macro ‘Log’
+  200 |         Log("Load             = %llu", DECisLoad.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:200:36: note: format string is defined here
+  200 |         Log("Load             = %llu", DECisLoad.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:202:9: note: in expansion of macro ‘Log’
+  202 |         Log("Load tatal time  = %llu", DECisLoad.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:202:36: note: format string is defined here
+  202 |         Log("Load tatal time  = %llu", DECisLoad.time);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:202:9: note: in expansion of macro ‘Log’
+  202 |         Log("Load tatal time  = %llu", DECisLoad.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:202:36: note: format string is defined here
+  202 |         Log("Load tatal time  = %llu", DECisLoad.time);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:203:9: note: in expansion of macro ‘Log’
+  203 |         Log("Cal              = %llu", DECisCal.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:203:36: note: format string is defined here
+  203 |         Log("Cal              = %llu", DECisCal.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:203:9: note: in expansion of macro ‘Log’
+  203 |         Log("Cal              = %llu", DECisCal.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:203:36: note: format string is defined here
+  203 |         Log("Cal              = %llu", DECisCal.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:205:9: note: in expansion of macro ‘Log’
+  205 |         Log("Cal total time   = %llu", DECisCal.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:205:36: note: format string is defined here
+  205 |         Log("Cal total time   = %llu", DECisCal.time);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:205:9: note: in expansion of macro ‘Log’
+  205 |         Log("Cal total time   = %llu", DECisCal.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:205:36: note: format string is defined here
+  205 |         Log("Cal total time   = %llu", DECisCal.time);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:206:9: note: in expansion of macro ‘Log’
+  206 |         Log("Csr              = %llu", DECisCsr.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:206:36: note: format string is defined here
+  206 |         Log("Csr              = %llu", DECisCsr.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:206:9: note: in expansion of macro ‘Log’
+  206 |         Log("Csr              = %llu", DECisCsr.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:206:36: note: format string is defined here
+  206 |         Log("Csr              = %llu", DECisCsr.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:208:9: note: in expansion of macro ‘Log’
+  208 |         Log("Csr total time   = %llu", DECisCsr.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:208:36: note: format string is defined here
+  208 |         Log("Csr total time   = %llu", DECisCsr.time);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:208:9: note: in expansion of macro ‘Log’
+  208 |         Log("Csr total time   = %llu", DECisCsr.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:208:36: note: format string is defined here
+  208 |         Log("Csr total time   = %llu", DECisCsr.time);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:209:9: note: in expansion of macro ‘Log’
+  209 |         Log("Other            = %llu", DECisOther.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:209:36: note: format string is defined here
+  209 |         Log("Other            = %llu", DECisOther.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:209:9: note: in expansion of macro ‘Log’
+  209 |         Log("Other            = %llu", DECisOther.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:209:36: note: format string is defined here
+  209 |         Log("Other            = %llu", DECisOther.cnt);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:211:9: note: in expansion of macro ‘Log’
+  211 |         Log("Other total time = %llu", DECisOther.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:211:36: note: format string is defined here
+  211 |         Log("Other total time = %llu", DECisOther.time);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:211:9: note: in expansion of macro ‘Log’
+  211 |         Log("Other total time = %llu", DECisOther.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:211:36: note: format string is defined here
+  211 |         Log("Other total time = %llu", DECisOther.time);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:212:9: note: in expansion of macro ‘Log’
+  212 |         Log("iCache Hit        = %llu", ICacheHit.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:212:37: note: format string is defined here
+  212 |         Log("iCache Hit        = %llu", ICacheHit.cnt);
+      |                                  ~~~^
+      |                                     |
+      |                                     long long unsigned int
+      |                                  %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:212:9: note: in expansion of macro ‘Log’
+  212 |         Log("iCache Hit        = %llu", ICacheHit.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:212:37: note: format string is defined here
+  212 |         Log("iCache Hit        = %llu", ICacheHit.cnt);
+      |                                  ~~~^
+      |                                     |
+      |                                     long long unsigned int
+      |                                  %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:214:9: note: in expansion of macro ‘Log’
+  214 |         Log("iCache Hit total time = %llu", ICacheHit.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:214:41: note: format string is defined here
+  214 |         Log("iCache Hit total time = %llu", ICacheHit.time);
+      |                                      ~~~^
+      |                                         |
+      |                                         long long unsigned int
+      |                                      %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:214:9: note: in expansion of macro ‘Log’
+  214 |         Log("iCache Hit total time = %llu", ICacheHit.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:214:41: note: format string is defined here
+  214 |         Log("iCache Hit total time = %llu", ICacheHit.time);
+      |                                      ~~~^
+      |                                         |
+      |                                         long long unsigned int
+      |                                      %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:215:9: note: in expansion of macro ‘Log’
+  215 |         Log("iCache Miss       = %llu", ICacheMiss.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:215:37: note: format string is defined here
+  215 |         Log("iCache Miss       = %llu", ICacheMiss.cnt);
+      |                                  ~~~^
+      |                                     |
+      |                                     long long unsigned int
+      |                                  %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:215:9: note: in expansion of macro ‘Log’
+  215 |         Log("iCache Miss       = %llu", ICacheMiss.cnt);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:215:37: note: format string is defined here
+  215 |         Log("iCache Miss       = %llu", ICacheMiss.cnt);
+      |                                  ~~~^
+      |                                     |
+      |                                     long long unsigned int
+      |                                  %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:217:9: note: in expansion of macro ‘Log’
+  217 |         Log("iCache Miss total time = %llu", ICacheMiss.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:217:42: note: format string is defined here
+  217 |         Log("iCache Miss total time = %llu", ICacheMiss.time);
+      |                                       ~~~^
+      |                                          |
+      |                                          long long unsigned int
+      |                                       %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:217:9: note: in expansion of macro ‘Log’
+  217 |         Log("iCache Miss total time = %llu", ICacheMiss.time);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:217:42: note: format string is defined here
+  217 |         Log("iCache Miss total time = %llu", ICacheMiss.time);
+      |                                       ~~~^
+      |                                          |
+      |                                          long long unsigned int
+      |                                       %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:224:9: note: in expansion of macro ‘Log’
+  224 |         Log("host time spent  = %llu us", g_timer);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:224:36: note: format string is defined here
+  224 |         Log("host time spent  = %llu us", g_timer);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:224:9: note: in expansion of macro ‘Log’
+  224 |         Log("host time spent  = %llu us", g_timer);
+      |         ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:224:36: note: format string is defined here
+  224 |         Log("host time spent  = %llu us", g_timer);
+      |                                 ~~~^
+      |                                    |
+      |                                    long long unsigned int
+      |                                 %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:41:12: note: in definition of macro ‘_Log’
+   41 |     printf(__VA_ARGS__); \
+      |            ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:230:20: note: in expansion of macro ‘Log’
+  230 |   if (g_timer > 0) Log("simulation frequency = %llu inst/s", cycle * 1000000 / g_timer);
+      |                    ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:230:51: note: format string is defined here
+  230 |   if (g_timer > 0) Log("simulation frequency = %llu inst/s", cycle * 1000000 / g_timer);
+      |                                                ~~~^
+      |                                                   |
+      |                                                   long long unsigned int
+      |                                                %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:17:25: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+   17 | #define ANSI_FG_BLUE    "\33[1;34m"
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/utils.h:35:21: note: in definition of macro ‘log_write’
+   35 |     fprintf(log_fp, __VA_ARGS__); \
+      |                     ^~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:5: note: in expansion of macro ‘_Log’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |     ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:10: note: in expansion of macro ‘ANSI_FMT’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |          ^~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:10:41: note: in expansion of macro ‘ANSI_FG_BLUE’
+   10 |     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+      |                                         ^~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:230:20: note: in expansion of macro ‘Log’
+  230 |   if (g_timer > 0) Log("simulation frequency = %llu inst/s", cycle * 1000000 / g_timer);
+      |                    ^~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/circuit.cpp:230:51: note: format string is defined here
+  230 |   if (g_timer > 0) Log("simulation frequency = %llu inst/s", cycle * 1000000 / g_timer);
+      |                                                ~~~^
+      |                                                   |
+      |                                                   long long unsigned int
+      |                                                %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/difftest/dut.cpp: In function ‘void difftest_step()’:
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/difftest/dut.cpp:118:30: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 2 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+  118 |     printf("total cycle : %llu\n",cycle);
+      |                           ~~~^    ~~~~~
+      |                              |    |
+      |                              |    uint64_t {aka long unsigned int}
+      |                              long long unsigned int
+      |                           %lu
+In file included from /home/fuhuakai/ysyx-workbench/npc/csrc/include/debug.h:7,
+                 from /home/fuhuakai/ysyx-workbench/npc/csrc/include/common.h:19,
+                 from /home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/ftrace.cpp:2:
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/ftrace.cpp: In function ‘void ftrace_check(uint8_t, paddr_t, paddr_t, word_t)’:
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/circuit.h:48:40: warning: narrowing conversion of ‘(((long long unsigned int)(i >> 31)) & ((1 << ((31 - 31) + 1)) - 1))’ from ‘long long unsigned int’ to ‘int64_t’ {aka ‘long int’} [-Wnarrowing]
+   48 | #define BITS(x, hi, lo) (((x) >> (lo)) & BITMASK((hi) - (lo) + 1)) // similar to x[hi:lo] in verilog
+      |                         ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/circuit.h:49:66: note: in definition of macro ‘SEXT’
+   49 | #define SEXT(x, len) ({ struct { int64_t n : len; } __x = { .n = x }; (uint64_t)__x.n; })
+      |                                                                  ^
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/ftrace.cpp:23:30: note: in expansion of macro ‘BITS’
+   23 |                 imm = ((SEXT(BITS(i, 31, 31), 1) << 19) | BITS(i, 19, 12) << 11 | BITS(i, 20 , 20) << 10 | BITS(i , 30 , 21)) << 1;
+      |                              ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/circuit.h:48:40: warning: narrowing conversion of ‘(((long long unsigned int)(i >> 20)) & ((1 << ((31 - 20) + 1)) - 1))’ from ‘long long unsigned int’ to ‘int64_t’ {aka ‘long int’} [-Wnarrowing]
+   48 | #define BITS(x, hi, lo) (((x) >> (lo)) & BITMASK((hi) - (lo) + 1)) // similar to x[hi:lo] in verilog
+      |                         ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/include/circuit.h:49:66: note: in definition of macro ‘SEXT’
+   49 | #define SEXT(x, len) ({ struct { int64_t n : len; } __x = { .n = x }; (uint64_t)__x.n; })
+      |                                                                  ^
+/home/fuhuakai/ysyx-workbench/npc/csrc/CircuitSim/ftrace.cpp:25:28: note: in expansion of macro ‘BITS’
+   25 |                 imm = SEXT(BITS(i, 31, 20), 12);
+      |                            ^~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/memory/memory.cpp:12:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   12 | char *char_test = "/Users/yizishun/ysyx-workbench/char-test.bin";
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/memory/memory.cpp: In function ‘uint8_t* guest_to_host_sdram(uint32_t, int)’:
+/home/fuhuakai/ysyx-workbench/npc/csrc/memory/memory.cpp:182:1: warning: control reaches end of non-void function [-Wreturn-type]
+  182 | }
+      | ^
+/home/fuhuakai/ysyx-workbench/npc/csrc/utils/pevent.cpp:2:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+    2 | char *trace_csv = "builds/trace.csv";
+      |                   ^~~~~~~~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/utils/pevent.cpp:3:20: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+    3 | char *trace_csv2 = "builds/trace2.csv";
+      |                    ^~~~~~~~~~~~~~~~~~~
+/home/fuhuakai/ysyx-workbench/npc/csrc/utils/pevent.cpp: In function ‘void record_perf_trace(uint64_t, uint64_t)’:
+/home/fuhuakai/ysyx-workbench/npc/csrc/utils/pevent.cpp:207:30: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 3 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+  207 |         fprintf(perf_fp, "%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu\n",cycle, instCnt, IFUGetInst.cnt, EXUFinCal.cnt, LSUGetData.cnt,
+      |                           ~~~^                                                      ~~~~~
+      |                              |                                                      |
+      |                              long long unsigned int                                 uint64_t {aka long unsigned int}
+      |                           %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/utils/pevent.cpp:207:35: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 4 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+  207 |         fprintf(perf_fp, "%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu\n",cycle, instCnt, IFUGetInst.cnt, EXUFinCal.cnt, LSUGetData.cnt,
+      |                                ~~~^                                                        ~~~~~~~
+      |                                   |                                                        |
+      |                                   long long unsigned int                                   uint64_t {aka long unsigned int}
+      |                                %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/utils/pevent.cpp:207:40: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+  207 |         fprintf(perf_fp, "%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu\n",cycle, instCnt, IFUGetInst.cnt, EXUFinCal.cnt, LSUGetData.cnt,
+      |                                     ~~~^                                                            ~~~~~~~~~~~~~~
+      |                                        |                                                                       |
+      |                                        long long unsigned int                                                  uint64_t {aka long unsigned int}
+      |                                     %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/utils/pevent.cpp:207:45: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 6 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+  207 |         fprintf(perf_fp, "%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu\n",cycle, instCnt, IFUGetInst.cnt, EXUFinCal.cnt, LSUGetData.cnt,
+      |                                          ~~~^                                                                       ~~~~~~~~~~~~~
+      |                                             |                                                                                 |
+      |                                             long long unsigned int                                                            uint64_t {aka long unsigned int}
+      |                                          %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/utils/pevent.cpp:207:50: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 7 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+  207 |         fprintf(perf_fp, "%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu\n",cycle, instCnt, IFUGetInst.cnt, EXUFinCal.cnt, LSUGetData.cnt,
+      |                                               ~~~^                                                                                 ~~~~~~~~~~~~~~
+      |                                                  |                                                                                            |
+      |                                                  long long unsigned int                                                                       uint64_t {aka long unsigned int}
+      |                                               %lu
+/home/fuhuakai/ysyx-workbench/npc/csrc/utils/pevent.cpp:207:55: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 8 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+  207 |         fprintf(perf_fp, "%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu\n",cycle, instCnt, IFUGetInst.cnt, EXUFinCal.cnt, LSUGetData.cnt,
+      |                                                    ~~~^
+      |                                                       |
+      |                                                       long long unsigned int
+      |                                                    %lu
+  208 |         DECisJump.cnt, DECisLoad.cnt, DECisStore.cnt, DECisCal.cnt, DECisCsr.cnt, DECisOther.cnt);
+      |         ~~~~~~~~~~~~~                                  
+      |                   |
+      |                   uint64_t {aka long unsigned int}
+/home/fuhuakai/ysyx-workbench/npc/csrc/utils/pevent.cpp:207:60: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 9 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+  207 |         fprintf(perf_fp, "%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu\n",cycle, instCnt, IFUGetInst.cnt, EXUFinCal.cnt, LSUGetData.cnt,
+      |                                                         ~~~^
+      |                                                            |
+      |                                                            long long unsigned int
+      |                                                         %lu
+  208 |         DECisJump.cnt, DECisLoad.cnt, DECisStore.cnt, DECisCal.cnt, DECisCsr.cnt, DECisOther.cnt);
+      |                        ~~~~~~~~~~~~~                        
+      |                                  |
+      |                                  uint64_t {aka long unsigned int}
+/home/fuhuakai/ysyx-workbench/npc/csrc/utils/pevent.cpp:207:65: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 10 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+  207 |         fprintf(perf_fp, "%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu\n",cycle, instCnt, IFUGetInst.cnt, EXUFinCal.cnt, LSUGetData.cnt,
+      |                                                              ~~~^
+      |                                                                 |
+      |                                                                 long long unsigned int
+      |                                                              %lu
+  208 |         DECisJump.cnt, DECisLoad.cnt, DECisStore.cnt, DECisCal.cnt, DECisCsr.cnt, DECisOther.cnt);
+      |                                       ~~~~~~~~~~~~~~             
+      |                                                  |
+      |                                                  uint64_t {aka long unsigned int}
+/home/fuhuakai/ysyx-workbench/npc/csrc/utils/pevent.cpp:207:70: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 11 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+  207 |         fprintf(perf_fp, "%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu\n",cycle, instCnt, IFUGetInst.cnt, EXUFinCal.cnt, LSUGetData.cnt,
+      |                                                                   ~~~^
+      |                                                                      |
+      |                                                                      long long unsigned int
+      |                                                                   %lu
+  208 |         DECisJump.cnt, DECisLoad.cnt, DECisStore.cnt, DECisCal.cnt, DECisCsr.cnt, DECisOther.cnt);
+      |                                                       ~~~~~~~~~~~~    
+      |                                                                |
+      |                                                                uint64_t {aka long unsigned int}
+/home/fuhuakai/ysyx-workbench/npc/csrc/utils/pevent.cpp:207:75: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 12 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+  207 |         fprintf(perf_fp, "%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu\n",cycle, instCnt, IFUGetInst.cnt, EXUFinCal.cnt, LSUGetData.cnt,
+      |                                                                        ~~~^
+      |                                                                           |
+      |                                                                           long long unsigned int
+      |                                                                        %lu
+  208 |         DECisJump.cnt, DECisLoad.cnt, DECisStore.cnt, DECisCal.cnt, DECisCsr.cnt, DECisOther.cnt);
+      |                                                                     ~~~~~~~~~~~~
+      |                                                                              |
+      |                                                                              uint64_t {aka long unsigned int}
+/home/fuhuakai/ysyx-workbench/npc/csrc/utils/pevent.cpp:207:80: warning: format ‘%llu’ expects argument of type ‘long long unsigned int’, but argument 13 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]
+  207 |         fprintf(perf_fp, "%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu\n",cycle, instCnt, IFUGetInst.cnt, EXUFinCal.cnt, LSUGetData.cnt,
+      |                                                                             ~~~^
+      |                                                                                |
+      |                                                                                long long unsigned int
+      |                                                                             %lu
+  208 |         DECisJump.cnt, DECisLoad.cnt, DECisStore.cnt, DECisCal.cnt, DECisCsr.cnt, DECisOther.cnt);
+      |                                                                                   ~~~~~~~~~~~~~~
+      |                                                                                              |
+      |                                                                                              uint64_t {aka long unsigned int}
+Archive ar -rcs VysyxSoCFull__ALL.a VysyxSoCFull.o VysyxSoCFull___024root__DepSet_h4d156741__0.o VysyxSoCFull___024root__DepSet_h4d156741__1.o VysyxSoCFull___024root__DepSet_h0188974b__0.o VysyxSoCFull___024unit__DepSet_h308b0958__0.o VysyxSoCFull__Dpi.o VysyxSoCFull__Trace__0.o VysyxSoCFull__ConstPool_0.o VysyxSoCFull___024root__Slow.o VysyxSoCFull___024root__DepSet_h4d156741__0__Slow.o VysyxSoCFull___024root__DepSet_h0188974b__0__Slow.o VysyxSoCFull___024unit__Slow.o VysyxSoCFull___024unit__DepSet_h460a3d32__0__Slow.o VysyxSoCFull__Syms.o VysyxSoCFull__Trace__0__Slow.o
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(uart.o): in function `UART::UART(SDL_Renderer*, int, int, int, int, int, int, int)':
+uart.cpp:(.text+0x17c): undefined reference to `SDL_SetRenderDrawColor'
+/usr/bin/ld: uart.cpp:(.text+0x195): undefined reference to `SDL_RenderDrawLine'
+/usr/bin/ld: uart.cpp:(.text+0x1af): undefined reference to `SDL_SetRenderDrawColor'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(uart.o): in function `UART::~UART()':
+uart.cpp:(.text+0x27d): undefined reference to `SDL_DestroyTexture'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(uart.o): in function `init_uart(SDL_Renderer*)':
+uart.cpp:(.text+0x5f0): undefined reference to `SDL_SetRenderDrawColor'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(render.o): in function `load_pic_texture(SDL_Renderer*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+render.cpp:(.text+0x182): undefined reference to `IMG_LoadTexture'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(render.o): in function `surface2texture(SDL_Renderer*, SDL_Surface*)':
+render.cpp:(.text+0x2b3): undefined reference to `SDL_CreateTextureFromSurface'
+/usr/bin/ld: render.cpp:(.text+0x2c3): undefined reference to `SDL_FreeSurface'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(render.o): in function `new_texture(SDL_Renderer*, int, int, int, int, int)':
+render.cpp:(.text+0x329): undefined reference to `SDL_CreateRGBSurface'
+/usr/bin/ld: render.cpp:(.text+0x343): undefined reference to `SDL_MapRGB'
+/usr/bin/ld: render.cpp:(.text+0x34f): undefined reference to `SDL_FillRect'
+/usr/bin/ld: render.cpp:(.text+0x35a): undefined reference to `SDL_CreateTextureFromSurface'
+/usr/bin/ld: render.cpp:(.text+0x36a): undefined reference to `SDL_FreeSurface'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(render.o): in function `draw_thicker_line(SDL_Renderer*, SDL_Point const*, int)':
+render.cpp:(.text+0x397): undefined reference to `SDL_RenderDrawLines'
+/usr/bin/ld: render.cpp:(.text+0x412): undefined reference to `SDL_RenderDrawLines'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(render.o): in function `draw_surrounding_line(SDL_Renderer*, SDL_Rect, int)':
+render.cpp:(.text+0x4d3): undefined reference to `SDL_RenderDrawLines'
+/usr/bin/ld: render.cpp:(.text+0x53d): undefined reference to `SDL_RenderDrawLines'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(render.o): in function `draw_str(SDL_Renderer*, char const*, int, int, unsigned int)':
+render.cpp:(.text+0x5d5): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: render.cpp:(.text+0x5dd): undefined reference to `SDL_DestroyTexture'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(render.o): in function `draw_str(SDL_Renderer*, char const*, int, int, unsigned int, unsigned int)':
+render.cpp:(.text+0x678): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: render.cpp:(.text+0x680): undefined reference to `SDL_DestroyTexture'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(render.o): in function `init_render(SDL_Renderer*)':
+render.cpp:(.text+0x726): undefined reference to `SDL_SetRenderDrawColor'
+/usr/bin/ld: render.cpp:(.text+0x733): undefined reference to `SDL_RenderFillRect'
+/usr/bin/ld: render.cpp:(.text+0x74d): undefined reference to `SDL_QueryTexture'
+/usr/bin/ld: render.cpp:(.text+0x785): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: render.cpp:(.text+0x791): undefined reference to `SDL_DestroyTexture'
+/usr/bin/ld: render.cpp:(.text+0x7ab): undefined reference to `SDL_SetRenderDrawColor'
+/usr/bin/ld: render.cpp:(.text+0x7dc): undefined reference to `SDL_RenderDrawLines'
+/usr/bin/ld: render.cpp:(.text+0x80a): undefined reference to `SDL_RenderDrawLines'
+/usr/bin/ld: render.cpp:(.text+0x82c): undefined reference to `SDL_RenderDrawLines'
+/usr/bin/ld: render.cpp:(.text+0x856): undefined reference to `SDL_RenderDrawLines'
+/usr/bin/ld: render.cpp:(.text+0x8c1): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: render.cpp:(.text+0x8c9): undefined reference to `SDL_DestroyTexture'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(keyboard.o): in function `new_key_shape(int, int) [clone .constprop.0]':
+keyboard.cpp:(.text+0x42): undefined reference to `SDL_CreateRGBSurface'
+/usr/bin/ld: keyboard.cpp:(.text+0x5f): undefined reference to `SDL_MapRGBA'
+/usr/bin/ld: keyboard.cpp:(.text+0x7a): undefined reference to `SDL_FillRect'
+/usr/bin/ld: keyboard.cpp:(.text+0x9c): undefined reference to `SDL_FillRect'
+/usr/bin/ld: keyboard.cpp:(.text+0xc8): undefined reference to `SDL_FillRect'
+/usr/bin/ld: keyboard.cpp:(.text+0xed): undefined reference to `SDL_FillRect'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(keyboard.o): in function `gen_key_texture(SDL_Renderer*, char const*, char const*, SDL_Surface*, bool)':
+keyboard.cpp:(.text+0x577): undefined reference to `SDL_MapRGBA'
+/usr/bin/ld: keyboard.cpp:(.text+0x598): undefined reference to `SDL_MapRGBA'
+/usr/bin/ld: keyboard.cpp:(.text+0x5c4): undefined reference to `SDL_CreateRGBSurface'
+/usr/bin/ld: keyboard.cpp:(.text+0x5d6): undefined reference to `SDL_FillRect'
+/usr/bin/ld: keyboard.cpp:(.text+0x5e5): undefined reference to `SDL_UpperBlit'
+/usr/bin/ld: keyboard.cpp:(.text+0x623): undefined reference to `SDL_UpperBlit'
+/usr/bin/ld: keyboard.cpp:(.text+0x632): undefined reference to `SDL_CreateTextureFromSurface'
+/usr/bin/ld: keyboard.cpp:(.text+0x63d): undefined reference to `SDL_FreeSurface'
+/usr/bin/ld: keyboard.cpp:(.text+0x645): undefined reference to `SDL_FreeSurface'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(keyboard.o): in function `init_keyboard(SDL_Renderer*)':
+keyboard.cpp:(.text+0xa2e): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: keyboard.cpp:(.text+0xabc): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: keyboard.cpp:(.text+0xb38): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: keyboard.cpp:(.text+0xbb4): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: keyboard.cpp:(.text+0xc30): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(keyboard.o):keyboard.cpp:(.text+0xcb0): more undefined references to `SDL_RenderCopy' follow
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(keyboard.o): in function `init_keyboard(SDL_Renderer*)':
+keyboard.cpp:(.text+0x33cd): undefined reference to `SDL_FreeSurface'
+/usr/bin/ld: keyboard.cpp:(.text+0x33d5): undefined reference to `SDL_FreeSurface'
+/usr/bin/ld: keyboard.cpp:(.text+0x33df): undefined reference to `SDL_FreeSurface'
+/usr/bin/ld: keyboard.cpp:(.text+0x33e8): undefined reference to `SDL_FreeSurface'
+/usr/bin/ld: keyboard.cpp:(.text+0x33f2): undefined reference to `SDL_FreeSurface'
+/usr/bin/ld: keyboard.cpp:(.text+0x340c): undefined reference to `SDL_SetRenderDrawColor'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(keyboard.o): in function `KEYBOARD::push_key(unsigned char, bool)':
+keyboard.cpp:(.text+0x3eab): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(keyboard.o): in function `kb_push_key(unsigned char, bool)':
+keyboard.cpp:(.text+0x411f): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(vga.o): in function `VGA::update_gui()':
+vga.cpp:(.text+0x29): undefined reference to `SDL_UpdateTexture'
+/usr/bin/ld: vga.cpp:(.text+0x4e): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(vga.o): in function `VGA::VGA(SDL_Renderer*, int, int, int)':
+vga.cpp:(.text+0xae): undefined reference to `SDL_CreateTexture'
+/usr/bin/ld: vga.cpp:(.text+0x143): undefined reference to `SDL_UpdateTexture'
+/usr/bin/ld: vga.cpp:(.text+0x153): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(vga.o): in function `VGA::~VGA()':
+vga.cpp:(.text+0x2dd): undefined reference to `SDL_DestroyTexture'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(vga.o): in function `VGA::finish_one_frame()':
+vga.cpp:(.text+0x9bf): undefined reference to `SDL_UpdateTexture'
+/usr/bin/ld: vga.cpp:(.text+0x9e4): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(vga.o): in function `init_vga(SDL_Renderer*)':
+vga.cpp:(.text+0xb20): undefined reference to `SDL_SetRenderDrawColor'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(font.o): in function `init_font(SDL_Renderer*)':
+font.cpp:(.text+0xbc): undefined reference to `TTF_Init'
+/usr/bin/ld: font.cpp:(.text+0x22d): undefined reference to `TTF_OpenFont'
+/usr/bin/ld: font.cpp:(.text+0x27e): undefined reference to `TTF_SetFontHinting'
+/usr/bin/ld: font.cpp:(.text+0x28f): undefined reference to `TTF_SetFontStyle'
+/usr/bin/ld: font.cpp:(.text+0x2af): undefined reference to `TTF_RenderText_Shaded_Wrapped'
+/usr/bin/ld: font.cpp:(.text+0x2db): undefined reference to `TTF_SetFontSize'
+/usr/bin/ld: font.cpp:(.text+0x301): undefined reference to `TTF_RenderGlyph_Shaded'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(font.o): in function `str2surface(char const*, unsigned int)':
+font.cpp:(.text+0x599): undefined reference to `TTF_RenderText_Blended_Wrapped'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(font.o): in function `str2surface(char const*, unsigned int, unsigned int)':
+font.cpp:(.text+0x5f0): undefined reference to `TTF_RenderText_Shaded_Wrapped'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(font.o): in function `str2texture(SDL_Renderer*, char const*, unsigned int)':
+font.cpp:(.text+0x636): undefined reference to `TTF_RenderText_Blended_Wrapped'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(font.o): in function `str2texture(SDL_Renderer*, char const*, unsigned int, unsigned int)':
+font.cpp:(.text+0x68d): undefined reference to `TTF_RenderText_Shaded_Wrapped'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(font.o): in function `ch2surface(unsigned char, unsigned int)':
+font.cpp:(.text+0x6d8): undefined reference to `TTF_RenderGlyph_Blended'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(font.o): in function `ch2surface(unsigned char, unsigned int, unsigned int)':
+font.cpp:(.text+0x72e): undefined reference to `TTF_RenderGlyph_Shaded'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(font.o): in function `ch2texture(SDL_Renderer*, unsigned char, unsigned int)':
+font.cpp:(.text+0x788): undefined reference to `TTF_RenderGlyph_Blended'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(font.o): in function `ch2texture(SDL_Renderer*, unsigned char, unsigned int, unsigned int)':
+font.cpp:(.text+0x7ee): undefined reference to `TTF_RenderGlyph_Shaded'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(font.o): in function `close_font()':
+font.cpp:(.text+0x890): undefined reference to `TTF_CloseFont'
+/usr/bin/ld: font.cpp:(.text+0x899): undefined reference to `TTF_Quit'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(term.o): in function `Term::~Term()':
+term.cpp:(.text+0x4d): undefined reference to `SDL_DestroyTexture'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(term.o): in function `Term::set_cursor_visibility(bool)':
+term.cpp:(.text+0x131): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(term.o): in function `Term::set_focus(bool)':
+term.cpp:(.text+0x211): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(term.o): in function `Term::clear()':
+term.cpp:(.text+0x2c5): undefined reference to `SDL_RenderFillRect'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(term.o): in function `Term::draw_cursor()':
+term.cpp:(.text+0x595): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(term.o): in function `Term::update_gui()':
+term.cpp:(.text+0x6bf): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(term.o): in function `Term::Term(SDL_Renderer*, int, int, int, int)':
+term.cpp:(.text+0x90c): undefined reference to `SDL_RenderFillRect'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(term.o): in function `Term::clear_screen()':
+term.cpp:(.text+0x8c): undefined reference to `SDL_RenderFillRect'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(component.o): in function `Component::update_gui()':
+component.cpp:(.text+0x23): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(component.o): in function `Component::update_state()':
+component.cpp:(.text+0x9a): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(component.o): in function `init_gui(SDL_Renderer*)':
+component.cpp:(.text+0x667): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(component.o): in function `update_components(SDL_Renderer*)':
+component.cpp:(.text+0x71a): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(segs7.o): in function `SEGS7::update_gui()':
+segs7.cpp:(.text+0x62): undefined reference to `SDL_RenderCopy'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(segs7.o):segs7.cpp:(.text+0x1b5): more undefined references to `SDL_RenderCopy' follow
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(segs7.o): in function `init_segs7(SDL_Renderer*)':
+segs7.cpp:(.text+0x35d): undefined reference to `SDL_SetRenderDrawColor'
+/usr/bin/ld: segs7.cpp:(.text+0x377): undefined reference to `SDL_RenderFillRect'
+/usr/bin/ld: segs7.cpp:(.text+0x391): undefined reference to `SDL_SetRenderDrawColor'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(switch.o): in function `init_switch(SDL_Renderer*)':
+switch.cpp:(.text+0xeb): undefined reference to `SDL_SetRenderDrawColor'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(led.o): in function `init_led(SDL_Renderer*)':
+led.cpp:(.text+0x97): undefined reference to `SDL_SetRenderDrawColor'
+/usr/bin/ld: led.cpp:(.text+0xa4): undefined reference to `SDL_RenderFillRect'
+/usr/bin/ld: led.cpp:(.text+0xbe): undefined reference to `SDL_SetRenderDrawColor'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(nvboard.o): in function `nvboard_update()':
+nvboard.cpp:(.text+0x109): undefined reference to `SDL_RenderPresent'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(nvboard.o): in function `nvboard_init(int)':
+nvboard.cpp:(.text+0x12d): undefined reference to `SDL_Init'
+/usr/bin/ld: nvboard.cpp:(.text+0x137): undefined reference to `IMG_Init'
+/usr/bin/ld: nvboard.cpp:(.text+0x15e): undefined reference to `SDL_CreateWindow'
+/usr/bin/ld: nvboard.cpp:(.text+0x177): undefined reference to `SDL_CreateRenderer'
+/usr/bin/ld: nvboard.cpp:(.text+0x198): undefined reference to `SDL_SetRenderDrawColor'
+/usr/bin/ld: nvboard.cpp:(.text+0x1a6): undefined reference to `SDL_RenderFillRect'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(nvboard.o): in function `nvboard_quit()':
+nvboard.cpp:(.text+0x245): undefined reference to `SDL_DestroyWindow'
+/usr/bin/ld: nvboard.cpp:(.text+0x251): undefined reference to `SDL_DestroyRenderer'
+/usr/bin/ld: nvboard.cpp:(.text+0x256): undefined reference to `IMG_Quit'
+/usr/bin/ld: nvboard.cpp:(.text+0x25f): undefined reference to `SDL_Quit'
+/usr/bin/ld: /home/fuhuakai/ysyx-workbench/nvboard/build/nvboard.a(event.o): in function `read_event()':
+event.cpp:(.text+0x28): undefined reference to `SDL_PollEvent'
+/usr/bin/ld: event.cpp:(.text+0x2aa): undefined reference to `SDL_StartTextInput'
+/usr/bin/ld: event.cpp:(.text+0x34e): undefined reference to `SDL_StopTextInput'
+collect2: error: ld returned 1 exit status
+make[1]: *** [VysyxSoCFull.mk:118：/home/fuhuakai/ysyx-workbench/npc/builds/ysyxSoCFull] 错误 1
+make: *** [Makefile:44：/home/fuhuakai/ysyx-workbench/npc/builds/ysyxSoCFull] 错误 2
