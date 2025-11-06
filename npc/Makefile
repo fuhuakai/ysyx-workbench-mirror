@@ -43,7 +43,8 @@ $(BIN): $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
 	$(VERILATOR) $(VERILATOR_FLAGS) \
 		--top-module $(TOPNAME) $^ \
 		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
-	@make -s -C $(OBJ_DIR) -f $(REWRITE) TOPNAME=$(TOPNAME) ARCH=$(ARCH)
+	@make -s -C $(OBJ_DIR) -f $(REWRITE) TOPNAME=$(TOPNAME) ARCH=$(ARCH) \
+		LDFLAGS="$(LDFLAGS) -lSDL2 -lSDL2_image -lSDL2_ttf -lpthread"
 
 # run npc
 override ARGS ?= --log=$(BUILD_DIR)/npc-log.txt --diff=$(NPC_HOME)/tools/nemu-diff/riscv32-nemu-interpreter-so
